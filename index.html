@@ -66,10 +66,10 @@
 
         .server-name-header {
             height: 50px;
-            padding: 0 10px 0 16px; /* 右側 padding 留給按鈕 */
+            padding: 0 10px; /* 調整 padding 為按鈕騰出空間 */
             display: flex;
             align-items: center;
-            justify-content: space-between;
+            justify-content: space-between; /* 標題在左，按鈕在右 */
             font-weight: 600;
             font-size: 18px;
             color: var(--discord-text-primary);
@@ -78,126 +78,121 @@
             flex-shrink: 0; /* 防止頭部被壓縮 */
             overflow: hidden; /* Header 內部溢出也隱藏 */
         }
-        .server-name-text {
+        .server-name-text { /* 包裹伺服器/頻道列表名稱的 span */
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            flex-grow: 1;
-            margin-right: 5px; /* 給按鈕間距 */
-            transition: opacity 0.2s ease-out 0.05s, max-width 0.2s ease-in-out; /* 調整消失動畫 */
+            flex-grow: 1; /* 允許它佔據左側大部分空間 */
+            margin-right: 5px; /* 給右邊按鈕一點間隔 */
+            display: inline-block; /* 確保其可見性 */
+            opacity: 1;
+            max-width: 200px; /* 給一個足夠的寬度 */
+            transition: opacity 0.1s ease-out, max-width 0.25s ease-in-out 0.05s; /* 微調動畫時間和延遲 */
         }
         .channels-panel.collapsed .server-name-text {
             opacity: 0;
-            max-width: 0; /* 確保不佔據佈局空間 */
-            margin-right: 0; /* 收合時不需要這個間距 */
+            max-width: 0; /* 關鍵：收合時使其寬度為0 */
+            margin-right: 0;
             padding: 0;
             pointer-events: none;
-            /* display: none; */ /* 可以考慮使用 display:none, 但 opacity+max-width 可能更平滑 */
+            /* display: none;  Alternative, but max-width:0 with opacity is smoother */
         }
         .panel-toggle-button {
-            background: none; border: none; color: var(--discord-text-muted);
-            font-size: 1.6em; cursor: pointer; padding: 5px 8px;
-            line-height: 1; display: flex; align-items: center; justify-content: center;
-            flex-shrink: 0;
-            width: 40px; height: 40px;
+            background: none;
+            border: none;
+            color: var(--discord-text-muted);
+            font-size: 1.6em;
+            cursor: pointer;
+            padding: 5px; /* 確保足夠的點擊區域 */
+            line-height: 1;
+            display: flex; /* 確保按鈕總是顯示 */
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0; /* 防止按鈕被壓縮 */
+            width: 40px; /* 按鈕固定寬度 */
+            height: 40px; /* 按鈕固定高度 */
             transition: color 0.2s;
         }
-        .panel-toggle-button:hover { color: var(--discord-text-primary); }
-        .channels-panel.collapsed .server-name-header {
-            justify-content: center; /* 收合時讓按鈕居中 */
+        .panel-toggle-button:hover {
+            color: var(--discord-text-primary);
         }
-        /* 當 server 是 brio 時，收合按鈕隱藏 */
+        .channels-panel.collapsed .server-name-header {
+             justify-content: center; /* 收合時讓唯一的按鈕居中 */
+        }
+        /* 當 server 是 brio 時，收合按鈕可能也需要隱藏 */
         .channels-panel.brio-view .panel-toggle-button {
             display: none;
         }
-         /* 當 server 是 brio 時，伺服器名稱也隱藏，只顯示頂部布里歐的標題*/
-        .channels-panel.brio-view .server-name-text {
+        .channels-panel.brio-view .server-name-text { /* 在brio視圖下，如果也希望伺服器名隱藏 */
             display: none;
         }
         .channels-panel.brio-view .server-name-header {
-            justify-content: center; /* 讓布里歐的頂部標題居中 */
+            justify-content: center; /* 如果只有一個大標題，讓它居中 */
         }
-
 
 
         .channel-list-container {
             padding: 18px 10px 18px 18px; overflow-y: auto; flex-grow: 1;
             scrollbar-width: thin; scrollbar-color: var(--discord-scrollbar-thumb) var(--discord-scrollbar-track);
-            transition: opacity 0.2s ease-out, visibility 0s linear 0.2s, padding 0.3s ease-in-out;
+            transition: opacity 0.2s ease-out 0.05s, visibility 0s linear 0.25s, height 0.3s ease-in-out, padding 0.3s ease-in-out, margin 0.3s ease-in-out;
             opacity: 1;
             visibility: visible;
+            height: auto;
         }
         .channels-panel.collapsed .channel-list-container {
             opacity: 0;
             visibility: hidden;
             pointer-events: none;
-            height: 0 !important; /* 強制高度為0 */
-            padding: 0 !important; /* 強制 padding 為0 */
-            margin: 0 !important; /* 強制 margin 為0 */
-            overflow: hidden !important; /* 強制溢出隱藏 */
+            height: 0 !important;
+            padding: 0 !important;
+            margin: 0 !important;
+            overflow: hidden !important;
         }
-        .channel-category-header { /* (樣式與之前相同) */ }
-         .channel-category-header .category-icon { /* (樣式與之前相同) */ }
-        .channel-item { /* (樣式與之前相同) */ }
-        .channel-item:hover { /* (樣式與之前相同) */ }
-        .channel-item.active { /* (樣式與之前相同) */ }
-        .channel-item.completed .channel-name-text:after { /* (樣式與之前相同) */ }
-        .channel-icon { /* (樣式與之前相同) */ }
-
-        /* --- 主內容區樣式 (與之前基本相同) --- */
-        .main-content-area { /* (樣式與之前相同) */ }
-        .content-header { /* (樣式與之前相同) */ }
-        .content-header .header-icon-placeholder { /* (樣式與之前相同) */ }
-        .content-header .header-icon-placeholder .channel-icon { /* (樣式與之前相同) */ }
-         .content-header .dm-avatar-header { /* (樣式與之前相同) */ }
-        .content-body { /* (樣式與之前相同) */ }
-        .content-section { /* (樣式與之前相同) */ }
-        .content-section h3 { /* (樣式與之前相同) */ }
-        .content-section h3.channel-title, .content-section h4.channel-title { /* (樣式與之前相同) */ }
-        .content-section h3.channel-title:first-child, .content-section h4.channel-title:first-child { /* (樣式與之前相同) */ }
-        .content-section h3.channel-title:before, .content-section h4.channel-title:before { /* (樣式與之前相同) */ }
-        .content-section p, .content-section li { /* (樣式與之前相同) */ }
-         .content-section ul, .content-section ol { /* (樣式與之前相同) */ }
-        .content-section strong.highlight { /* (樣式與之前相同) */ }
-        .content-section .important-note { /* (樣式與之前相同) */ }
-        .content-section .architect-warning { /* (樣式與之前相同) */ }
-
-        .message-group { /* (樣式與之前相同) */ }
-        .message { /* (樣式與之前相同) */ }
-        .message-avatar { /* (樣式與之前相同) */ }
+        /* 其他 CSS 保持不變... */
+        .channel-category-header { padding: 15px 0 10px 0; font-size: 1.05em; font-weight: 700; color: var(--discord-text-primary); text-transform: uppercase; border-bottom: 1px solid var(--discord-bg-light); margin-bottom: 10px; display: flex; align-items: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .channel-category-header .category-icon { font-size: 1.25em; margin-right: 8px; color: var(--accent-color1); }
+        .channel-item { display: flex; align-items: center; padding: 7px 10px; border-radius: 4px; color: var(--discord-channel-text); font-weight: 500; font-size: 0.98em; cursor: pointer; margin-bottom: 2px; transition: background-color 0.15s ease-out, color 0.15s ease-out; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .channel-item:hover { background-color: var(--discord-channel-hover-bg); color: var(--discord-text-primary); }
+        .channel-item.active { background-color: var(--discord-active-channel-bg); color: var(--discord-text-primary); font-weight: bold; }
+        .channel-item.completed .channel-name-text:after { content: " ✔️"; color: var(--highlight-green); font-size: 0.9em; margin-left: 5px; }
+        .channel-icon { margin-right: 8px; color: var(--discord-text-muted); min-width: 18px; font-size: 1em; }
+        .main-content-area { flex-grow: 1; background-color: var(--discord-bg-medium); display: flex; flex-direction: column; overflow: hidden; }
+        .content-header { height: 50px; padding: 0 18px; display: flex; align-items: center; font-size: 17px; font-weight: 600; border-bottom: 1px solid var(--discord-bg-darkest); box-shadow: 0 1px 0 rgba(0,0,0,0.2); flex-shrink: 0; }
+        .content-header .header-icon-placeholder { margin-right: 10px; display: flex; align-items: center; justify-content: center; width: 30px; height: 30px; font-size: 1.2em; }
+        .content-header .header-icon-placeholder .channel-icon { font-size: 1.3em; opacity: 0.8; }
+        .content-header .dm-avatar-header { width: 30px; height: 30px; background-color: var(--accent-color1); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1em; color: white; }
+        .content-body { padding: 25px 30px; overflow-y: auto; flex-grow: 1; scrollbar-width: thin; scrollbar-color: var(--discord-scrollbar-thumb) var(--discord-scrollbar-track); font-size: 1em; line-height: 1.8; }
+        .content-section { margin-bottom: 25px; padding: 20px; background-color: var(--discord-bg-dark); border-radius: 5px; }
+        .content-section h3 { color: var(--discord-text-primary); font-size: 1.4em; margin-top: 0; margin-bottom: 15px; border-bottom: 1px solid var(--discord-bg-light); padding-bottom: 10px; }
+        .content-section h3.channel-title, .content-section h4.channel-title { font-size: 1.3em; font-weight: 500; color: var(--discord-text-primary); margin-top: 20px; margin-bottom: 10px; padding-bottom: 5px; border-bottom: none; }
+        .content-section h3.channel-title:first-child, .content-section h4.channel-title:first-child { margin-top: 0; }
+        .content-section h3.channel-title:before, .content-section h4.channel-title:before { content: "# "; color: var(--discord-text-muted); font-weight: bold; margin-right: 4px; }
+        .content-section p, .content-section li { color: var(--discord-text-secondary); margin-bottom: 10px; font-size: 1.05em; }
+        .content-section ul, .content-section ol { padding-left: 30px; }
+        .content-section strong.highlight { color: var(--accent-color1); font-weight: bold; }
+        .content-section .important-note { color: #faa61a; font-weight: bold; }
+        .content-section .architect-warning { display: block; margin-top: 10px; color: #faa61a; font-weight: bold; }
+        .message-group { margin-bottom: 18px; }
+        .message { display: flex; align-items: flex-start; padding: 2px 0; }
+        .message-avatar { width: 42px; height: 42px; margin-right: 18px; font-size: 1.1em; border-radius: 50%; background-color: var(--accent-color1); flex-shrink: 0; display:flex; align-items:center; justify-content:center; font-weight:bold; color:white; }
         .message-avatar.kua { background-color: #7289da; }
-        .message-content { /* (樣式與之前相同) */ }
-        .message-header { /* (樣式與之前相同) */ }
-        .message-username { /* (樣式與之前相同) */}
+        .message-content { flex-grow: 1; }
+        .message-header { display: flex; align-items: baseline; margin-bottom: 4px; }
+        .message-username { font-weight: 500; color: var(--discord-text-primary); margin-right: 8px; font-size: 1.05em;}
         .message-username.kua { color: #9099dd; }
-        .message-timestamp { /* (樣式與之前相同) */ }
-        .message-text { /* (樣式與之前相同) */ }
+        .message-timestamp { font-size: 0.8em; color: var(--discord-text-muted); }
+        .message-text { color: var(--discord-text-primary); line-height: 1.45rem; font-size:1.05em;}
         .message-text p { margin-bottom: 5px !important; }
-
-        .completion-toast { /* (樣式與之前相同) */ }
-         @keyframes slideUpFadeOut { /* (樣式與之前相同) */ }
-
-        /* 手機版響應式調整 (保留) */
-        @media (max-width: 768px) {
-            body { font-size: 14px; }
-            .channels-panel:not(.collapsed) { width: 220px; }
-            .channels-panel.collapsed { width: 50px; }
-            .server-name-header { font-size: 16px; padding: 0 8px 0 12px;}
-            .panel-toggle-button { font-size: 1.4em; padding: 5px;}
-            .channels-panel.collapsed .server-name-header {
-                justify-content: center;
-            }
-            .content-header {font-size: 15px; padding: 0 12px;}
-            .content-body {padding: 15px 20px;}
-        }
-
+        .completion-toast { display: none; position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background-color: var(--highlight-green); color: white; padding: 15px 25px; border-radius: 8px; z-index: 2000; font-size: 1.1em; box-shadow: 0 4px 10px rgba(0,0,0,0.2); animation: slideUpFadeOut 3.5s forwards; }
+        @keyframes slideUpFadeOut { 0% { bottom: -60px; opacity: 0; } 15% { bottom: 30px; opacity: 1; } 85% { bottom: 30px; opacity: 1; } 100% { bottom: -60px; opacity: 0; } }
+        @media (max-width: 768px) { body { font-size: 14px; } .channels-panel:not(.collapsed) { width: 220px; } .channels-panel.collapsed { width: 50px; } .server-name-header { font-size: 16px; padding: 0 8px 0 12px;} .panel-toggle-button { font-size: 1.4em; padding: 5px;} .channels-panel.collapsed .server-name-header { justify-content: center; } .content-header {font-size: 15px; padding: 0 12px;} .content-body {padding: 15px 20px;} }
     </style>
 </head>
 <body>
 
     <div class="discord-app-layout">
         <div id="serverList" class="server-list"></div>
-        <div id="channelsPanelEl" class="channels-panel"> {/* 給予 ID */}
+        <div id="channelsPanelEl" class="channels-panel">
             <div class="server-name-header">
                 <span id="serverNameTextEl">可可冒險島指南</span>
                 <button id="panelToggleButtonEl" class="panel-toggle-button">«</button>
@@ -222,7 +217,8 @@
         ];
 
         const guideTopics = [
-            // ... (所有 guideTopics 數據保持不變)
+            // ... (guideTopics 數據與您上一個包含所有文本修正的版本相同)
+            // !! 請確保這裡的 content 內容是完整且正確的 !!
              {
                 id: 'welcome',
                 category: '歡迎來到可可冒險島',
@@ -469,10 +465,10 @@
 
         document.addEventListener('DOMContentLoaded', () => {
             const serverListEl = document.getElementById('serverList');
-            const channelsPanelEl = document.getElementById('channelsPanelEl'); // Corrected ID
-            const panelToggleButtonEl = document.getElementById('panelToggleButtonEl'); // Corrected ID
+            const channelsPanelEl = document.getElementById('channelsPanelEl');
+            const panelToggleButtonEl = document.getElementById('panelToggleButtonEl');
             const channelListEl = document.getElementById('channelList');
-            const serverNameTextEl = document.getElementById('serverNameTextEl'); // Corrected ID
+            const serverNameTextEl = document.getElementById('serverNameTextEl');
             const contentHeaderEl = document.getElementById('contentHeader');
             const currentChannelNameEl = document.getElementById('currentChannelName');
             const contentBodyEl = document.getElementById('contentBody');
@@ -492,10 +488,9 @@
                 }
             }
 
-            if(panelToggleButtonEl) {
+            if(panelToggleButtonEl && channelsPanelEl) { // Make sure both exist
                 panelToggleButtonEl.addEventListener('click', toggleChannelsPanel);
             }
-
 
             function renderServers() {
                 if (!serverListEl) return;
@@ -518,7 +513,6 @@
                 channelListEl.innerHTML = '';
                 const currentServer = servers.find(s => s.id === activeServerId);
                 serverNameTextEl.textContent = currentServer ? currentServer.name : '未知區域';
-
 
                 if (activeServerId === 'guide') {
                     panelToggleButtonEl.style.display = 'flex';
@@ -553,8 +547,8 @@
                         channelListEl.appendChild(channelDiv);
                     });
                 } else if (activeServerId === 'brio') {
-                    panelToggleButtonEl.style.display = 'none';
-                    if (channelsPanelEl) channelsPanelEl.classList.remove('collapsed');
+                    panelToggleButtonEl.style.display = 'none'; // Hide toggle button for Brio
+                    if (channelsPanelEl) channelsPanelEl.classList.remove('collapsed'); // Ensure panel is expanded
 
                     const brioTitle = document.createElement('div');
                     brioTitle.classList.add('channel-category-header');
@@ -567,17 +561,18 @@
                 if (!servers.find(s => s.id === serverId)) return;
                 activeServerId = serverId;
 
-                // When switching to guide, ensure panel is not forced collapsed by brio's logic
-                // and set the button icon based on the actual current collapse state for guide
                 if (activeServerId === 'guide') {
-                    if (channelsPanelEl) channelsPanelEl.classList.toggle('collapsed', isChannelPanelCollapsed); // Retain user's collapse choice for guide
-                    if (panelToggleButtonEl) panelToggleButtonEl.textContent = isChannelPanelCollapsed ? '☰' : '«';
-                } else { // For brio or other servers
-                    isChannelPanelCollapsed = true; // Or false if you want Brio to start expanded
+                    // Retain user's collapse preference for guide, or default to expanded
+                    // isChannelPanelCollapsed remains as is from user interaction
                     if (channelsPanelEl) channelsPanelEl.classList.toggle('collapsed', isChannelPanelCollapsed);
-                    if (panelToggleButtonEl) panelToggleButtonEl.textContent = '☰'; // Brio panel usually collapsed by default
+                    if (panelToggleButtonEl) panelToggleButtonEl.textContent = isChannelPanelCollapsed ? '☰' : '«';
+                } else if (activeServerId === 'brio') {
+                    // When switching to Brio, force panel to be "uncollapsed" (as it only shows title)
+                    // and hide the toggle button as it's not applicable.
+                    isChannelPanelCollapsed = false; // Set to false, effectively "uncollapsing"
+                    if (channelsPanelEl) channelsPanelEl.classList.remove('collapsed');
+                    if (panelToggleButtonEl) panelToggleButtonEl.style.display = 'none'; // Hide button for Brio
                 }
-
 
                 renderServers();
 
@@ -588,7 +583,7 @@
                     activeChannelId = brioDialogueContent.id;
                     selectContentItem(activeChannelId, 'dialogue');
                 }
-                renderChannelsOrDialogueTitle();
+                renderChannelsOrDialogueTitle(); // This will now also handle toggle button display
             }
 
             function selectContentItem(itemId, type) {
@@ -643,11 +638,18 @@
             }
 
             // Initialization
-            if (serverListEl && channelsPanelEl && panelToggleButtonEl && channelListEl && serverNameTextEl && contentHeaderEl && contentBodyEl && completionToastEl) {
+            const initialElements = [
+                serverListEl, channelsPanelEl, panelToggleButtonEl, channelListEl,
+                serverNameTextEl, contentHeaderEl, contentBodyEl, completionToastEl
+            ];
+            if (initialElements.every(el => el)) {
                 renderServers();
                 selectServer(activeServerId);
             } else {
                 console.error("一個或多個必要的 DOM 元素未找到，遊戲無法初始化。請檢查HTML中的ID。");
+                 initialElements.forEach((el, index) => {
+                    if (!el) console.error(`Element at index ${index} is null. Expected ID: ${['serverList', 'channelsPanelEl', 'panelToggleButtonEl', 'channelList', 'serverNameTextEl', 'contentHeader', 'contentBody', 'completionToast'][index]}`);
+                });
             }
         });
     </script>
