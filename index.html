@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>可可冒險島 Discord 指南模擬</title>
     <style>
-        /* --- CSS 樣式 (與上一個版本基本相同) --- */
+        /* --- CSS 樣式 (與上一個包含收合功能的版本相同) --- */
         :root {
             --discord-bg-darkest: #202225;
             --discord-bg-dark: #2f3136;
@@ -15,7 +15,7 @@
             --discord-text-primary: #dcddde;
             --discord-text-secondary: #b9bbbe;
             --discord-text-muted: #72767d;
-            --discord-text-link: #0096cf;
+            --discord-text-link: #0096cf; /* Discord 連結藍色 */
             --discord-channel-text: #b9bbbe;
             --discord-channel-hover-bg: #3a3c43;
             --discord-active-channel-bg: var(--discord-bg-light);
@@ -137,7 +137,6 @@
             margin: 0 !important;
             overflow: hidden !important;
         }
-        /* 其他 CSS (channel-category-header, channel-item 等) 保持不變 */
         .channel-category-header { padding: 15px 0 10px 0; font-size: 1.05em; font-weight: 700; color: var(--discord-text-primary); text-transform: uppercase; border-bottom: 1px solid var(--discord-bg-light); margin-bottom: 10px; display: flex; align-items: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .channel-category-header .category-icon { font-size: 1.25em; margin-right: 8px; color: var(--accent-color1); }
         .channel-item { display: flex; align-items: center; padding: 7px 10px; border-radius: 4px; color: var(--discord-channel-text); font-weight: 500; font-size: 0.98em; cursor: pointer; margin-bottom: 2px; transition: background-color 0.15s ease-out, color 0.15s ease-out; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -235,9 +234,10 @@
                         <p>系統精靈：「要加入我們的島嶼，首先你需要 Discord！它就像我們的魔法通訊水晶。」</p>
                         <p>取得方式:</p>
                         <ul>
-                            <li><strong>IOS 設備:</strong> 前往 App Store 搜尋「Discord」。</li>
-                            <li><strong>安卓設備:</strong> 前往 Play 商店搜尋「Discord」。</li>
-                            <li><strong>PC/Mac:</strong> 前往 discord.com 下載或使用網頁版。</li>
+                            <li><strong>IOS 設備:</strong> 前往 App Store 搜尋「Discord」或點擊 <a href="https://apps.apple.com/us/app/discord-talk-play-hang-out/id985746746" target="_blank" style="color:var(--discord-text-link); text-decoration:underline;">此處安裝</a>。</li>
+                            <li><strong>安卓設備:</strong> 前往 Play 商店搜尋「Discord」或點擊 <a href="https://play.google.com/store/apps/details?id=com.discord" target="_blank" style="color:var(--discord-text-link); text-decoration:underline;">此處安裝</a>。</li>
+                            <li><strong>PC/Mac:</strong> 前往瀏覽器搜尋「Discord」或點擊 <a href="https://discord.com/download" target="_blank" style="color:var(--discord-text-link); text-decoration:underline;">此處下載</a>。</li>
+                            <li><strong>網頁瀏覽:</strong> 前往瀏覽器搜尋「Discord」或直接訪問 <a href="https://discord.com/app" target="_blank" style="color:var(--discord-text-link); text-decoration:underline;">discord.com/app</a>。</li>
                         </ul>
                     </div>
                     <div class="content-section">
@@ -375,7 +375,7 @@
                 `,
                 isCompleted: false
             },
-            { // 新增的趣味頻道
+            {
                 id: 'cant_reach_this',
                 category: '最終章：島嶼的溫度與祝福',
                 categoryIcon: '💖',
@@ -394,7 +394,7 @@
             }
         ];
 
-        const brioDialogueContent = { /* (brioDialogueContent 數據正確) */
+        const brioDialogueContent = {
             id: 'brio_main_dialogue',
             name: '與布里歐的記事記錄',
             icon: '👨‍🍳',
@@ -557,8 +557,6 @@
                     brioTitle.classList.add('channel-category-header');
                     brioTitle.innerHTML = `<span class="category-icon">${brioDialogueContent.icon || '💬'}</span>${brioDialogueContent.name}`;
                     channelListEl.appendChild(brioTitle);
-                    // 在布里歐模式下，頻道列表通常是空的，或者只顯示一個總標題
-                    // 確保在收合時，這個單一的標題也會被 channel-list-container 的 CSS 規則隱藏
                 }
             }
 
