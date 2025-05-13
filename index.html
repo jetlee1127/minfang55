@@ -51,54 +51,91 @@
 
         /* --- 頻道面板 (可收合) --- */
         .channels-panel {
-            width: 280px;
-            background-color: var(--discord-bg-dark); display: flex;
-            flex-direction: column; flex-shrink: 0;
+            width: 280px; /* 展開時的寬度 */
+            background-color: var(--discord-bg-dark);
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0;
             transition: var(--panel-transition);
             position: relative;
-            overflow: hidden;
+            overflow: hidden; /* 非常重要 */
         }
         .channels-panel.collapsed {
-            width: 60px;
+            width: 60px; /* 收合時的寬度 */
         }
 
         .server-name-header {
-            height: 50px; padding: 0 10px;
-            display: flex; align-items: center;
+            height: 50px;
+            padding: 0 10px;
+            display: flex;
+            align-items: center;
             justify-content: space-between;
-            font-weight: 600; font-size: 18px;
-            color: var(--discord-text-primary); border-bottom: 1px solid var(--discord-bg-darkest);
+            font-weight: 600;
+            font-size: 18px;
+            color: var(--discord-text-primary);
+            border-bottom: 1px solid var(--discord-bg-darkest);
             box-shadow: 0 1px 0 rgba(0,0,0,0.2), 0 1.5px 0 rgba(0,0,0,0.05), 0 2px 0 rgba(0,0,0,0.05);
-            flex-shrink: 0; overflow: hidden;
+            flex-shrink: 0;
+            overflow: hidden;
         }
         .server-name-text {
-            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-            flex-grow: 1; margin-right: 5px; display: inline-block;
-            opacity: 1; max-width: calc(100% - 50px);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            flex-grow: 1;
+            margin-right: 5px;
+            display: inline-block;
+            opacity: 1;
+            max-width: calc(100% - 50px);
             transition: opacity 0.15s ease-out, max-width 0.25s ease-in-out;
         }
         .channels-panel.collapsed .server-name-text {
-            opacity: 0; max-width: 0; margin-right: 0; padding: 0; pointer-events: none;
+            opacity: 0;
+            max-width: 0;
+            margin-right: 0;
+            padding:0;
+            pointer-events: none;
         }
         .panel-toggle-button {
-            background: none; border: none; color: var(--discord-text-muted);
-            font-size: 1.6em; cursor: pointer; padding: 5px; line-height: 1;
-            display: flex; align-items: center; justify-content: center;
-            flex-shrink: 0; width: 40px; height: 40px; transition: color 0.2s;
+            background: none;
+            border: none;
+            color: var(--discord-text-muted);
+            font-size: 1.6em;
+            cursor: pointer;
+            padding: 5px;
+            line-height: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            width: 40px;
+            height: 40px;
+            transition: color 0.2s;
         }
-        .panel-toggle-button:hover { color: var(--discord-text-primary); }
-        .channels-panel.collapsed .server-name-header { justify-content: center; }
+        .panel-toggle-button:hover {
+            color: var(--discord-text-primary);
+        }
+        .channels-panel.collapsed .server-name-header {
+             justify-content: center;
+        }
 
 
         .channel-list-container {
             padding: 18px 10px 18px 18px; overflow-y: auto; flex-grow: 1;
             scrollbar-width: thin; scrollbar-color: var(--discord-scrollbar-thumb) var(--discord-scrollbar-track);
             transition: opacity 0.2s ease-out 0.05s, visibility 0s linear 0.25s, height 0.3s ease-in-out, padding 0.3s ease-in-out, margin 0.3s ease-in-out;
-            opacity: 1; visibility: visible; height: auto;
+            opacity: 1;
+            visibility: visible;
+            height: auto;
         }
         .channels-panel.collapsed .channel-list-container {
-            opacity: 0; visibility: hidden; pointer-events: none;
-            height: 0 !important; padding: 0 !important; margin: 0 !important; overflow: hidden !important;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            height: 0 !important;
+            padding: 0 !important;
+            margin: 0 !important;
+            overflow: hidden !important;
         }
         /* 其他 CSS (channel-category-header, channel-item 等) 保持不變 */
         .channel-category-header { padding: 15px 0 10px 0; font-size: 1.05em; font-weight: 700; color: var(--discord-text-primary); text-transform: uppercase; border-bottom: 1px solid var(--discord-bg-light); margin-bottom: 10px; display: flex; align-items: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -108,8 +145,6 @@
         .channel-item.active { background-color: var(--discord-active-channel-bg); color: var(--discord-text-primary); font-weight: bold; }
         .channel-item.completed .channel-name-text:after { content: " ✔️"; color: var(--highlight-green); font-size: 0.9em; margin-left: 5px; }
         .channel-icon { margin-right: 8px; color: var(--discord-text-muted); min-width: 18px; font-size: 1em; }
-
-        /* --- 主內容區樣式 --- */
         .main-content-area { flex-grow: 1; background-color: var(--discord-bg-medium); display: flex; flex-direction: column; overflow: hidden; height: 100vh; }
         .content-header { height: 50px; padding: 0 18px; display: flex; align-items: center; font-size: 17px; font-weight: 600; border-bottom: 1px solid var(--discord-bg-darkest); box-shadow: 0 1px 0 rgba(0,0,0,0.2); flex-shrink: 0; }
         .content-header .header-icon-placeholder { margin-right: 10px; display: flex; align-items: center; justify-content: center; width: 30px; height: 30px; font-size: 1.2em; }
@@ -337,7 +372,6 @@
                         <p>然而，隨著島嶼發展，新的挑戰逐漸浮現——有些小甜點在成長過程中迷失了方向，不確定自己的未來；有些甜點建築師承擔了過多責任，無法兼顧小甜點的需求；甚至島上的三位愛罷工的員工，時常因為種種理由停下手邊工作，使得烘焙坊的運作增添不少困難與變數。</p>
                         <p>面對這些挑戰，管理員期待建立一個<strong class="highlight">支持網路</strong>，讓甜點建築師、小甜點們，以及島上的所有居民都能互相扶持，確保每個甜點都能夠找到自己的價值與歸屬。這個支持網路不僅將提供協助與指引，也致力創造更和諧的環境，讓島嶼的甜美氣息得以延續，讓每位小甜點都能自由開展，在故事中綻放光彩。</p>
                     </div>
-                    <div style="height: 50vh;"></div> {/* 添加的空白區域 */}
                 `,
                 isCompleted: false
             },
@@ -349,19 +383,18 @@
                 name: '你點不到吧！',
                 content: `
                     <div class="content-section">
-                        <h3>＃你點不到吧！</h3>
+                        <h3 class="channel-title">你點不到吧！</h3>
                         <p>系統精靈：「嘿嘿，這是一個隱藏的彩蛋頻道！你能看到這裡，說明你真的很努力在探索呢！」</p>
                         <p>🎉🎉🎉</p>
                         <p>其實也沒有什麼特別的內容，就是想跟你說聲「探索辛苦了！」</p>
                         <p>希望你在可可冒險島玩得開心！</p>
                     </div>
-                    <div style="height: 50vh;"></div>
                 `,
                 isCompleted: false
             }
         ];
 
-        const brioDialogueContent = {
+        const brioDialogueContent = { /* (brioDialogueContent 數據正確) */
             id: 'brio_main_dialogue',
             name: '與布里歐的記事記錄',
             icon: '👨‍🍳',
@@ -430,7 +463,6 @@
                      <p>在可可曆127年，島上就有了這位傳奇的甜點建築師——布里歐 (Brio)。他不只是製作甜點，更是小甜點們的守護者。他用奶油般溫暖的雙手，為每個即將誕生的甜點灌注靈魂，輕聲對它們說：「歡迎來到世界，你準備好探索自己的甜美人生了嗎？」</p>
                      <p>布里歐深知每個甜點的獨特。他曾對焦慮的草莓泡芙說：「你不需要變得酥脆，柔軟也是一種可愛的特質。」他也鼓勵膽怯的可可可頌（也就是我們剛剛提到的『垮垮垮鬆』！）：『你經過層層折疊，才有了現在的樣子，不會這麼容易垮掉的。』他的信念是幫助甜點發掘自己的價值，而非改變它們。</p>
                 </div>
-                <div style="height: 50vh;"></div> {/* 添加的空白區域 */}
             `,
             isCompleted: false
         };
@@ -525,6 +557,8 @@
                     brioTitle.classList.add('channel-category-header');
                     brioTitle.innerHTML = `<span class="category-icon">${brioDialogueContent.icon || '💬'}</span>${brioDialogueContent.name}`;
                     channelListEl.appendChild(brioTitle);
+                    // 在布里歐模式下，頻道列表通常是空的，或者只顯示一個總標題
+                    // 確保在收合時，這個單一的標題也會被 channel-list-container 的 CSS 規則隱藏
                 }
             }
 
@@ -532,7 +566,7 @@
                 if (!servers.find(s => s.id === serverId)) return;
                 activeServerId = serverId;
 
-                // 當切換伺服器時，保持用戶對頻道面板的收合偏好
+                // 切換伺服器時，保持用戶對頻道面板的收合偏好
                 if (channelsPanelEl) {
                      channelsPanelEl.classList.toggle('collapsed', isChannelPanelCollapsed);
                 }
