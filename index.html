@@ -19,468 +19,909 @@
             --discord-channel-text: #b9bbbe;
             --discord-channel-hover-bg: #3a3c43;
             --discord-active-channel-bg: var(--discord-bg-light);
-            --discord-mention-bg: rgba(88, 101, 242, 0.3);
+好的            --discord-mention-bg: rgba(88, 101, 242, ，我已經將所有必要的 CSS 修正和確保 JavaScript 邏輯簡0.3);
             --discord-scrollbar-thumb: var(--discord-bg-darkest);
-            --discord-scrollbar-track: var(--discord-bg-dark);
+            潔性的調整，**全部整合到一個單一的 HTML 檔案中**。我已經仔細檢查了 HTML 結構--discord-scrollbar-track: var(--discord-bg-dark);
             --highlight-green: #43b581;
             --accent-color1: #d4a373;
             --panel-transition: width 0.3s ease-in-out;
         }
 
-        body {
+        body {、CSS 規則的應用以及 JavaScript 中獲取元素和事件綁定的部分，力求最大限度地減少潛
             font-family: 'Whitney', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-            line-height: 1.7; margin: 0; background-color: var(--discord-bg-darkest);
+            line在錯誤。
+
+這個版本包含了：
+
+*   **修正後的收合面板 CSS：** 特別注意了在-height: 1.7; margin: 0; background-color: var(--discord-bg-darkest);
+            color: var(--discord-text-primary); display: flex; height: 100 `.channels-panel.collapsed` 狀態下，`.server-name-text` 的隱藏方式（使用 `opacityvh;
+            overflow: hidden; font-size: 16px;
+        }
+
+        .discord` 和 `width: 0` 等組合）以及 `.panel-toggle-button` 在收合面板中的定位。
+-app-layout { display: flex; width: 100%; height: 100%; }
+        .server-list {
+            width: 72px; background-color: var(--discord-bg-darkest);*   **收合按鈕的箭頭/圖標切換。**
+*   **之前已實現的所有功能： padding: 12px 0;
+            display: flex; flex-direction: column; align-items** 伺服器切換、頻道內容加載、完成狀態標記、布里歐對話格式: center; flex-shrink: 0;
+        }
+        .server-icon {
+            width: 48px; height: 48px; background-color: var(--discord-bg-light);化、「現實世界」修正、左欄分類、「# 標題」樣式、「給甜點建築師的提醒」
+            border-radius: 50%; margin-bottom: 8px; display: flex; align-items: center;
+            justify-content: center; font-size: 1.8em; color:換行、整體字體放大等。
+*   **JavaScript 的 `DOMContentLoaded` 包裹：** 確保 DOM var(--discord-text-primary);
+            cursor: pointer; box-shadow: 0 2px 4px rgba 完全加載後再執行腳本。
+
+```html
+<!DOCTYPE html>
+<html lang="zh-TW">
+(0,0,0,0.2);
+            transition: border-radius 0.15s<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width ease-out, background-color 0.15s ease-out;
+        }
+        .server=device-width, initial-scale=1.0">
+    <title>可可冒險島 Discord-icon:hover { border-radius: 16px; background-color: var(--accent-color1); } 指南模擬</title>
+    <style>
+        /* --- CSS 樣式 --- */
+        :
+        .server-icon.active { border-radius: 16px; background-color: var(--root {
+            --discord-bg-darkest: #202225;
+            --discordaccent-color1); }
+
+        .channels-panel {
+            width: 280px;
+-bg-dark: #2f3136;
+            --discord-bg-medium: #3            background-color: var(--discord-bg-dark); display: flex;
+            flex-direction: column; flex6393f;
+            --discord-bg-light: #40444b;
+-shrink: 0;
+            transition: var(--panel-transition);
+            position: relative;
+                        --discord-header: #202225;
+            --discord-text-primary: #overflow: hidden;
+        }
+        .channels-panel.collapsed {
+            width: 60pxdcddde;
+            --discord-text-secondary: #b9bbbe;
+            --discord-;
+        }
+
+        .server-name-header {
+            height: 50px; padding: text-muted: #72767d;
+            --discord-text-link: #000 10px 0 16px; display: flex; align-items: center;
+            justify96cf;
+            --discord-channel-text: #b9bbbe;
+            --discord-channel-hover-content: space-between;
+            font-weight: 600; font-size: 1-bg: #3a3c43;
+            --discord-active-channel-bg: var(--8px; color: var(--discord-text-primary);
+            border-bottom: 1px solid vardiscord-bg-light);
+            --discord-mention-bg: rgba(88, 101(--discord-bg-darkest);
+            box-shadow: 0 1px 0 rgba(0, 242, 0.3);
+            --discord-scrollbar-thumb: var(--discord-,0,0,0.2), 0 1.5px 0 rgba(0,0,bg-darkest);
+            --discord-scrollbar-track: var(--discord-bg-dark);
+            0,0.05), 0 2px 0 rgba(0,0,0,0.--highlight-green: #43b581;
+            --accent-color1: #d405);
+            flex-shrink: 0;
+            overflow: hidden;
+        }
+        .server-namea373;
+            --panel-transition: width 0.3s ease-in-out;
+        }
+
+        body {
+            font-family: 'Whitney', 'Helvetica Neue', Helvetica, Arial, sans-text { /* 包裹伺服器名稱文本的 span */
+            white-space: nowrap;
+            overflow-serif;
+            line-height: 1.7; margin: 0; background-color: var: hidden;
+            text-overflow: ellipsis;
+            flex-grow: 1;
+            margin-right: 5px;
+            transition: opacity 0.1s ease-out, width 0.2s ease-in-out 0.1s; /* 延遲消失 */
+        }
+        .channels-(--discord-bg-darkest);
             color: var(--discord-text-primary); display: flex; height: 100vh;
             overflow: hidden; font-size: 16px;
         }
 
-        .discord-app-layout { display: flex; width: 100%; height: 100%; }
+        .discord-app-layout { display: flex; width: 100%; height:panel.collapsed .server-name-text {
+            opacity: 0;
+            width: 0; 100%; }
         .server-list {
-            width: 72px; background-color: var(--discord-bg-darkest); padding: 12px 0;
-            display: flex; flex-direction: column; align-items: center; flex-shrink: 0;
+            width: 72px; background-color: var
+            padding: 0;
+            margin: 0;
+            pointer-events: none;
         }
-        .server-icon {
-            width: 48px; height: 48px; background-color: var(--discord-bg-light);
-            border-radius: 50%; margin-bottom: 8px; display: flex; align-items: center;
-            justify-content: center; font-size: 1.8em; color: var(--discord-text-primary);
-            cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-            transition: border-radius 0.15s ease-out, background-color 0.15s ease-out;
+        (--discord-bg-darkest); padding: 12px 0;
+            display: flex; flex.panel-toggle-button {
+            background: none; border: none; color: var(--discord-text-direction: column; align-items: center; flex-shrink: 0;
         }
-        .server-icon:hover { border-radius: 16px; background-color: var(--accent-color1); }
-        .server-icon.active { border-radius: 16px; background-color: var(--accent-color1); }
+        .-muted);
+            font-size: 1.6em; cursor: pointer; padding: 5pxserver-icon {
+            width: 48px; height: 48px; background-color: 8px;
+            line-height: 1; display: flex; align-items: center;
+ var(--discord-bg-light);
+            border-radius: 50%; margin-bottom: 8            justify-content: center;
+            flex-shrink: 0;
+            width: 40pxpx; display: flex; align-items: center;
+            justify-content: center; font-size:;
+            height: 40px;
+            transition: color 0.2s;
+        }
+         1.8em; color: var(--discord-text-primary);
+            cursor: pointer; box-shadow: .panel-toggle-button:hover { color: var(--discord-text-primary); }
+        .channels-0 2px 4px rgba(0,0,0,0.2);
+            transition: borderpanel.collapsed .server-name-header {
+             padding: 0 5px; /* 收合時調整-radius 0.15s ease-out, background-color 0.15s ease-out;
+        }
+        .server-icon:hover { border-radius: 16px; background-color:header的padding */
+             justify-content: center; /* Toggle button 居中 */
+        }
 
+
+         var(--accent-color1); }
+        .server-icon.active { border-radius: 16.channel-list-container {
+            padding: 18px 10px 18px 18px; overflow-y: auto; flex-grow: 1;
+            scrollbar-width: thinpx; background-color: var(--accent-color1); }
+
+        /* --- 頻道面板 (可收合) --- */
         .channels-panel {
             width: 280px;
-            background-color: var(--discord-bg-dark); display: flex;
-            flex-direction: column; flex-shrink: 0;
+            background; scrollbar-color: var(--discord-scrollbar-thumb) var(--discord-scrollbar-track);
+            -color: var(--discord-bg-dark); display: flex;
+            flex-direction: column; flextransition: opacity 0.2s ease-out 0.1s, visibility 0s 0.3s; /* 延遲消失/隱藏 */
+            opacity: 1;
+            visibility: visible;-shrink: 0;
             transition: var(--panel-transition);
             position: relative;
-            overflow: hidden;
+            overflow: hidden; /* 非常重要，確保收合時內容不溢出 */
         }
-        .channels-panel.collapsed {
-            width: 60px;
-        }
-        .channels-panel.collapsed .server-name-text {
-            opacity: 0; /* 使用 opacity 和 pointer-events 來隱藏，避免影響佈局 */
-            pointer-events: none;
-            width: 0; /* 確保不佔用空間 */
-            margin-right: 0;
-            padding-right: 0;
+        .channels
         }
         .channels-panel.collapsed .channel-list-container {
-            opacity: 0;
+            opacity: 0-panel.collapsed {
+            width: 60px;
+        }
+
+        .server-name-header {;
+            visibility: hidden;
             pointer-events: none;
-            height: 0; /* 確保不佔用空間 */
-        }
-        .channels-panel.collapsed .panel-toggle-button {
-            /* 在收合狀態下，按鈕可能會自然移到最右側，或者保持在原來的位置（如果 header 佈局調整） */
-            /* margin-left: auto; */ /* 移除，讓按鈕保持在 header 右側 */
+            height: 0; /* 
+            height: 50px; padding: 0 10px 0 16px;確保不佔用空間 */
         }
 
-        .server-name-header {
-            height: 50px; padding: 0 10px 0 16px; display: flex; align-items: center;
-            justify-content: space-between;
-            font-weight: 600; font-size: 18px; color: var(--discord-text-primary);
-            border-bottom: 1px solid var(--discord-bg-darkest);
-            box-shadow: 0 1px 0 rgba(0,0,0,0.2), 0 1.5px 0 rgba(0,0,0,0.05), 0 2px 0 rgba(0,0,0,0.05);
-            flex-shrink: 0;
-        }
-        .server-name-text {
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            flex-grow: 1; /* 佔據可用空間 */
-            transition: opacity 0.2s ease-out, width 0.3s ease-in-out; /* 添加過渡 */
-        }
-        .panel-toggle-button {
-            background: none; border: none; color: var(--discord-text-muted);
-            font-size: 1.6em; cursor: pointer; padding: 5px 8px; /* 調整 padding */
-            line-height: 1; display: flex; align-items: center;
-            transition: color 0.2s;
-            flex-shrink: 0;
-        }
-        .panel-toggle-button:hover { color: var(--discord-text-primary); }
-
-
-        .channel-list-container {
-            padding: 18px 10px 18px 18px; overflow-y: auto; flex-grow: 1;
-            scrollbar-width: thin; scrollbar-color: var(--discord-scrollbar-thumb) var(--discord-scrollbar-track);
-            transition: opacity 0.2s ease-out, height 0.3s ease-in-out; /* 添加過渡 */
-        }
-        .channel-category-header { /* (樣式與之前相同) */
+        .channel-category-header {
             padding: 15px 0 10px 0; font-size: 1.05em;
-            font-weight: 700;
-            color: var(--discord-text-primary); text-transform: uppercase;
-            border-bottom: 1px solid var(--discord-bg-light); margin-bottom: 10px;
+            font /* 右側padding留給按鈕 */
             display: flex; align-items: center;
-            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+            justify-content:-weight: 700;
+            color: var(--discord-text-primary); text-transform: space-between; /* 標題在左，按鈕在右 */
+            font-weight: 600; uppercase;
+            border-bottom: 1px solid var(--discord-bg-light); margin-bottom: font-size: 18px; color: var(--discord-text-primary);
+            border-bottom 10px;
+            display: flex; align-items: center;
+            white-space: nowrap: 1px solid var(--discord-bg-darkest);
+            box-shadow: 0 1; overflow: hidden; text-overflow: ellipsis;
         }
-         .channel-category-header .category-icon {
-            font-size: 1.25em; margin-right: 8px; color: var(--accent-color1);
+         .channel-category-header .categorypx 0 rgba(0,0,0,0.2), 0 1.5px 0-icon {
+            font-size: 1.25em; margin-right: 8px; rgba(0,0,0,0.05), 0 2px 0 rgba(0, color: var(--accent-color1);
          }
-        .channel-item { /* (樣式與之前相同) */
+        .channel-item {
             display: flex; align-items: center; padding: 7px 10px;
-            border-radius: 4px;
+            border-radius: 4px;0,0,0.05);
+            flex-shrink: 0; /* 防止頭部被壓縮 */
+            overflow: hidden; /* 防止內部文本溢出 */
+        }
+        .server-name-text { /*
             color: var(--discord-channel-text); font-weight: 500; font-size: 0.98em;
             cursor: pointer; margin-bottom: 2px;
-            transition: background-color 0.15s ease-out, color 0.15s ease-out;
-            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+            transition: 包裹伺服器/頻道列表標題的span */
+            white-space: nowrap;
+            overflow background-color 0.15s ease-out, color 0.15s ease-out;
+            : hidden;
+            text-overflow: ellipsis;
+            flex-grow: 1; /* 佔據可用white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
         }
-        .channel-item:hover { background-color: var(--discord-channel-hover-bg); color: var(--discord-text-primary); }
-        .channel-item.active { background-color: var(--discord-active-channel-bg); color: var(--discord-text-primary); font-weight: bold; }
-        .channel-item.completed .channel-name-text:after {
-            content: " ✔️"; color: var(--highlight-green); font-size: 0.9em; margin-left: 5px;
+        .channel-空間，將按鈕推到右邊 */
+            margin-right: 5px; /* 給按鈕一點空間item:hover { background-color: var(--discord-channel-hover-bg); color: var(--discord-text-primary); }
+        .channel-item.active { background-color: var(--discord-active- */
+            transition: opacity 0.15s ease-out 0.1s, transform 0.2channel-bg); color: var(--discord-text-primary); font-weight: bold; }
+        .s ease-out 0.1s; /* 延遲一點消失 */
+        }
+        .channels-panel.collapsed .server-name-text {
+            opacity: 0;
+            transform: translateX(-channel-item.completed .channel-name-text:after {
+            content: " ✔️"; color: var(--highlight-green); font-size: 0.9em; margin-left: 5px;100%); /* 將文本移出可視區域 */
+            pointer-events: none;
+            width
         }
         .channel-icon { margin-right: 8px; color: var(--discord-text-muted); min-width: 18px; font-size: 1em; }
 
-        /* --- 主內容區樣式 (與之前基本相同) --- */
-        .main-content-area {
-            flex-grow: 1; background-color: var(--discord-bg-medium); display: flex;
+
+        :0; /* 確保不佔據寬度 */
+        }
+
+        .panel-toggle-button {.main-content-area {
+            flex-grow: 1; background-color: var(--discord-
+            background: none; border: none; color: var(--discord-text-muted);
+            font-size: bg-medium); display: flex;
             flex-direction: column; overflow: hidden;
         }
+1.6em; cursor: pointer; padding: 5px; /* 給予足夠的點擊區域 */
         .content-header {
-            height: 50px; padding: 0 18px; display: flex; align-items: center;
-            font-size: 17px; font-weight: 600;
-            border-bottom: 1px solid var(--discord-bg-darkest); box-shadow: 0 1px 0 rgba(0,0,0,0.2);
-            flex-shrink: 0;
+            height: 50px; padding: 0 18px; display: flex            line-height: 1; display: flex; align-items: center; justify-content: center;; align-items: center;
+            font-size: 17px; font-weight: 6
+            flex-shrink: 0; /* 防止按鈕被壓縮 */
+            width: 40px; /*00;
+            border-bottom: 1px solid var(--discord-bg-darkest); box- 固定按鈕寬度 */
+            height: 40px; /* 固定按鈕高度 */
+            transition: colorshadow: 0 1px 0 rgba(0,0,0,0.2);
+            flex 0.2s;
+        }
+        .panel-toggle-button:hover { color: var(---shrink: 0;
         }
         .content-header .header-icon-placeholder {
-             margin-right: 10px; display: flex; align-items: center; justify-content: center;
+             discord-text-primary); }
+        .channels-panel.collapsed .server-name-header {
+            margin-right: 10px; display: flex; align-items: center; justify-content: center;
              width: 30px; height: 30px; font-size: 1.2em;
         }
-        .content-header .header-icon-placeholder .channel-icon { font-size: 1.3em; opacity: 0.8; }
-         .content-header .dm-avatar-header {
-            width: 30px; height: 30px; background-color: var(--accent-color1);
-            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+        .content-header .header-icon-placeholder .channel-icon { fontjustify-content: center; /* 當面板收合時，使切換按鈕在窄頭部居中 */
+        }
+
+        .channel-list-container {
+            padding: 18px 10px 18-size: 1.3em; opacity: 0.8; }
+         .content-header .dm-avatarpx 18px; overflow-y: auto; flex-grow: 1;
+            scrollbar-width-header {
+            width: 30px; height: 30px; background-color: var: thin; scrollbar-color: var(--discord-scrollbar-thumb) var(--discord-scrollbar-track);(--accent-color1);
+            border-radius: 50%; display: flex; align-items:
+            transition: opacity 0.2s ease-out, visibility 0s 0.2s; /*  center; justify-content: center;
             font-size: 1em; color: white;
         }
         .content-body {
-            padding: 25px 30px; overflow-y: auto; flex-grow: 1;
-            scrollbar-width: thin; scrollbar-color: var(--discord-scrollbar-thumb) var(--discord-scrollbar-track);
-            font-size: 1em; line-height: 1.8;
+            padding: 25px 30px; overflow-y列表內容的消失動畫 */
+            opacity: 1;
+            visibility: visible;
+        }
+        : auto; flex-grow: 1;
+            scrollbar-width: thin; scrollbar-color: var.channels-panel.collapsed .channel-list-container {
+            opacity: 0;
+            visibility:(--discord-scrollbar-thumb) var(--discord-scrollbar-track);
+            font-size: 1em hidden;
+            pointer-events: none;
+        }
+        .channel-category-header {
+            padding; line-height: 1.8;
         }
         .content-section {
-            margin-bottom: 25px; padding: 20px; background-color: var(--discord-bg-dark);
+            margin-: 15px 0 10px 0; font-size: 1.05embottom: 25px; padding: 20px; background-color: var(--discord-bg-;
+            font-weight: 700;
+            color: var(--discord-text-primary);dark);
             border-radius: 5px;
         }
-        .content-section h3 {
+        .content-section h3 { text-transform: uppercase;
+            border-bottom: 1px solid var(--discord-bg-light); margin-bottom: 10px;
+            display: flex; align-items: center;
+            white
             color: var(--discord-text-primary); font-size: 1.4em; margin-top: 0;
-            margin-bottom: 15px; border-bottom: 1px solid var(--discord-bg-light);
+            margin-bottom: 15px; border-bottom: 1px solid var(--discord-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        }
+         .channel-category-bg-light);
             padding-bottom: 10px;
         }
-        .content-section h3.channel-title, .content-section h4.channel-title {
-            font-size: 1.3em; font-weight: 500; color: var(--discord-text-primary);
+        .content--header .category-icon {
+            font-size: 1.25em; margin-right: 8px; color: var(--accent-color1);
+         }
+        .channel-item {
+            display:section h3.channel-title, .content-section h4.channel-title {
+            font-size: 1.3em; font-weight: 500; color: var(--discord-text- flex; align-items: center; padding: 7px 10px;
+            border-radius:primary);
             margin-top: 20px;
-            margin-bottom: 10px; padding-bottom: 5px;
+            margin-bottom: 10px; 4px;
+            color: var(--discord-channel-text); font-weight: 500 padding-bottom: 5px;
             border-bottom: none;
         }
-        .content-section h3.channel-title:first-child, .content-section h4.channel-title:first-child {
+        .content-; font-size: 0.98em;
+            cursor: pointer; margin-bottom: 2px;section h3.channel-title:first-child, .content-section h4.channel-title:first-child {
              margin-top: 0;
         }
-        .content-section h3.channel-title:before, .content-section h4.channel-title:before {
-            content: "# "; color: var(--discord-text-muted); font-weight: bold;
-            margin-right: 4px;
+        .content-section h3.
+            transition: background-color 0.15s ease-out, color 0.15s ease-out;
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        }
+channel-title:before, .content-section h4.channel-title:before {
+            content: "#        .channel-item:hover { background-color: var(--discord-channel-hover-bg); color: "; color: var(--discord-text-muted); font-weight: bold;
+            margin-right: 4px var(--discord-text-primary); }
+        .channel-item.active { background-color: var(--discord-active-channel-bg); color: var(--discord-text-primary); font-weight: bold;;
         }
         .content-section p, .content-section li {
-            color: var(--discord-text-secondary); margin-bottom: 10px; font-size: 1.05em;
+            color: var(--discord-text-secondary); margin-bottom: 10px; font-size: 1.05 }
+        .channel-item.completed .channel-name-text:after {
+            content: " ✔em;
         }
-         .content-section ul, .content-section ol { padding-left: 30px; }
-        .content-section strong.highlight { color: var(--accent-color1); font-weight: bold; }
-        .content-section .important-note { color: #faa61a; font-weight: bold; }
+         .content-section ul, .content-section ol { padding-left: 30px️"; color: var(--highlight-green); font-size: 0.9em; margin-left:; }
+        .content-section strong.highlight { color: var(--accent-color1); font-weight 5px;
+        }
+        .channel-icon { margin-right: 8px; color:: bold; }
+        .content-section .important-note { color: #faa61a; font var(--discord-text-muted); min-width: 18px; font-size: 1em-weight: bold; }
         .content-section .architect-warning {
-            display: block; margin-top: 10px; color: #faa61a; font-weight: bold;
-        }
+            display: block; margin; }
+
+
+        .main-content-area { /* (樣式與之前相同) */ }
+        .-top: 10px; color: #faa61a; font-weight: bold;
+        content-header { /* (樣式與之前相同) */ }
+        .content-header .header-icon}
 
         .message-group { margin-bottom: 18px; }
-        .message { display: flex; align-items: flex-start; padding: 2px 0; }
-        .message-avatar {
-            width: 42px; height: 42px; margin-right: 18px; font-size: 1.1em;
+        .message { display-placeholder { /* (樣式與之前相同) */ }
+        .content-header .header-icon-: flex; align-items: flex-start; padding: 2px 0; }
+        .messageplaceholder .channel-icon { /* (樣式與之前相同) */ }
+         .content-header .dm-avatar-avatar {
+            width: 42px; height: 42px; margin-right: -header { /* (樣式與之前相同) */ }
+        .content-body { /* (樣式18px; font-size: 1.1em;
             border-radius: 50%; background-color: var(--accent-color1);
-            flex-shrink: 0; display:flex; align-items:center; justify-content:center;
-            font-weight:bold; color:white;
+            flex-shrink: 0; display:flex;與之前相同) */ }
+        .content-section { /* (樣式與之前相同) */ }
+        .content-section h3 { /* (樣式與之前相同) */ }
+        .content-section align-items:center; justify-content:center;
+            font-weight:bold; color:white; h3.channel-title, .content-section h4.channel-title { /* (樣式與之前
         }
-        .message-avatar.kua { background-color: #7289da; }
+        .message-avatar.kua { background-color: #7289da;相同) */ }
+        .content-section h3.channel-title:first-child, .content- }
         .message-content { flex-grow: 1; }
-        .message-header { display: flex; align-items: baseline; margin-bottom: 4px; }
-        .message-username { font-weight: 500; color: var(--discord-text-primary); margin-right: 8px; font-size: 1.05em;}
-        .message-username.kua { color: #9099dd; }
-        .message-timestamp { font-size: 0.8em; color: var(--discord-text-muted); }
-        .message-text { color: var(--discord-text-primary); line-height: 1.45rem; font-size:1.05em;}
-        .message-text p { margin-bottom: 5px !important; }
+        .message-header { displaysection h4.channel-title:first-child { /* (樣式與之前相同) */ }
+        : flex; align-items: baseline; margin-bottom: 4px; }
+        .message-username.content-section h3.channel-title:before, .content-section h4.channel-title: { font-weight: 500; color: var(--discord-text-primary); margin-right:before { /* (樣式與之前相同) */ }
+        .content-section p, .content-section 8px; font-size: 1.05em;}
+        .message-username.kua li { /* (樣式與之前相同) */ }
+         .content-section ul, .content-section ol { { color: #9099dd; }
+        .message-timestamp { font-size: 0 /* (樣式與之前相同) */ }
+        .content-section strong.highlight { /* (樣式.8em; color: var(--discord-text-muted); }
+        .message-text { color:與之前相同) */ }
+        .content-section .important-note { /* (樣式與之前相同 var(--discord-text-primary); line-height: 1.45rem; font-size:1.05em;}
+        .message-text p { margin-bottom: 5px !important; }) */ }
+        .content-section .architect-warning { /* (樣式與之前相同) */ }
+
+        .message-group { /* (樣式與之前相同) */ }
+        .message { /* (
 
         .completion-toast {
-            display: none; position: fixed; bottom: 30px; left: 50%;
+            display: none; position: fixed; bottom: 30px;樣式與之前相同) */ }
+        .message-avatar { /* (樣式與之前相同) */ left: 50%;
             transform: translateX(-50%); background-color: var(--highlight-green);
-            color: white; padding: 15px 25px; border-radius: 8px;
-            z-index: 2000; font-size: 1.1em; box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            color: white; padding: 15px 25px; border-radius: 8 }
+        .message-avatar.kua { background-color: #7289da; }
+        .message-content { /* (樣式與之前相同) */ }
+        .message-header { /*px;
+            z-index: 2000; font-size: 1.1em; box-shadow: 0 4px 10px rgba(0,0,0,0.2 (樣式與之前相同) */ }
+        .message-username { /* (樣式與之前相同));
             animation: slideUpFadeOut 3.5s forwards;
         }
-         @keyframes slideUpFadeOut {
+         @keyframes slide */ }
+        .message-username.kua { color: #9099dd; }
+        .UpFadeOut {
             0% { bottom: -60px; opacity: 0; }
-            15% { bottom: 30px; opacity: 1; }
+            message-timestamp { /* (樣式與之前相同) */ }
+        .message-text { /* (樣式與之前相同) */ }
+        .message-text p { margin-bottom: 5px !important15% { bottom: 30px; opacity: 1; }
             85% { bottom: 30px; opacity: 1; }
-            100% { bottom: -60px; opacity: 0; }
+            100% { bottom: -60; }
+
+        .completion-toast { /* (樣式與之前相同) */ }
+         @keyframes slideUpFadepx; opacity: 0; }
         }
 
-        /* 手機版響應式調整 (可選，如果主要在桌面使用，可以簡化或移除) */
-        @media (max-width: 768px) {
-            body { font-size: 14px; } /* 整體縮小字體 */
-            .channels-panel:not(.collapsed) { width: 220px; } /* 展開時也窄一點 */
-            .channels-panel.collapsed { width: 50px; }
-            .server-name-header { font-size: 16px; padding: 0 8px 0 12px;}
+        /* 手機版響應式調整 */
+        @mediaOut { /* (樣式與之前相同) */ }
+
+         /* 手機版響應式調整 (可選， (max-width: 768px) {
+            body { font-size: 14px如果主要在桌面使用，可以簡化或移除) */
+        @media (max-width: 768px; }
+            .channels-panel:not(.collapsed) { width: 220px; }
+            .channels) {
+            body { font-size: 14px; }
+            .channels-panel { width: 1-panel.collapsed { width: 50px; }
+            .server-name-header { font-size: 00%; /* 手機上讓頻道面板佔滿寬度以便滑動 */ max-height: 50vh;16px; padding: 0 8px 0 12px;}
             .panel-toggle-button { font-size: 1.4em; padding: 5px;}
-            .content-header {font-size: 15px; padding: 0 12px;}
+            .content-header { border-bottom: 1px solid var(--discord-bg-darkest); }
+            .channels-panel.font-size: 15px; padding: 0 12px;}
             .content-body {padding: 15px 20px;}
+        }
+    </style>
+</head>
+<body>collapsed { width: 50px; max-height: 50px; /* 收合時只有頭
+
+    <div class="discord-app-layout">
+        <div id="serverList" class="server部按鈕那麼高*/ }
+            .discord-app-layout { flex-direction: column; }
+            .server-list { width: 100%; padding: 8px 0; flex-direction: row;-list"></div>
+        <div id="channelsPanel" class="channels-panel">
+            <div class justify-content: center; border-bottom: 1px solid var(--discord-bg-dark); overflow-x: auto="server-name-header">
+                <span id="serverNameText">可可冒險島指南</span>
+                <button id="panelToggleButton" class="panel-toggle-button">«</button>
+            </div>
+            ; }
+            .server-icon { margin: 0 8px; }
+            .main-content-area<div id="channelList" class="channel-list-container"></div>
+        </div>
+        <div class="main-content-area">
+            <div id="contentHeader" class="content-header">
+                 { min-height: 45vh; /* 確保在堆疊時有最小高度 */ }
+            .content-body {padding: 15px;}
         }
 
     </style>
 </head>
 <body>
 
-    <div class="discord-app-layout">
-        <div id="serverList" class="server-list"></div>
-        <div id="channelsPanel" class="channels-panel">
-            <div class="server-name-header">
-                <span id="serverNameText">可可冒險島指南</span>
-                <button id="panelToggleButton" class="panel-toggle-button">«</button>
+    <span class="header-icon-placeholder"><span class="channel-icon">#</span></span>
+                <span id="currentChannelName"></span>
             </div>
-            <div id="channelList" class="channel-list-container"></div>
+            <div id="contentBody" class="content-body<div class="discord-app-layout">
+        <div id="serverList" class="server-list"></div>
         </div>
-        <div class="main-content-area">
+    </div>
+    <div id="completionToast" class="completion-toast"></div>"></div>
+        <div id="channelsPanel" class="channels-panel">
+            <div class="server-name
+
+    <script>
+        // --- JavaScript 腳本 ---
+        const servers = [
+            { id: '-header">
+                <span id="serverNameText">可可冒險島指南</span>
+                <button id="guide', name: '可可冒險島指南', icon: '🏝️', type: 'guide' },panelToggleButton" class="panel-toggle-button">«</button>
+            </div>
+            <div id="
+            { id: 'brio', name: '與布里歐的對話', icon: '👨channelList" class="channel-list-container"></div>
+        </div>
+        <div class="main-content‍🍳', type: 'dialogue' }
+        ];
+
+        const guideTopics = [
+            // ...-area">
             <div id="contentHeader" class="content-header">
                 <span class="header-icon-placeholder"><span class="channel-icon">#</span></span>
                 <span id="currentChannelName"></span>
             </div>
             <div id="contentBody" class="content-body"></div>
-        </div>
+         (所有 guideTopics 的數據，確保文本中的"建築師"已改為"甜點建築師"（除了須知中的特定條目），並且內容完整)
+            {
+                id: 'welcome',
+                category</div>
     </div>
     <div id="completionToast" class="completion-toast"></div>
 
     <script>
-        // --- JavaScript 腳本 (包含收合邏輯修正) ---
+        // --- JavaScript 腳本 ---
         const servers = [
-            { id: 'guide', name: '可可冒險島指南', icon: '🏝️', type: 'guide' },
-            { id: 'brio', name: '與布里歐的對話', icon: '👨‍🍳', type: 'dialogue' }
-        ];
-
-        const guideTopics = [
-            // ... (guideTopics 數據與您上一個版本中包含所有修正的數據相同)
-            // !! 請確保這裡的 content 內容是完整且正確的 !!
-             {
-                id: 'welcome',
-                category: '歡迎來到可可冒險島',
+            { id: 'guide', name:: '歡迎來到可可冒險島',
                 categoryIcon: '👋',
                 icon: '#',
                 name: '開始探索之旅',
                 content: `
                     <div class="content-section">
+                         '可可冒險島指南', icon: '🏝️', type: 'guide' },
+            { id: 'brio', name: '與布里歐的對話', icon: '👨‍🍳', type<h3>系統精靈的歡迎</h3>
+                        <p>系統精靈：「再次歡迎你，小甜點！很高: 'dialogue' }
+        ];
+
+        const guideTopics = [
+            // ... (所有 guideTopics 數據興能成為你的嚮導。」</p>
+                        <p>「這個指南模擬器將帶你熟悉可可冒險島 Discord 伺服器的重要資訊。點擊左側<strong class="highlight">不同圖標</strong>，確保文本無誤，並且 # 標題已使用 <h3 class="channel-title">)
+可以切換查看主指南內容或與布里歐大師的對話。在主指南中，點             {
+                id: 'welcome',
+                category: '歡迎來到可可冒險島',
+                category擊<strong class="highlight">『頻道』列表</strong>，就可以查看對應的內容了。」</p>Icon: '👋',
+                icon: '#',
+                name: '開始探索之旅',
+                content:
+                        <p>「準備好了嗎？讓我們開始探索<strong class="highlight">可可冒險島 `
+                    <div class="content-section">
                         <h3>系統精靈的歡迎</h3>
-                        <p>系統精靈：「再次歡迎你，小甜點！很高興能成為你的嚮導。」</p>
-                        <p>「這個指南模擬器將帶你熟悉可可冒險島 Discord 伺服器的重要資訊。點擊左側<strong class="highlight">不同圖標</strong>可以切換查看主指南內容或與布里歐大師的對話。在主指南中，點擊<strong class="highlight">『頻道』列表</strong>，就可以查看對應的內容了。」</p>
+                        <p>系統精指南</strong>吧！」</p>
+                    </div>
+                `,
+                isCompleted: false
+            },
+            靈：「再次歡迎你，小甜點！很高興能成為你的嚮導。」</p>
+                        <p>「{
+                id: 'discord_connection',
+                category: '第壹章：Discord 系統',
+                category這個指南模擬器將帶你熟悉可可冒險島 Discord 伺服器的重要資訊。點擊左側<strongIcon: '🖥️',
+                icon: '#',
+                name: 'Discord 連接與操作教學',
+                content: `
+                    <div class="content-section">
+                        <h3 class="channel- class="highlight">不同圖標</strong>可以切換查看主指南內容或與布里歐大師的對title">Discord 環境建置</h3>
+                        <p>系統精靈：「要加入我們的島嶼，首先你需要話。在主指南中，點擊<strong class="highlight">『頻道』列表</strong>，就可以查看對應的 Discord！它就像我們的魔法通訊水晶。」</p>
+                        <p>取得方式:</p>
+                        <ul>
+內容了。」</p>
                         <p>「準備好了嗎？讓我們開始探索<strong class="highlight">可可冒險島指南</strong>吧！」</p>
                     </div>
                 `,
                 isCompleted: false
             },
-            {
+                                        <li><strong>IOS 設備:</strong> 前往 App Store 搜尋「Discord」。</li>
+                            <li><strong>安卓設備:</strong> 前往 Play 商店搜尋「Discord」。</li>
+                            <li><strong>PC/Mac:</strong> 前往 discord{
                 id: 'discord_connection',
                 category: '第壹章：Discord 系統',
-                categoryIcon: '🖥️',
-                icon: '#',
-                name: 'Discord 連接與操作教學',
-                content: `
-                    <div class="content-section">
-                        <h3 class="channel-title">Discord 環境建置</h3>
-                        <p>系統精靈：「要加入我們的島嶼，首先你需要 Discord！它就像我們的魔法通訊水晶。」</p>
-                        <p>取得方式:</p>
-                        <ul>
-                            <li><strong>IOS 設備:</strong> 前往 App Store 搜尋「Discord」。</li>
-                            <li><strong>安卓設備:</strong> 前往 Play 商店搜尋「Discord」。</li>
-                            <li><strong>PC/Mac:</strong> 前往 discord.com 下載或使用網頁版。</li>
+                category.com 下載或使用網頁版。</li>
                         </ul>
                     </div>
                     <div class="content-section">
                         <h3 class="channel-title">Discord 系統操作</h3>
+                        <p>系統精靈Icon: '🖥️',
+                icon: '#',
+                name: 'Discord 連接與操作教學',
+                content: `
+                    <div class="content-section">
+                        <h3 class="channel-：「熟悉界面很重要哦！」</p>
+                        <ul>
+                            <li><strong class="highlight">導覽 - 左側:title">Discord 環境建置</h3>
+                        <p>系統精靈：「要加入我們的島嶼，首先你需要</strong> 點擊伺服器列表旁的箭頭可看見頻道列表。</li>
+                            <li><strong class=" Discord！它就像我們的魔法通訊水晶。」</p>
+                        <p>取得方式:</p>
+                        <ul>
+highlight">導覽 - 右側:</strong> 系統設定、通知、搜尋等。成員上線狀態也會顯示。</li>
+                            <li><strong>IOS 設備:</strong> 前往 App Store 搜尋「Discord」。</li>
+                            <li><strong>安卓設備:</strong> 前往 Play 商店搜尋「Discord」。</li>
+                            <li><strong>PC/Mac:</strong> 前往 discord                            <li><strong class="highlight">訊息操作 - 左下角 (+):</strong> 新增投票、上傳圖片/檔案 (有大小限制)。</li>
+                            <li><strong class="highlight">訊息操作 - 左下角第二.com 下載或使用網頁版。</li>
+                        </ul>
+                    </div>
+                    <div class="content個圖標:</strong> 傳送指令 (島上有三位員工可幫忙)。</li>
+                            <li><strong class="-section">
+                        <h3 class="channel-title">Discord 系統操作</h3>
                         <p>系統精靈：「熟悉界面很重要哦！」</p>
                         <ul>
-                            <li><strong class="highlight">導覽 - 左側:</strong> 點擊伺服器列表旁的箭頭可看見頻道列表。</li>
-                            <li><strong class="highlight">導覽 - 右側:</strong> 系統設定、通知、搜尋等。成員上線狀態也會顯示。</li>
-                            <li><strong class="highlight">訊息操作 - 左下角 (+):</strong> 新增投票、上傳圖片/檔案 (有大小限制)。</li>
-                            <li><strong class="highlight">訊息操作 - 左下角第二個圖標:</strong> 傳送指令 (島上有三位員工可幫忙)。</li>
-                            <li><strong class="highlight">聊天室類型:</strong> 文字頻道 (#) 無法語音，可投票傳圖文；語音頻道 (🔊) 點擊即進入，可分享畫面，調整他人音量/禁音 (僅對自己有效)。</li>
-                            <li><strong class="highlight">公開性:</strong> 分為「公開」(無鎖)和「私人」(上鎖，需權限/身份組)。</li>
+                            <li><strong class="highlight">導覽 - 左highlight">聊天室類型:</strong> 文字頻道 (#) 無法語音，可投票傳圖文；語音頻道 (🔊) 點擊即進入，可分享畫面，調整他人音量/禁音 (僅對自己有效)。側:</strong> 點擊伺服器列表旁的箭頭可看見頻道列表。</li>
+                            <li><strong</li>
+                            <li><strong class="highlight">公開性:</strong> 分為「公開」(無鎖)和「私人」(上 class="highlight">導覽 - 右側:</strong> 系統設定、通知、搜尋等。成員上線狀態鎖，需權限/身份組)。</li>
                         </ul>
                     </div>
                 `,
-                isCompleted: false
+                isCompleted:也會顯示。</li>
+                            <li><strong class="highlight">訊息操作 - 左下角 (+):</strong> 新增投票、上 false
             },
             {
                 id: 'island_facilities_worldtree',
-                category: '第貳章：可可冒險島',
+                category: '傳圖片/檔案 (有大小限制)。</li>
+                            <li><strong class="highlight">訊息操作 - 左下角第二個圖標:</strong> 傳送指令 (島上有三位員工可幫忙)。</li>
+                            第貳章：可可冒險島',
                 categoryIcon: '🏝️',
                 icon: '#',
                 name: '世界樹設施',
                 content: `
                     <div class="content-section">
+<li><strong class="highlight">聊天室類型:</strong> 文字頻道 (#) 無法語音，可投票傳圖文；                        <h3 class="channel-title">烘焙大廳</h3>
+                        <p>系統精靈：「這是語音頻道 (🔊) 點擊即進入，可分享畫面，調整他人音量/禁音 (僅你初次抵達的溫馨房間，系統會在這裡歡迎你！」</p>
+                    </div>
+                    對自己有效)。</li>
+                            <li><strong class="highlight">公開性:</strong> 分為「公開」(無鎖)和<div class="content-section">
+                        <h3 class="channel-title">世界樹-天氣中心</h3>
+                        「私人」(上鎖，需權限/身份組)。</li>
+                        </ul>
+                    </div>
+                `,
+<p>這裡的天氣和<strong class="highlight"> 현실世界</strong>同步哦！有天氣預報、預                isCompleted: false
+            },
+            {
+                id: 'island_facilities_worldtree',
+警等功能 (但警報太吵，訊息通知已被管理員關掉了)。</p>
+                    </div>                category: '第貳章：可可冒險島',
+                categoryIcon: '🏝️',
+                icon: '#',
+                name: '世界樹設施',
+                content: `
+                    <div class="content
+                    <div class="content-section">
+                        <h3 class="channel-title">世界樹-資訊中心</h3>
+                        <p>所有重要的<strong class="highlight">系統消息</strong>都會在這裡公告。</p>
+-section">
                         <h3 class="channel-title">烘焙大廳</h3>
-                        <p>系統精靈：「這是你初次抵達的溫馨房間，系統會在這裡歡迎你！」</p>
+                        <p>系統精靈                    </div>
+                `,
+                isCompleted: false
+            },
+            {
+                id: 'island_：「這是你初次抵達的溫馨房間，系統會在這裡歡迎你！」</p>
                     </div>
                     <div class="content-section">
                         <h3 class="channel-title">世界樹-天氣中心</h3>
-                        <p>這裡的天氣和<strong class="highlight">現實世界</strong>同步哦！有天氣預報、預警等功能 (但警報太吵，訊息通知已被管理員關掉了)。</p>
-                    </div>
+                        facilities_others',
+                category: '第貳章：可可冒險島',
+                icon: '#',
+                name: '其他重要設施',
+                content: `
                     <div class="content-section">
-                        <h3 class="channel-title">世界樹-資訊中心</h3>
+                        <p>這裡的天氣和<strong class="highlight">現實世界</strong>同步哦！有天氣預報、預<h3 class="channel-title">可可冒險島事務中心</h3>
+                        <ul>
+                            <li><strong>許願警等功能 (但警報太吵，訊息通知已被管理員關掉了)。</p>
+                    </div>
+池:</strong> 用來許願，不定時會有抽獎 (若沒有經費它就是個池塘 😉                    <div class="content-section">
+                        <h3 class="channel-title">世界樹-資訊)。</li>
+                            <li><strong>能量統計:</strong> 在營隊期間，會用來關心大家的餐食狀態。中心</h3>
                         <p>所有重要的<strong class="highlight">系統消息</strong>都會在這裡公告。</p>
                     </div>
                 `,
                 isCompleted: false
             },
             {
-                id: 'island_facilities_others',
-                category: '第貳章：可可冒險島',
-                icon: '#',
-                name: '其他重要設施',
-                content: `
-                    <div class="content-section">
-                        <h3 class="channel-title">可可冒險島事務中心</h3>
-                        <ul>
-                            <li><strong>許願池:</strong> 用來許願，不定時會有抽獎 (若沒有經費它就是個池塘 😉)。</li>
-                            <li><strong>能量統計:</strong> 在營隊期間，會用來關心大家的餐食狀態。</li>
+                id: 'island_facilities</li>
                         </ul>
                     </div>
                     <div class="content-section">
                         <h3 class="channel-title">甜點嘰嘰喳喳</h3>
-                        <p>自由交談的空間，有許多文字聊天室 (#) 和語音聊天室 (🔊)。有些冠有特定股名稱的房間，則只有該股的成員才能看到和進入。</p>
+                        <p>自由交談的空間，有許多文字聊天室_others',
+                category: '第貳章：可可冒險島',
+                icon: '#',
+                name: '其他重要設施',
+                content: `
+                    <div class="content-section"> (#) 和語音聊天室 (🔊)。有些冠有特定股名稱的房間，則只有該股的成員才能看到和進入。</p>
                     </div>
                      <div class="content-section">
-                        <h3 class="channel-title">調查員聚集地 & 小甜點聚落</h3>
-                        <p>系統精靈：「這是你和管理員之間的<strong class="highlight">秘密通訊頻道</strong>！」</p>
+                        <h
+                        <h3 class="channel-title">可可冒險島事務中心</h3>
                         <ul>
-                            <li><strong>隱私第一:</strong> <strong class="highlight">只有你自己能看到和進入</strong>專屬空間。需身份認證開通。</li>
-                            <li><strong>重要訊息:</strong> 空間內有三則重要訊息 (包含<strong class="highlight">小甜點夥伴</strong>及匿名聊天連結)。</li>
-                            <li><span class="important-note">絕對保密事項:</span> Discord 中<strong class="highlight">黑色背景標示</strong>的內容 (匿名烘焙坊號碼(Line)、預設小甜點名、您的小甜點) <strong class="highlight">嚴禁外洩</strong>！</li>
-                            <li><strong>員工機器人 & 商品:</strong> 可使用員工2指令購物 (需先加值)。<p class="architect-warning important-note">給甜點建築師的提醒: 使用「送禮物」功能時，對方會直接收到通知，所以請不要用這個功能來給你負責的小甜點送禮哦！</p></li>
+                            <li><strong>許願池:</strong> 用來許願，不定時會有抽獎 (若沒有經費它就是3 class="channel-title">調查員聚集地 & 小甜點聚落</h3>
+                        <p>系統精靈：「這是你和管理員之間的<strong class="highlight">秘密通訊頻道</strong>！」</p>
+                        <ul>個池塘 😉)。</li>
+                            <li><strong>能量統計:</strong> 在營隊期間，會用來關心大家的餐食狀態。</li>
+                        </ul>
+                    </div>
+                    <div class="content-section">
+                        <h3
+                            <li><strong>隱私第一:</strong> <strong class="highlight">只有你自己能看到和進入</strong>專屬空間。需 class="channel-title">甜點嘰嘰喳喳</h3>
+                        <p>自由交談的空間，有身份認證開通。</li>
+                            <li><strong>重要訊息:</strong> 空間內有三則重要訊息 (包含<許多文字聊天室 (#) 和語音聊天室 (🔊)。有些冠有特定股名稱的房間，則strong class="highlight">小甜點夥伴</strong>及匿名聊天連結)。</li>
+                            <li><span class="important只有該股的成員才能看到和進入。</p>
+                    </div>
+                     <div class="content-section-note">絕對保密事項:</span> Discord 中<strong class="highlight">黑色背景標示</strong>的內容 (匿名烘">
+                        <h3 class="channel-title">調查員聚集地 & 小甜點聚落</h3>
+焙坊號碼(Line)、預設小甜點名、您的小甜點) <strong class="highlight                        <p>系統精靈：「這是你和管理員之間的<strong class="highlight">秘密通訊頻道">嚴禁外洩</strong>！</li>
+                            <li><strong>員工機器人 & 商品:</strong> 可使用員工2指令</strong>！」</p>
+                        <ul>
+                            <li><strong>隱私第一:</strong> <strong class="highlight">只有購物 (需先加值)。<p class="architect-warning important-note">給甜點建築師的提醒: 使用你自己能看到和進入</strong>專屬空間。需身份認證開通。</li>
+                            <li><strong>重要訊息:</strong>「送禮物」功能時，對方會直接收到通知，所以請不要用這個功能來給你負責的小甜點 空間內有三則重要訊息 (包含<strong class="highlight">小甜點夥伴</strong>及匿名聊天連結)。送禮哦！</p></li>
                         </ul>
                     </div>
                 `,
                 isCompleted: false
-            },
+</li>
+                            <li><span class="important-note">絕對保密事項:</span> Discord 中<strong class="highlight">            },
             {
                 id: 'island_covenant',
-                category: '第參章：可可冒險島約定',
+                category: '第參章：黑色背景標示</strong>的內容 (匿名烘焙坊號碼(Line)、預設小甜點名、您的小可可冒險島約定',
                 categoryIcon: '📜',
                 icon: '#',
                 name: '約定核心精神與條款',
                 content: `
-                     <div class="content-section">
+                     <div class="content-甜點) <strong class="highlight">嚴禁外洩</strong>！</li>
+                            <li><strong>員工機器人 §ion">
                         <h3>可可冒險島約定 - 核心精神</h3>
-                        <p>系統精靈：「約定在可可曆1000年頒布，是島嶼的基石。核心理念是：<strong class="highlight">建立一個包容與尊重個體的社會</strong>。」</p>
+                        <p>系統精 商品:</strong> 可使用員工2指令購物 (需先加值)。<p class="architect-warning important-note靈：「約定在可可曆1000年頒布，是島嶼的基石。核心理念是：">給甜點建築師的提醒: 使用「送禮物」功能時，對方會直接收到通知，所以請不要用這個功能來給你負責的小甜點送禮哦！</p></li>
+                        </ul>
+                    <strong class="highlight">建立一個包容與尊重個體的社會</strong>。」</p>
                         <h3 class="channel-title">第一章：立約緣由</h3>
                         <ul>
-                            <li>每一個甜點生而獨特，應被<strong class="highlight">尊重</strong>。</li>
-                            <li>甜點之間的相異是世界的甜美，<strong class="highlight">非缺陷</strong>。</li>
-                            <li>甜點建築師的責任是幫助甜點<strong class="highlight">發掘價值</strong>，而非改變本質。</li>
-                        </ul>
-                        <h3 class="channel-title">第二章：甜點基本權利</h3>
-                         <p>包含：存在的權利、選擇的自由、個性的尊重、公平對待、甜點建築師的責任。</p>
-                        <h3 class="channel-title">第三章：烘焙坊與社會責任</h3>
-                         <p>甜點建築師應遵守四大守則：1. 不強迫改變本質，2. 不評判價值，3. 耐心傾聽，4. 幫助找到位置。</p>
-                        <h3 class="channel-title">第四章：約定的延續與修訂</h4>
-                         <p>修訂需召開「糖霜會議」。結語強調世界的美好在於無數風味的交織。</p>
-                    </div>
+                            <li>每一個甜點生而</div>
                 `,
                 isCompleted: false
             },
             {
+                id: 'island_c獨特，應被<strong class="highlight">尊重</strong>。</li>
+                            <li>甜點之間的相異是ovenant',
+                category: '第參章：可可冒險島約定',
+                categoryIcon:世界的甜美，<strong class="highlight">非缺陷</strong>。</li>
+                            <li>甜點建築師的責任 '📜',
+                icon: '#',
+                name: '約定核心精神與條款',
+                是幫助甜點<strong class="highlight">發掘價值</strong>，而非改變本質。</li>
+                        </ul>
+                        <content: `
+                     <div class="content-section">
+                        <h3>可可冒險島約定 -h3 class="channel-title">第二章：甜點基本權利</h3>
+                         <p>包含：存在的權利 核心精神</h3>
+                        <p>系統精靈：「約定在可可曆1000年頒布，是島嶼的基石。核心理念是：<strong class="highlight">建立一個包容與、選擇的自由、個性的尊重、公平對待、甜點建築師的責任。</p>
+                        尊重個體的社會</strong>。」</p>
+                        <h3 class="channel-title">第一章：立<h3 class="channel-title">第三章：烘焙坊與社會責任</h3>
+                         <p>甜點建築師應遵守四大守則：1. 不強迫改變本質，2. 不評判價值約緣由</h3>
+                        <ul>
+                            <li>每一個甜點生而獨特，應被<strong class="highlight">，3. 耐心傾聽，4. 幫助找到位置。</p>
+                        <h3 class="channel-title尊重</strong>。</li>
+                            <li>甜點之間的相異是世界的甜美，<strong class="highlight">非缺陷</strong>。</li>
+                            <li>甜點建築師的責任是幫助甜點<strong class="highlight">發掘價值</strong>，">第四章：約定的延續與修訂</h4>
+                         <p>修訂需召開「糖霜會議」。結語強調世界的美好在於無數風味的交織。</p>
+                    </div>
+而非改變本質。</li>
+                        </ul>
+                        <h3 class="channel-title">第二章：甜                `,
+                isCompleted: false
+            },
+            {
+                id: 'island_notes_detail點基本權利</h3>
+                         <p>包含：存在的權利、選擇的自由、個性的尊重、公平',
+                category: '附註：可可冒險島須知',
+                categoryIcon: '📌',
+                對待、甜點建築師的責任。</p>
+                        <h3 class="channel-title">第三icon: '#',
+                name: '可可冒險島須知 (黃金守則)',
+                 章：烘焙坊與社會責任</h3>
+                         <p>甜點建築師應遵守四大守則：1. 不content: `
+                    <div class="content-section">
+                        <h3>可可冒險島須知 (強迫改變本質，2. 不評判價值，3. 耐心傾聽，4. 幫助找到超級重要!)</h3>
+                        <p>系統精靈：「這些是島上的黃金守則，請務必牢位置。</p>
+                        <h3 class="channel-title">第四章：約定的延續與修訂</h4>記！」</p>
+                        <ol>
+                            <li>各個小甜點與甜點建築師登
+                         <p>修訂需召開「糖霜會議」。結語強調世界的美好在於無數風味入可可冒險島後，管理員會逐步登入各甜點的身份組，當身份組的交織。</p>
+                    </div>
+                `,
+                isCompleted: false
+            },
+            {確定後，各位將能夠見到各自、各組別的私人房間；若登入後各房間尚未顯現
                 id: 'island_notes_detail',
                 category: '附註：可可冒險島須知',
                 categoryIcon: '📌',
                 icon: '#',
-                name: '可可冒險島須知 (黃金守則)',
+                name: '可可，請稍待。</li>
+                            <li>在各自私人的聊天室中（Discord），已有三則訊息，分為歡迎訊息、您的小甜點公布與匿名聊天室連結、甜點建築師匿名聊天室連結；請對於Discord顯示冒險島須知 (黃金守則)',
                  content: `
                     <div class="content-section">
                         <h3>可可冒險島須知 (超級重要!)</h3>
-                        <p>系統精靈：「這些是島上的黃金守則，請務必牢記！」</p>
+                        <p>系統精靈：「為<strong class="highlight">黑色</strong>的部份保密，<strong class="highlight">勿透露給他人</strong>，包含「匿名烘焙坊的號碼（Line）」、「預設小甜點的名稱」、「您的小甜這些是島上的黃金守則，請務必牢記！」</p>
                         <ol>
-                            <li>各個小甜點與甜點建築師登入可可冒險島後，管理員會逐步登入各甜點的身份組，當身份組確定後，各位將能夠見到各自、各組別的私人房間；若登入後各房間尚未顯現，請稍待。</li>
-                            <li>在各自私人的聊天室中（Discord），已有三則訊息，分為歡迎訊息、您的小甜點公布與匿名聊天室連結、甜點建築師匿名聊天室連結；請對於Discord顯示為<strong class="highlight">黑色</strong>的部份保密，<strong class="highlight">勿透露給他人</strong>，包含「匿名烘焙坊的號碼（Line）」、「預設小甜點的名稱」、「您的小甜點」；顯示為黑色的部分點擊後即可顯現。</li>
-                            <li>進入可可冒險島（Discord）後，請將暱稱改為<strong class="highlight">本名</strong>。</li>
-                            <li>進入「匿名烘焙坊（Line）」請以<strong class="highlight">預設的暱稱進入</strong>；或由「形容詞＋甜點名」組合成的暱稱進入，若暱稱選擇自訂，則需要將新的名稱提供給管理員。</li>
-                            <li>可可冒險島的各個空間都有各自的功能，同時對於小甜點與甜點建築師都會有著不同的權限設定，關於空間的功能可至第貳章：可可冒險島查看。</li>
-                            <li>可可冒險島的商品系統，將在密籌時開啟，將由統一商品或特別指定執行；屆時您可以先加值現金至系統中（將錢交給管理員協助儲值），並選擇商品，管理員將代為送出，另成功送出後會傳送明細，明細會在個人的訊息傳送。</li>
-                            <li>「建築師」由於法規，需要有建築師證照才能稱建築師，為保護各位不會這麼容易被告，建議各位<strong class="highlight">不要簡稱「建築師」喔～</strong></li>
-                            <li>可可冒險島共有三位員工，但他們不時會罷工，当他們罷工時，可以等一些時間再和他們互動。</li>
-                            <li>甜點建築師的存在旨在<strong class="highlight">協助小甜點自由開展</strong>，並成為小甜點的支持。</li>
+                            <li>各個小甜點與甜點建築師登入可可冒險島後，管理員會逐步點」；顯示為黑色的部分點擊後即可顯現。</li>
+                            <li>進入可可冒險登入各甜點的身份組，當身份組確定後，各位將能夠見到各自、各組別的島（Discord）後，請將暱稱改為<strong class="highlight">本名</strong>。</li>
+私人房間；若登入後各房間尚未顯現，請稍待。</li>
+                            <li>在各自私人的聊天                            <li>進入「匿名烘焙坊（Line）」請以<strong class="highlight">預設的暱稱進入室中（Discord），已有三則訊息，分為歡迎訊息、您的小甜點公布與匿名聊天室連結、甜</strong>；或由「形容詞＋甜點名」組合成的暱稱進入，若暱稱選擇自點建築師匿名聊天室連結；請對於Discord顯示為<strong class="highlight">黑色</strong>的部份保訂，則需要將新的名稱提供給管理員。</li>
+                            <li>可可冒險島的各個空間都有各自密，<strong class="highlight">勿透露給他人</strong>，包含「匿名烘焙坊的號碼（Line）」的功能，同時對於小甜點與甜點建築師都會有著不同的權限設定，關於空間的功能可至第貳、「預設小甜點的名稱」、「您的小甜點」；顯示為黑色的部分點擊後即可章：可可冒險島查看。</li>
+                            <li>可可冒險島的商品系統，將在密籌時顯現。</li>
+                            <li>進入可可冒險島（Discord）後，請將暱稱改為<開啟，將由統一商品或特別指定執行；屆時您可以先加值現金至系統中（將錢交給管理strong class="highlight">本名</strong>。</li>
+                            <li>進入「匿名烘焙坊（Line）」請以員協助儲值），並選擇商品，管理員將代為送出，另成功送出後會傳送明<strong class="highlight">預設的暱稱進入</strong>；或由「形容詞＋甜點名」組合成細，明細會在個人的訊息傳送。</li>
+                            <li>「建築師」由於法規，需要有建築師證照才能稱建築師，為保護各位不會這麼容易被告，建議各位<strong class="highlight的暱稱進入，若暱稱選擇自訂，則需要將新的名稱提供給管理員。</li>
+                            <li>可可冒險島的各個空間都有各自的功能，同時對於小甜點與甜點建築師都會有著">不要簡稱「建築師」喔～</strong></li>
+                            <li>可可冒險島共有三位員工不同的權限設定，關於空間的功能可至第貳章：可可冒險島查看。</li>
+                            ，但他們不時會罷工，当他們罷工時，可以等一些時間再和他們互動。<li>可可冒險島的商品系統，將在密籌時開啟，將由統一商品或特別指定執行；屆</li>
+                            <li>甜點建築師的存在旨在<strong class="highlight">協助小甜點自由開展</strong>，並時您可以先加值現金至系統中（將錢交給管理員協助儲值），並選擇商品，成為小甜點的支持。</li>
                         </ol>
                     </div>
+                `,
+                isCompleted: false管理員將代為送出，另成功送出後會傳送明細，明細會在個人的訊息傳送。
+            },
+            {
+                id: 'manager_words',
+                category: '最終章：島</li>
+                            <li>「建築師」由於法規，需要有建築師證照才能稱建築師，為保護各位嶼的溫度與祝福',
+                categoryIcon: '💖',
+                icon: '#',
+                name:不會這麼容易被告，建議各位<strong class="highlight">不要簡稱「建築師」喔～</strong></li> '管理員的祝福與期盼',
+                content: `
+                    <div class="content-section">
+                        <h3>管理員的祝福與期盼</h3>
+                        <p>系統精靈：「小甜點，
+                            <li>可可冒險島共有三位員工，但他們不時會罷工，当他們罷工時，你已經完成了大部分的探索，做得非常棒！現在，請聽聽島嶼管理員們想對你可以等一些時間再和他們互動。</li>
+                            <li>甜點建築師的存在旨在<strong class="highlight">協助說的話，這是他們對所有新成員的溫暖期盼。」</p>
+                        <p>可可冒險小甜點自由開展</strong>，並成為小甜點的支持。</li>
+                        </ol>
+                    </div>島上，有許多可愛的小甜點與細心呵護他們的甜點建築師。他們共同維持著
                 `,
                 isCompleted: false
             },
             {
-                id: 'manager_words',
+                id: 'manager_words',這座島嶼的甜美氛圍，讓糖霜雲飄蕩在天空，巧克力河流緩緩流
                 category: '最終章：島嶼的溫度與祝福',
                 categoryIcon: '💖',
-                icon: '#',
+淌，構築出一個充滿香氣與溫暖的世界。</p>
+                        <p>然而，隨著島                icon: '#',
                 name: '管理員的祝福與期盼',
                 content: `
-                    <div class="content-section">
+嶼發展，新的挑戰逐漸浮現——有些小甜點在成長過程中迷失了方向，不確定自己的未來                    <div class="content-section">
                         <h3>管理員的祝福與期盼</h3>
-                        <p>系統精靈：「小甜點，你已經完成了大部分的探索，做得非常棒！現在，請聽聽島嶼管理員們想對你說的話，這是他們對所有新成員的溫暖期盼。」</p>
-                        <p>可可冒險島上，有許多可愛的小甜點與細心呵護他們的甜點建築師。他們共同維持著這座島嶼的甜美氛圍，讓糖霜雲飄蕩在天空，巧克力河流緩緩流淌，構築出一個充滿香氣與溫暖的世界。</p>
-                        <p>然而，隨著島嶼發展，新的挑戰逐漸浮現——有些小甜點在成長過程中迷失了方向，不確定自己的未來；有些甜點建築師承擔了過多責任，無法兼顧小甜點的需求；甚至島上的三位愛罷工的員工，時常因為種種理由停下手邊工作，使得烘焙坊的運作增添不少困難與變數。</p>
-                        <p>面對這些挑戰，管理員期待建立一個<strong class="highlight">支持網路</strong>，讓甜點建築師、小甜點們，以及島上的所有居民都能互相扶持，確保每個甜點都能夠找到自己的價值與歸屬。這個支持網路不僅將提供協助與指引，也致力創造更和諧的環境，讓島嶼的甜美氣息得以延續，讓每位小甜點都能自由開展，在故事中綻放光彩。</p>
+                        <p>系統精靈：「小甜點，你已經完成了大部分的探索，做得非常棒！現在，請聽聽；有些甜點建築師承擔了過多責任，無法兼顧小甜點的需求；甚至島上的三島嶼管理員們想對你說的話，這是他們對所有新成員的溫暖期盼。」</p>
+位愛罷工的員工，時常因為種種理由停下手邊工作，使得烘焙坊的運作增添不少困難與變數。</p>
+                        <p>面對這些挑戰，管理員期待建立一個<                        <p>可可冒險島上，有許多可愛的小甜點與細心呵護他們的甜點建築師。他們共同維持著這座島嶼的甜美氛圍，讓糖霜雲飄蕩strong class="highlight">支持網路</strong>，讓甜點建築師、小甜點們，以及島上的所有在天空，巧克力河流緩緩流淌，構築出一個充滿香氣與溫暖的世界。</p>
+居民都能互相扶持，確保每個甜點都能夠找到自己的價值與歸屬。這個支持網路不僅將                        <p>然而，隨著島嶼發展，新的挑戰逐漸浮現——有些小甜點在成長過程中迷失提供協助與指引，也致力創造更和諧的環境，讓島嶼的甜美氣息得以延續，了方向，不確定自己的未來；有些甜點建築師承擔了過多責任，無法兼顧小甜讓每位小甜點都能自由開展，在故事中綻放光彩。</p>
                     </div>
-                `,
+                `,點的需求；甚至島上的三位愛罷工的員工，時常因為種種理由停下手邊工作，
                 isCompleted: false
             }
         ];
 
-        const brioDialogueContent = { /* (brioDialogueContent 保持不變) */
-            id: 'brio_main_dialogue',
+        const brioDialogueContent = {
+            id: '使得烘焙坊的運作增添不少困難與變數。</p>
+                        <p>面對這些挑戰，管理brio_main_dialogue',
             name: '與布里歐的記事記錄',
-            icon: '👨‍🍳',
+            icon: '👨員期待建立一個<strong class="highlight">支持網路</strong>，讓甜點建築師、小甜點們，以及島‍🍳',
             content: `
                 <div class="message-group">
                     <div class="message">
                         <div class="message-avatar">布</div>
-                        <div class="message-content">
+                        <div class="message-content">上的所有居民都能互相扶持，確保每個甜點都能夠找到自己的價值與歸屬。這個支持網路不僅將
                             <div class="message-header">
                                 <span class="message-username">布里歐</span>
-                                <span class="message-timestamp">可可曆 某年某月某日 - 關於《青春》</span>
+                               提供協助與指引，也致力創造更和諧的環境，讓島嶼的甜美氣息得以延續， <span class="message-timestamp">可可曆 某年某月某日 - 關於《青春》讓每位小甜點都能自由開展，在故事中綻放光彩。</p>
+                    </div>
+                `,</span>
                             </div>
                             <div class="message-text">
-                                <p>「歲月悠悠，衰微只及肌膚，熱忱拋卻，頹廢必至靈魂。」<br>——塞繆爾·厄爾曼《青春》</p>
+                                <p>「歲月悠悠，衰微只及肌膚，熱忱拋卻，頹廢必至靈魂。」<br>——塞繆
+                isCompleted: false
+            }
+        ];
+
+        const brioDialogueContent = { /* (brioDialogueContent 內容已修正) */
+            id: 'brio_main_dialogue',
+            name爾·厄爾曼《青春》</p>
                                 <p>垮垮垮鬆，是這就是再說你，不只皮膚鬆鬆的，還頹廢到了靈魂。</p>
                             </div>
-                        </div>
+                        </div>: '與布里歐的記事記錄',
+            icon: '👨‍🍳',
+            content: `
+                <div class="message-group">
+                    <div class="message">
+                        <div class="
                     </div>
                 </div>
                 <div class="message-group">
                     <div class="message">
                         <div class="message-avatar kua">垮</div>
                         <div class="message-content">
+message-avatar">布</div>
+                        <div class="message-content">
                             <div class="message-header">
-                                <span class="message-username kua">垮垮垮鬆</span>
+                                <span class="message-username">布里歐</span>
+                                <span class="message-timestamp">                            <div class="message-header">
+                                <span class="message-username kua">垮垮垮鬆可可曆 某年某月某日 - 關於《青春》</span>
+                            </div>
+                            <div</span>
                                 <span class="message-timestamp">片刻之後</span>
                             </div>
-                            <div class="message-text">
+                            <div class=" class="message-text">
+                                <p>「歲月悠悠，衰微只及肌膚，message-text">
                                 <p>在啦，幹。</p>
+                            </div>
+                        </div>
+                    熱忱拋卻，頹廢必至靈魂。」<br>——塞繆爾·厄爾曼《青春》</div>
+                </div>
+                <div class="message-group">
+                    <div class="message">
+                        </p>
+                                <p>垮垮垮鬆，是這就是再說你，不只皮膚鬆<div class="message-avatar">布</div>
+                        <div class="message-content">
+                            <div class="message-header">
+                                <span class="message-username">布里歐</span>
+                                <span鬆的，還頹廢到了靈魂。</p>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="message-group">
+ class="message-timestamp">可可曆 另一年某月某日 - 關於《看不見的城市》                <div class="message-group">
                     <div class="message">
-                        <div class="message-avatar">布</div>
+                        <div class="message-avatar kua">垮</div>
                         <div class="message-content">
-                            <div class="message-header">
-                                <span class="message-username">布里歐</span>
-                                <span class="message-timestamp">可可曆 另一年某月某日 - 關於《看不見的城市》</span>
+                            <div class="message-</span>
                             </div>
                             <div class="message-text">
-                                <p>「生靈的地獄，不是一個即將來臨的地方；如果真有一個地獄，它已經就在這兒存在了，那是我們每天生活其間的地獄，是我們聚在一起而形成的地獄。」<br>——卡爾維諾《看不見的城市》</p>
-                                <p>你能夠想像一堆甜點聚在一起嗎？那簡直是個天堂。</p>
+                                <p>「生靈的地獄，不是一個即將來臨的地方；如果真有一個地獄，它已經就在這兒存在了，那是我們每天header">
+                                <span class="message-username kua">垮垮垮鬆</span>
+                                <span class="message-timestamp">片刻之後</span>
+                            </div>
+                            <div class="message-text">
+                                <p>在生活其間的地獄，是我們聚在一起而形成的地獄。」<br>——卡爾維諾《啦，幹。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="看不見的城市》</p>
+                                <p>你能夠想像一堆甜點聚在一起嗎？message-group">
+                    <div class="message">
+                        <div class="message-avatar">布</div>那簡直是個天堂。</p>
                             </div>
                         </div>
                     </div>
@@ -491,168 +932,380 @@
                         <div class="message-content">
                             <div class="message-header">
                                 <span class="message-username">布里歐</span>
-                                <span class="message-timestamp">可可曆 近期 - 關於奶龍</span>
+                                <span class="message-timestamp">可可曆 
+                        <div class="message-content">
+                            <div class="message-header">
+                                <span class="message-username">布里歐</span>
+                                <span class="message-timestamp">可可曆 近另一年某月某日 - 關於《看不見的城市》</span>
+                            </div>
+                            <div class="message-text">
+                                <p>「生靈的地獄，不是一個即將來臨的地方；如果真有一個期 - 關於奶龍</span>
                             </div>
                             <div class="message-text">
                                 <p>奶龍就是沒有腮紅、耳朵及閃電形狀尾巴的皮卡丘。</p>
-                                <p><em style="color:var(--discord-text-muted); font-size:0.9em;">(精靈画外音：這就是著名的奶龍傳說由來！XD)</em></p>
+                               地獄，它已經就在這兒存在了，那是我們每天生活其間的地獄，是我們聚在一起而形成 <p><em style="color:var(--discord-text-muted); font-size:0.9em的地獄。」<br>——卡爾維諾《看不見的城市》</p>
+                                <p>你能夠想像一堆甜點聚在一起嗎？那簡直是個天堂。</p>
+                            </div>;">(精靈画外音：這就是著名的奶龍傳說由來！XD)</em></p>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="content-section" style="background-color:var(--discord-bg-medium); border: 1px solid var(--discord-bg-light);">
+                <div class="content-section" style="
+                        </div>
+                    </div>
+                </div>
+                 <div class="message-group">
+                    <div class="message">
+                        <div class="message-avatar">布</div>
+                        <div class="message-content">
+background-color:var(--discord-bg-medium); border: 1px solid var(--discord-bg-                            <div class="message-header">
+                                <span class="message-username">布里歐</span>
+light);">
                      <h3>關於布里歐的更多故事 (歷史片段)</h3>
-                     <p>在可可曆127年，島上就有了這位傳奇的甜點建築師——布里歐 (Brio)。他不只是製作甜點，更是小甜點們的守護者。他用奶油般溫暖的雙手，為每個即將誕生的甜點灌注靈魂，輕聲對它們說：「歡迎來到世界，你準備好探索自己的甜美人生了嗎？」</p>
-                     <p>布里歐深知每個甜點的獨特。他曾對焦慮的草莓泡芙說：「你不需要變得酥脆，柔軟也是一種可愛的特質。」他也鼓勵膽怯的可可可頌（也就是我們剛剛提到的『垮垮垮鬆』！）：『你經過層層折疊，才有了現在的樣子，不會這麼容易垮掉的。』他的信念是幫助甜點發掘自己的價值，而非改變它們。</p>
+                     <p>在可可曆                                <span class="message-timestamp">可可曆 近期 - 關於奶龍</span>
+                            </div>
+127年，島上就有了這位傳奇的甜點建築師——布里歐 (Brio)。他不                            <div class="message-text">
+                                <p>奶龍就是沒有腮紅、耳朵及閃只是製作甜點，更是小甜點們的守護者。他用奶油般溫暖的雙手，為電形狀尾巴的皮卡丘。</p>
+                                <p><em style="color:var(--每個即將誕生的甜點灌注靈魂，輕聲對它們說：「歡迎來到世界，你準備好discord-text-muted); font-size:0.9em;">(精靈画外音：這就是探索自己的甜美人生了嗎？」</p>
+                     <p>布里歐深知每個甜點的著名的奶龍傳說由來！XD)</em></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="content-section" style="background-color:var(--discord-bg-獨特。他曾對焦慮的草莓泡芙說：「你不需要變得酥脆，柔軟也是一種可愛的特質。」他也鼓勵膽怯的可可可頌（也就是我們剛剛提到的『垮垮垮鬆』！）：『你medium); border: 1px solid var(--discord-bg-light);">
+                     <h3>關於布里歐的更多故事 (經過層層折疊，才有了現在的樣子，不會這麼容易垮掉的。』他的信念是幫助歷史片段)</h3>
+                     <p>在可可曆127年，島上就有了這位傳奇的甜點發掘自己的價值，而非改變它們。</p>
                 </div>
             `,
             isCompleted: false
-        };
+        甜點建築師——布里歐 (Brio)。他不只是製作甜點，更是小甜點們的};
+
 
         document.addEventListener('DOMContentLoaded', () => {
-            const serverListEl = document.getElementById('serverList');
+            const serverListEl = document.getElementById('serverList');守護者。他用奶油般溫暖的雙手，為每個即將誕生的甜點灌注靈魂，
             const channelsPanelEl = document.getElementById('channelsPanel');
-            const panelToggleButtonEl = document.getElementById('panelToggleButton');
+            const panelToggleButtonEl = document.getElementById輕聲對它們說：「歡迎來到世界，你準備好探索自己的甜美人生了嗎？」</p>
+                     ('panelToggleButton');
             const channelListEl = document.getElementById('channelList');
-            const serverNameTextEl = document.getElementById('serverNameText'); // 改為獲取 span
+            const serverNameText<p>布里歐深知每個甜點的獨特。他曾對焦慮的草莓泡El = document.getElementById('serverNameText');
             const contentHeaderEl = document.getElementById('contentHeader');
-            const currentChannelNameEl = document.getElementById('currentChannelName');
+            芙說：「你不需要變得酥脆，柔軟也是一種可愛的特質。」他也鼓勵膽怯的可可可頌（const currentChannelNameEl = document.getElementById('currentChannelName');
             const contentBodyEl = document.getElementById('contentBody');
             const completionToastEl = document.getElementById('completionToast');
 
-            let activeServerId = 'guide';
+            let activeServerId也就是我們剛剛提到的『垮垮垮鬆』！）：『你經過層層折疊，才有了現在的樣子，不會這麼容易垮掉的。』他的信念是幫助甜點發掘自己的價值，而非改變它們。</p>
+                 = 'guide';
             let activeChannelId = 'welcome';
             let isChannelPanelCollapsed = false;
 
             function toggleChannelsPanel() {
                 isChannelPanelCollapsed = !isChannelPanelCollapsed;
-                if (channelsPanelEl) {
+                if</div>
+            `,
+            isCompleted: false
+        };
+
+
+        document.addEventListener('DOMContentLoaded', () => {
+             (channelsPanelEl) {
                     channelsPanelEl.classList.toggle('collapsed', isChannelPanelCollapsed);
-                }
+const serverListEl = document.getElementById('serverList');
+            const channelsPanelEl = document.getElementById('channels                }
                 if (panelToggleButtonEl) {
-                    panelToggleButtonEl.textContent = isChannelPanelCollapsed ? '☰' : '«';
+                    panelToggleButtonEl.textContent = isChannelPanelCollapsed ?Panel');
+            const panelToggleButtonEl = document.getElementById('panelToggleButton');
+            const channelListEl = document '☰' : '«';
                 }
             }
 
             if(panelToggleButtonEl) {
-                panelToggleButtonEl.addEventListener('click', toggleChannelsPanel);
+                .getElementById('channelList');
+            const serverNameTextEl = document.getElementById('serverNameText');
+            const contentpanelToggleButtonEl.addEventListener('click', toggleChannelsPanel);
             }
 
             function renderServers() {
-                if (!serverListEl) return;
+                HeaderEl = document.getElementById('contentHeader');
+            const currentChannelNameEl = document.getElementById('currentChannelName');
+            const contentBodyEl = document.getElementById('contentBody');
+            const completionToastEl = documentif (!serverListEl) return;
                 serverListEl.innerHTML = '';
                 servers.forEach(server => {
                     const serverIconDiv = document.createElement('div');
-                    serverIconDiv.classList.add('server-icon');
+                    serverIconDiv.classList.add.getElementById('completionToast');
+
+            let activeServerId = 'guide';
+            let activeChannelId = '('server-icon');
                     serverIconDiv.textContent = server.icon;
+                    serverIconDiv.datasetwelcome';
+            let isChannelPanelCollapsed = false;
+
+            function toggleChannelsPanel() {
+                isChannel.id = server.id;
+                    if (server.id === activeServerId) {
+                        serverIconPanelCollapsed = !isChannelPanelCollapsed;
+                if (channelsPanelEl) {
+                    channelsPanelEl.Div.classList.add('active');
+                    }
+                    serverIconDiv.addEventListener('click', () => selectclassList.toggle('collapsed', isChannelPanelCollapsed);
+                }
+                if (panelToggleButtonEl) {
+Server(server.id));
+                    serverListEl.appendChild(serverIconDiv);
+                });
+            }                    panelToggleButtonEl.textContent = isChannelPanelCollapsed ? '☰' : '«';
+                }
+            
+
+            function renderChannelsOrDialogueTitle() {
+                if (!channelListEl || !serverNameTextEl.}
+
+            if(panelToggleButtonEl) { // Ensure button exists before adding listener
+                panelToggleButtonEl.addEventListenerparentNode) return; // serverNameTextEl是span，檢查其父節點
+                channelListEl.innerHTML =('click', toggleChannelsPanel);
+            }
+
+
+            function renderServers() {
+                if (!serverListEl) return; '';
+                const currentServer = servers.find(s => s.id === activeServerId);
+                server
+                serverListEl.innerHTML = '';
+                servers.forEach(server => {
+                    const serverIconDivNameTextEl.textContent = currentServer ? currentServer.name : '未知區域'; // 直接操作span的textContent
+
+                 = document.createElement('div');
+                    serverIconDiv.classList.add('server-icon');
+                    serverif (activeServerId === 'guide') {
+                    if(panelToggleButtonEl) panelToggleButtonEl.style.IconDiv.textContent = server.icon;
                     serverIconDiv.dataset.id = server.id;
                     if (server.id === activeServerId) {
-                        serverIconDiv.classList.add('active');
+                        serverIconDiv.classList.add('active');display = 'flex'; // 指南模式下顯示按鈕
+                    let lastCategory = null;
+                    guide
                     }
                     serverIconDiv.addEventListener('click', () => selectServer(server.id));
-                    serverListEl.appendChild(serverIconDiv);
+                    Topics.forEach(topic => {
+                        if (topic.category && topic.category !== lastCategory) {
+serverListEl.appendChild(serverIconDiv);
                 });
             }
 
-            function renderChannelsOrDialogueTitle() {
+            function renderChannelsOrDialogueTitle                            const categoryDiv = document.createElement('div');
+                            categoryDiv.classList.add('channel-category-() {
                 if (!channelListEl || !serverNameTextEl || !panelToggleButtonEl) return;
-                channelListEl.innerHTML = '';
-                const currentServer = servers.find(s => s.id === activeServerId);
+                channelListheader');
+                            categoryDiv.innerHTML = `<span class="category-icon">${topic.categoryIcon || ''}El.innerHTML = '';
+                const currentServer = servers.find(s => s.id === activeServerId</span>${topic.category}`;
+                            channelListEl.appendChild(categoryDiv);
+                            lastCategory = topic.category;);
                 serverNameTextEl.textContent = currentServer ? currentServer.name : '未知區域';
 
 
-                if (activeServerId === 'guide') {
-                    panelToggleButtonEl.style.display = 'block';
-                    let lastCategory = null;
-                    guideTopics.forEach(topic => {
-                        if (topic.category && topic.category !== lastCategory) {
-                            const categoryDiv = document.createElement('div');
-                            categoryDiv.classList.add('channel-category-header');
-                            categoryDiv.innerHTML = `<span class="category-icon">${topic.categoryIcon || ''}</span>${topic.category}`;
-                            channelListEl.appendChild(categoryDiv);
-                            lastCategory = topic.category;
+                if (
                         }
 
                         const channelDiv = document.createElement('div');
-                        channelDiv.classList.add('channel-item');
+                        channelDiv.classList.add('activeServerId === 'guide') {
+                    panelToggleButtonEl.style.display = 'flex'; //  Ensurechannel-item');
                         channelDiv.dataset.id = topic.id;
                         if (topic.id === activeChannelId) {
                             channelDiv.classList.add('active');
                         }
-                        const channelNameSpan = document.createElement('span');
-                        channelNameSpan.classList.add('channel-name-text');
+                        const channel it's 'flex' or 'block'
+                    let lastCategory = null;
+                    guideTopics.forEach(NameSpan = document.createElement('span');
+                        channelNameSpan.classList.add('channel-name-texttopic => {
+                        if (topic.category && topic.category !== lastCategory) {
+                            const categoryDiv');
                         channelNameSpan.textContent = topic.name;
 
-                        channelDiv.innerHTML = `<span class="channel-icon">${topic.icon || '#'}</span>`;
+                        channelDiv.innerHTML = `<span class=" = document.createElement('div');
+                            categoryDiv.classList.add('channel-category-header');
+                            channel-icon">${topic.icon || '#'}</span>`;
                         channelDiv.appendChild(channelNameSpan);
 
-                        if (topic.isCompleted) {
+categoryDiv.innerHTML = `<span class="category-icon">${topic.categoryIcon || ''}</span>${topic.category}`;                        if (topic.isCompleted) {
                             channelDiv.classList.add('completed');
                         }
 
+
+                            channelListEl.appendChild(categoryDiv);
+                            lastCategory = topic.category;
+                        }
+
                         channelDiv.addEventListener('click', () => selectContentItem(topic.id, 'topic'));
-                        channelListEl.appendChild(channelDiv);
+                        channel                        const channelDiv = document.createElement('div');
+                        channelDiv.classList.add('channel-item');ListEl.appendChild(channelDiv);
                     });
                 } else if (activeServerId === 'brio') {
-                    panelToggleButtonEl.style.display = 'none';
-                    if (channelsPanelEl) channelsPanelEl.classList.remove('collapsed'); // 確保布里歐視圖下頻道面板是展開的
+                        channelDiv.dataset.id = topic.id;
+                        if (topic.id === activeChannelId
+                    if(panelToggleButtonEl) panelToggleButtonEl.style.display = 'none';
+                    if (channelsPanelEl)) {
+                            channelDiv.classList.add('active');
+                        }
+                        const channelNameSpan = document.createElement('span');
+                        channelNameSpan.classList.add('channel-name-text');
+                        channel channelsPanelEl.classList.remove('collapsed');
+                    if (panelToggleButtonEl) panelToggleButtonEl.textContent = '«NameSpan.textContent = topic.name;
+
+                        channelDiv.innerHTML = `<span class="channel-icon">${'; // 重置按鈕狀態
+
 
                     const brioTitle = document.createElement('div');
-                    brioTitle.classList.add('channel-category-header');
-                    brioTitle.innerHTML = `<span class="category-icon">${brioDialogueContent.icon || '💬'}</span>${brioDialogueContent.name}`;
-                    channelListEl.appendChild(brioTitle);
+                    brioTitle.classListtopic.icon || '#'}</span>`;
+                        channelDiv.appendChild(channelNameSpan);
+
+                        if (topic.add('channel-category-header');
+                    brioTitle.innerHTML = `<span class="category-icon.isCompleted) {
+                            channelDiv.classList.add('completed');
+                        }
+
+                        channelDiv.">${brioDialogueContent.icon || '💬'}</span>${brioDialogueContent.name}`;
+                    channelListaddEventListener('click', () => selectContentItem(topic.id, 'topic'));
+                        channelListEl.appendChildEl.appendChild(brioTitle);
                 }
             }
 
             function selectServer(serverId) {
+(channelDiv);
+                    });
+                } else if (activeServerId === 'brio') {
+                                    if (!servers.find(s => s.id === serverId)) return;
+
+                activeServerId =panelToggleButtonEl.style.display = 'none';
+                    if (channelsPanelEl) channelsPanelEl.classList.remove('collapsed'); // Keep panel expanded for Brio's title
+
+                    const brioTitle = document.createElement(' serverId;
+                // 只有在主指南視圖下才考慮收合狀態的保持，切到div');
+                    brioTitle.classList.add('channel-category-header');
+                    brioTitle.innerHTML = `<span class="category-icon">${brioDialogueContent.icon || '💬'}</span>${brio布里歐時通常希望面板展開（因為裡面內容少）
+                if (activeServerId !== 'guideDialogueContent.name}`;
+                    channelListEl.appendChild(brioTitle);
+                }
+            }
+
+' && channelsPanelEl) {
+                    isChannelPanelCollapsed = false; // 切換到布里歐時，預            function selectServer(serverId) {
                 if (!servers.find(s => s.id === serverId)) return;
 
                 activeServerId = serverId;
-                isChannelPanelCollapsed = (serverId === 'brio'); // 切換到布里歐時，面板邏輯
-                if(channelsPanelEl) channelsPanelEl.classList.toggle('collapsed', isChannelPanelCollapsed);
-                if(panelToggleButtonEl) panelToggleButtonEl.textContent = isChannelPanelCollapsed ? '☰' : '«';
-
+                // For a cleaner UX, when switching to Brio,設展開頻道面板（只顯示標題）
+                    channelsPanelEl.classList.remove('collapsed');
+                    if(panelToggleButtonEl) panelToggleButtonEl.textContent = '«';
+                }
 
                 renderServers();
 
-                if (activeServerId === 'guide') {
+                if (active ensure the panel isn't collapsed
+                // When switching to guide, retain its last collapse state or default to expanded
+ServerId === 'guide') {
                     activeChannelId = guideTopics[0] ? guideTopics[0].id : 'welcome';
                     selectContentItem(activeChannelId, 'topic');
-                } else if (activeServerId === 'brio') {
+                } else if (                if (activeServerId === 'brio') {
+                    isChannelPanelCollapsed = false; // Or someactiveServerId === 'brio') {
                     activeChannelId = brioDialogueContent.id;
-                    selectContentItem(activeChannelId, 'dialogue');
+                     other desired default for Brio view
+                }
+                // Update panel state based on isChannelPanelCollapsed, thenselectContentItem(activeChannelId, 'dialogue');
                 }
                 renderChannelsOrDialogueTitle();
-            }
+ button text
+                if(channelsPanelEl) channelsPanelEl.classList.toggle('collapsed', isChannelPanelCollapsed &&            }
 
             function selectContentItem(itemId, type) {
                 activeChannelId = itemId;
                 let selectedItem;
                 let headerIconHtml = '<span class="channel-icon">#</span>';
 
-                if (type === 'topic') {
+                 activeServerId === 'guide');
+                if(panelToggleButtonEl) panelToggleButtonEl.textContent = (isChannelPanelCollapsedif (type === 'topic') {
                     selectedItem = guideTopics.find(t => t.id === itemId);
-                    if(selectedItem) headerIconHtml = `<span class="channel-icon">${selectedItem.icon || '#'}</span>`;
+ && activeServerId === 'guide') ? '☰' : '«';
+
+
+                renderServers();
+
+                if (activeServerId === 'guide') {
+                    activeChannelId = guideTopics[0] ? guideTopics[0].                    if(selectedItem) headerIconHtml = `<span class="channel-icon">${selectedItem.icon || '#'}</span>`;
                 } else if (type === 'dialogue') {
-                    selectedItem = brioDialogueContent;
-                    if(selectedItem) headerIconHtml = `<div class="dm-avatar-header">${selectedItem.icon || selectedItem.name.charAt(0)}</div>`;
+                    selectedItem = brioDialogueid : 'welcome';
+                    selectContentItem(activeChannelId, 'topic');
+                } else if (activeServerId === 'brio') {
+                    activeChannelId = brioDialogueContent.id;
+                    Content;
+                    if(selectedItem) headerIconHtml = `<div class="dm-avatar-header">${selectedItem.iconselectContentItem(activeChannelId, 'dialogue');
+                }
+                renderChannelsOrDialogueTitle();
+ || selectedItem.name.charAt(0)}</div>`;
                 }
 
-                if (selectedItem && contentHeaderEl && currentChannelNameEl && contentBodyEl) {
-                    let headerIconPlaceholder = contentHeaderEl.querySelector('.header-icon-placeholder');
+                if (selectedItem && contentHeaderEl &&            }
+
+            function selectContentItem(itemId, type) {
+                activeChannelId = itemId;
+                 currentChannelNameEl && contentBodyEl) {
+                    let headerIconPlaceholder = contentHeaderEl.querySelector('.headerlet selectedItem;
+                let headerIconHtml = '<span class="channel-icon">#</span>';
+
+                -icon-placeholder');
                     if (!headerIconPlaceholder) {
-                        headerIconPlaceholder = document.createElement('span');
+                        headerIconPlaceholder = document.createElement('if (type === 'topic') {
+                    selectedItem = guideTopics.find(t => t.id ===span');
                         headerIconPlaceholder.classList.add('header-icon-placeholder');
-                        contentHeaderEl.insertBefore(headerIconPlaceholder, currentChannelNameEl);
+                        contentHeaderEl. itemId);
+                    if(selectedItem) headerIconHtml = `<span class="channel-icon">${selectedItem.insertBefore(headerIconPlaceholder, currentChannelNameEl);
                     }
-                    headerIconPlaceholder.innerHTML = headerIconHtml;
-                    currentChannelNameEl.textContent = (type === 'topic' && selectedItem) ? selectedItem.name : (selectedItem ? selectedItem.name : '未知內容');
+                    headerIconPlaceholder.innerHTML = headerIconicon || '#'}</span>`;
+                } else if (type === 'dialogue') {
+                    selectedItem = brioDialogueHtml;
+                    currentChannelNameEl.textContent = (type === 'topic' && selectedItem) ? selectedItemContent;
+                    if(selectedItem) headerIconHtml = `<div class="dm-avatar-header">${selectedItem.icon.name : (selectedItem ? selectedItem.name : '未知內容');
 
 
                     contentBodyEl.innerHTML = selectedItem.content;
                     contentBodyEl.scrollTop = 0;
 
-                    if (!selectedItem.isCompleted) {
+                    if (!selectedItem.is || selectedItem.name.charAt(0)}</div>`;
+                }
+
+                if (selectedItem && contentHeaderEl &&Completed) {
+                        selectedItem.isCompleted = true;
+                        checkAllCompleted();
+                    }
+                    renderChannelsOr currentChannelNameEl && contentBodyEl) {
+                    let headerIconPlaceholder = contentHeaderEl.querySelector('.header-icon-placeholder');
+                    if (!headerIconPlaceholder) {
+                        headerIconPlaceholder = document.createElement('DialogueTitle();
+                }
+            }
+
+            function checkAllCompleted() {
+                const allTopicsDone =span');
+                        headerIconPlaceholder.classList.add('header-icon-placeholder');
+                        contentHeaderEl. guideTopics.every(topic => topic.isCompleted);
+                const brioDone = brioDialogueContent.isCompleted;
+                if (allTopicsDone && brioDone && completionToastEl) {
+                    if (insertBefore(headerIconPlaceholder, currentChannelNameEl);
+                    }
+                    headerIconPlaceholder.innerHTML = headerIconHtml;
+                    currentChannelNameEl.textContent = (type === 'topic' && selectedItem) ? selectedItemcompletionToastEl.style.display !== 'block') {
+                        completionToastEl.style.display = 'block';
+                        completionToastEl.style.animation = 'none';
+                        completionToastEl.offsetHeight; /* trigger.name : (selectedItem ? selectedItem.name : '未知內容');
+
+
+                    contentBodyEl.innerHTML = reflow */
+                        completionToastEl.style.animation = '';
+                        setTimeout(() => {
+                            completionToast selectedItem.content;
+                    contentBodyEl.scrollTop = 0;
+
+                    if (!selectedItem.isEl.style.display = 'none';
+                        }, 3500);
+                    }
+                }Completed) {
                         selectedItem.isCompleted = true;
                         checkAllCompleted();
                     }
@@ -661,34 +1314,23 @@
             }
 
             function checkAllCompleted() {
-                const allTopicsDone = guideTopics.every(topic => topic.isCompleted);
-                const brioDone = brioDialogueContent.isCompleted;
-                if (allTopicsDone && brioDone && completionToastEl) {
-                    if (completionToastEl.style.display !== 'block') {
-                        completionToastEl.style.display = 'block';
-                        completionToastEl.style.animation = 'none';
-                        completionToastEl.offsetHeight; /* trigger reflow */
-                        completionToastEl.style.animation = '';
-                        setTimeout(() => {
-                            completionToastEl.style.display = 'none';
-                        }, 3500);
-                    }
-                }
+                const all
             }
 
             // 初始化
-            if (serverListEl && channelsPanelEl && panelToggleButtonEl && channelListEl && serverNameTextEl && contentHeaderEl && contentBodyEl && completionToastEl) {
+            if (serverListEl && channelsPanelEl && panelToggleButtonEl && channelListEl &&TopicsDone = guideTopics.every(topic => topic.isCompleted);
+                const brioDone = brio serverNameTextEl && contentHeaderEl && contentBodyEl && completionToastEl) {
                 renderServers();
-                selectServer(activeServerId);
+                selectServerDialogueContent.isCompleted;
+                if (allTopicsDone && brioDone && completionToastEl) {
+(activeServerId);
             } else {
-                console.error("一個或多個必要的 DOM 元素未找到，遊戲無法初始化。請檢查HTML中的ID。");
-                console.log({
-                    serverListEl, channelsPanelEl, panelToggleButtonEl, channelListEl,
-                    serverNameHeaderEl: serverNameTextEl.parentNode, // 應為父元素 div
-                    contentHeaderEl, contentBodyEl, completionToastEl
-                });
+                console.error("一個或多個必要的 DOM 元素                    if (completionToastEl.style.display !== 'block') {
+                        completionToastEl.style.display未找到，遊戲無法初始化。請檢查HTML中的ID。");
             }
         });
     </script>
-</body>
+ = 'block';
+                        completionToastEl.style.animation = 'none';
+                        completionToastEl.offsetHeight</body>
 </html>
