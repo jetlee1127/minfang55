@@ -216,12 +216,11 @@
                 <div id="contentBody" class="content-body">
                     {/* HTML content will be inserted here by JS */}
                 </div>
-                {/* The mock input bar will be appended to contentBodyWrapper by JS if needed */}
             </div>
         </div>
     </div>
     <div id="completionToast" class="completion-toast">
-        太棒了，小甜點！你已掌握所有指南精華！準備好在島上大顯身手了嗎？🥳
+        {/* Text updated in JS */}
     </div>
 
     <script>
@@ -233,8 +232,7 @@
 
         const guideTopics = [
             // !! 請確保這裡的 content 內容是完整且經過所有文本修正的 !!
-            // 例如 "建築師" -> "甜點建築師"， "现实世界" -> "現實世界"
-             {
+            {
                 id: 'welcome',
                 category: '歡迎來到可可冒險島',
                 categoryIcon: '👋',
@@ -418,6 +416,7 @@
                         <p>其實也沒有什麼特別的內容，就是想跟你說聲「探索辛苦了！」</p>
                         <p>希望你在可可冒險島玩得開心！</p>
                     </div>
+                    <div style="height: 30vh;"></div>
                 `,
                 isCompleted: false
             }
@@ -527,6 +526,7 @@
             let activeServerId = 'guide';
             let activeChannelId = 'welcome';
             let isChannelPanelCollapsed = false;
+            let toastTimer = null; // 用於管理 toast 的計時器
 
             function toggleChannelsPanel() {
                 isChannelPanelCollapsed = !isChannelPanelCollapsed;
@@ -703,7 +703,7 @@
                          inputMockWrapper.innerHTML = `
                             <div class="discord-input-mock">
                                 <span class="icon">⊕</span>
-                                <span class="input-placeholder">向 ${currentChannelNameEl.textContent} 傳送訊息...</span>
+                                <span class="input-placeholder">向 ${brioDialogueData.name} 傳送訊息...</span>
                                 <span class="icon">😊</span>
                                 <span class="icon">🎤</span>
                             </div>`;
@@ -724,22 +724,29 @@
                 const allBrioSubTopicsDone = brioDialogueData.subTopics.every(subTopic => subTopic.isCompleted);
 
                 if (allTopicsDone && allBrioSubTopicsDone && completionToastEl) {
-                    if (!completionToastEl.classList.contains('animate')) {
-                        completionToastEl.textContent = '太棒了，小甜點！你已掌握所有指南精華！準備好在島上大顯身手了嗎？🥳';
-                        completionToastEl.style.display = 'block';
-                        requestAnimationFrame(() => { // 確保 display:block 生效後再添加動畫 class
-                            requestAnimationFrame(() => { // 再多一幀確保
-                                completionToastEl.classList.add('animate');
-                            });
-                        });
+                    // 確保動畫相關的 class 和 style 被正確重置，以便動畫可以重新播放
+                    completionToastEl.classList.remove('animate');
+                    completionToastEl.style.display = 'none'; // 先隱藏
+                    completionToastEl.style.opacity = '0'; // 重置透明度
+                    completionToastEl.style.bottom = '-70px'; // 重置位置
 
-                        const handleAnimationEnd = () => {
-                            completionToastEl.style.display = 'none';
-                            completionToastEl.classList.remove('animate');
-                            completionToastEl.removeEventListener('animationend', handleAnimationEnd);
-                        };
-                        completionToastEl.addEventListener('animationend', handleAnimationEnd, { once: true });
-                    }
+                    // 使用 requestAnimationFrame 確保 DOM 更新後再添加 animate class
+                    requestAnimationFrame(() => {
+                        completionToastEl.textContent = '太棒了，小甜點！你已掌握所有指南精華！準備好在島上大顯身手了嗎？🥳';
+                        completionToastEl.style.display = 'block'; // 設為 block 以便動畫可見
+                        requestAnimationFrame(() => { // 再一幀確保 display 生效
+                             completionToastEl.classList.add('animate');
+                        });
+                    });
+
+                    // 使用 animationend 事件來在動畫結束後可靠地隱藏元素
+                    const handleAnimationEnd = () => {
+                        completionToastEl.style.display = 'none';
+                        completionToastEl.classList.remove('animate');
+                        completionToastEl.removeEventListener('animationend', handleAnimationEnd);
+                    };
+                    completionToastEl.removeEventListener('animationend', handleAnimationEnd); // 先移除舊的監聽器以防重複
+                    completionToastEl.addEventListener('animationend', handleAnimationEnd, { once: true });
                 }
             }
 
