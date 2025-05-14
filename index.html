@@ -214,13 +214,13 @@
             </div>
             <div id="contentBodyWrapper" class="content-body-wrapper">
                 <div id="contentBody" class="content-body">
-                    {/* Content will be inserted here by JS */}
+                    {/* HTML content will be inserted here by JS */}
                 </div>
             </div>
         </div>
     </div>
     <div id="completionToast" class="completion-toast">
-        太棒了，小甜點！你已掌握所有指南精華！準備好在島上大顯身手了嗎？🥳
+        {/* Text updated in JS */}
     </div>
 
     <script>
@@ -231,6 +231,7 @@
         ];
 
         const guideTopics = [
+            // !! 請確保這裡的 content 內容是完整且經過所有文本修正的 !!
             {
                 id: 'welcome',
                 category: '歡迎來到可可冒險島',
@@ -394,7 +395,7 @@
                     <div class="content-section">
                         <h3>管理員的祝福與期盼</h3>
                         <p>系統精靈：「小甜點，你已經完成了大部分的探索，做得非常棒！現在，請聽聽島嶼管理員們想對你說的話，這是他們對所有新成員的溫暖期盼。」</p>
-                        <p>可可冒險島上，有許多可愛的小甜點與細心呵護他們的甜點建築師。他們共同維持著這座島嶼的甜美氛圍，讓糖霜雲飄蕩在天空，巧克力河流緩緩流淌，構築出一個充滿香氣與溫暖の世界。</p>
+                        <p>可可冒險島上，有許多可愛的小甜點與細心呵護他們的甜點建築師。他們共同維持著這座島嶼的甜美氛圍，讓糖霜雲飄蕩在天空，巧克力河流緩緩流淌，構築出一個充滿香氣與溫暖的世界。</p>
                         <p>然而，隨著島嶼發展，新的挑戰逐漸浮現——有些小甜點在成長過程中迷失了方向，不確定自己的未來；有些甜點建築師承擔了過多責任，無法兼顧小甜點的需求；甚至島上的三位愛罷工的員工，時常因為種種理由停下手邊工作，使得烘焙坊的運作增添不少困難與變數。</p>
                         <p>面對這些挑戰，管理員期待建立一個<strong class="highlight">支持網路</strong>，讓甜點建築師、小甜點們，以及島上的所有居民都能互相扶持，確保每個甜點都能夠找到自己的價值與歸屬。這個支持網路不僅將提供協助與指引，也致力創造更和諧的環境，讓島嶼的甜美氣息得以延續，讓每位小甜點都能自由開展，在故事中綻放光彩。</p>
                     </div>
@@ -415,6 +416,7 @@
                         <p>其實也沒有什麼特別的內容，就是想跟你說聲「探索辛苦了！」</p>
                         <p>希望你在可可冒險島玩得開心！</p>
                     </div>
+                    <div style="height: 30vh;"></div>
                 `,
                 isCompleted: false
             }
@@ -524,6 +526,7 @@
             let activeServerId = 'guide';
             let activeChannelId = 'welcome';
             let isChannelPanelCollapsed = false;
+            let toastTimer = null; // 用於管理 toast 的計時器
 
             function toggleChannelsPanel() {
                 isChannelPanelCollapsed = !isChannelPanelCollapsed;
@@ -645,7 +648,7 @@
                         selectContentItem(activeChannelId, 'brio_subtopic');
                     } else {
                         if(contentBodyWrapperEl && currentChannelNameEl && contentHeaderEl) {
-                             contentBodyWrapperEl.querySelector('#contentBody').innerHTML = '<div class="content-section"><p>布里歐暫時沒有記事可看。</p></div>';
+                             contentBodyWrapperEl.querySelector('#contentBody').innerHTML = '<div class="content-scrollable-area"><div class="content-section"><p>布里歐暫時沒有記事可看。</p></div></div>';
                              const existingInputMock = contentBodyWrapperEl.querySelector('.discord-input-mock-wrapper');
                              if (existingInputMock) existingInputMock.remove();
                              currentChannelNameEl.textContent = brioDialogueData.name;
@@ -721,27 +724,29 @@
                 const allBrioSubTopicsDone = brioDialogueData.subTopics.every(subTopic => subTopic.isCompleted);
 
                 if (allTopicsDone && allBrioSubTopicsDone && completionToastEl) {
-                    // 確保在觸發動畫前，元素是可見的，並且動畫class沒有被應用
-                    if (completionToastEl.style.display !== 'block' || !completionToastEl.classList.contains('animate')) {
+                    // 確保動畫相關的 class 和 style 被正確重置，以便動畫可以重新播放
+                    completionToastEl.classList.remove('animate');
+                    completionToastEl.style.display = 'none'; // 先隱藏
+                    completionToastEl.style.opacity = '0'; // 重置透明度
+                    completionToastEl.style.bottom = '-70px'; // 重置位置
+
+                    // 使用 requestAnimationFrame 確保 DOM 更新後再添加 animate class
+                    requestAnimationFrame(() => {
                         completionToastEl.textContent = '太棒了，小甜點！你已掌握所有指南精華！準備好在島上大顯身手了嗎？🥳';
-                        completionToastEl.style.display = 'block'; // Step 1: Make it visible
-                        completionToastEl.classList.remove('animate'); // Step 2: Remove class if it's already there from a previous quick trigger
-
-                        // Step 3: Force reflow to restart animation if class is re-added immediately
-                        void completionToastEl.offsetWidth;
-
-                        // Step 4: Add class to trigger animation
-                        requestAnimationFrame(() => { // Ensures 'display: block' is processed
-                            completionToastEl.classList.add('animate');
+                        completionToastEl.style.display = 'block'; // 設為 block 以便動畫可見
+                        requestAnimationFrame(() => { // 再一幀確保 display 生效
+                             completionToastEl.classList.add('animate');
                         });
+                    });
 
-                        const handleAnimationEnd = () => {
-                            completionToastEl.style.display = 'none';
-                            completionToastEl.classList.remove('animate');
-                            completionToastEl.removeEventListener('animationend', handleAnimationEnd);
-                        };
-                        completionToastEl.addEventListener('animationend', handleAnimationEnd, { once: true });
-                    }
+                    // 使用 animationend 事件來在動畫結束後可靠地隱藏元素
+                    const handleAnimationEnd = () => {
+                        completionToastEl.style.display = 'none';
+                        completionToastEl.classList.remove('animate');
+                        completionToastEl.removeEventListener('animationend', handleAnimationEnd);
+                    };
+                    completionToastEl.removeEventListener('animationend', handleAnimationEnd); // 先移除舊的監聽器以防重複
+                    completionToastEl.addEventListener('animationend', handleAnimationEnd, { once: true });
                 }
             }
 
