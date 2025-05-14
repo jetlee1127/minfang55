@@ -52,7 +52,7 @@
             width: 280px;
             background-color: var(--discord-bg-dark); display: flex;
             flex-direction: column; flex-shrink: 0;
-            transition: var(--panel-transition); /* Applies to width change */
+            transition: var(--panel-transition); 
             position: relative;
             overflow: hidden; 
         }
@@ -68,21 +68,21 @@
             color: var(--discord-text-primary); border-bottom: 1px solid var(--discord-bg-darkest);
             box-shadow: 0 1px 0 rgba(0,0,0,0.2), 0 1.5px 0 rgba(0,0,0,0.05), 0 2px 0 rgba(0,0,0,0.05);
             flex-shrink: 0; overflow: hidden;
-            transition: border-bottom-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* Smooth transition for border/shadow */
+            transition: border-bottom-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out; 
         }
-        .server-name-text { /* This is the "可可冒險島指南" text element */
+        .server-name-text { 
             white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
             flex-grow: 1; margin-right: 5px; display: inline-block;
-            opacity: 1; /* Visible by default */
-            max-width: calc(100% - 50px); /* Takes up available space, leaving room for button */
-            transition: opacity 0.15s ease-out, max-width 0.25s ease-in-out; /* Smooth hide/show for text */
+            opacity: 1; 
+            max-width: calc(100% - 50px); 
+            transition: opacity 0.15s ease-out, max-width 0.25s ease-in-out; 
         }
-        .channels-panel.collapsed .server-name-text { /* Rules to hide the text when panel is collapsed */
-            opacity: 0;           /* Make it fully transparent */
-            max-width: 0;         /* Reduce its width to zero */
-            margin-right: 0;      /* Remove any right margin */
-            padding: 0;           /* Remove any padding */
-            pointer-events: none; /* Make it non-interactive */
+        .channels-panel.collapsed .server-name-text { 
+            opacity: 0;          
+            max-width: 0;        
+            margin-right: 0;     
+            padding: 0;          
+            pointer-events: none; 
         }
         .panel-toggle-button {
             background: none; border: none; color: var(--discord-text-muted);
@@ -93,9 +93,9 @@
         .panel-toggle-button:hover { color: var(--discord-text-primary); }
 
         .channels-panel.collapsed .server-name-header {
-            justify-content: center; /* Centers the toggle button when text is gone */
-            border-bottom-color: transparent; /* Hides header border */
-            box-shadow: none; /* Hides header shadow */
+            justify-content: center; 
+            border-bottom-color: transparent; 
+            box-shadow: none; 
         }
 
         .channel-list-container {
@@ -120,21 +120,47 @@
         .channel-item.active { background-color: var(--discord-active-channel-bg); color: var(--discord-text-primary); font-weight: bold; }
         .channel-item.completed .channel-name-text:after { content: " ✔️"; color: var(--highlight-green); font-size: 0.9em; margin-left: 5px; }
         .channel-icon { margin-right: 8px; color: var(--discord-text-muted); min-width: 18px; font-size: 1em; }
+        
         .main-content-area { flex-grow: 1; background-color: var(--discord-bg-medium); display: flex; flex-direction: column; overflow: hidden; height: 100vh; }
-        .content-header { height: 50px; padding: 0 18px; display: flex; align-items: center; font-size: 17px; font-weight: 600; border-bottom: 1px solid var(--discord-bg-darkest); box-shadow: 0 1px 0 rgba(0,0,0,0.2); flex-shrink: 0; }
-        .content-header .header-icon-placeholder { margin-right: 10px; display: flex; align-items: center; justify-content: center; width: 30px; height: 30px; font-size: 1.2em; }
+        
+        .content-header { 
+            height: 50px; padding: 0 18px; display: flex; align-items: center; 
+            font-size: 17px; font-weight: 600; 
+            border-bottom: 1px solid var(--discord-bg-darkest); 
+            box-shadow: 0 1px 0 rgba(0,0,0,0.2); flex-shrink: 0;
+            overflow: hidden; /* Added to prevent children from breaking layout */
+        }
+        .content-header .header-icon-placeholder { 
+            margin-right: 10px; display: flex; align-items: center; justify-content: center; 
+            width: 30px; height: 30px; font-size: 1.2em;
+            flex-shrink: 0; /* Prevent icon from shrinking */
+        }
         .content-header .header-icon-placeholder .channel-icon { font-size: 1.3em; opacity: 0.8; }
-        .content-header .dm-avatar-header { width: 30px; height: 30px; background-color: var(--accent-color1); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1em; color: white; }
+        .content-header .dm-avatar-header { 
+            width: 30px; height: 30px; background-color: var(--accent-color1); 
+            border-radius: 50%; display: flex; align-items: center; justify-content: center; 
+            font-size: 1em; color: white;
+            flex-shrink: 0; /* Prevent avatar from shrinking */
+        }
+        /* Styling for the current channel name in the header to prevent stacking */
+        #currentChannelName {
+            flex-grow: 1; /* Allow it to take available space */
+            white-space: nowrap; /* Prevent text from wrapping to the next line */
+            overflow: hidden; /* Hide text that overflows the container */
+            text-overflow: ellipsis; /* Display an ellipsis (...) for overflowed text */
+            min-width: 0; /* Important for flex items to allow shrinking below content size */
+        }
+
         .content-body-wrapper {
             flex-grow: 1;
             display: flex;
             flex-direction: column;
-            overflow: hidden;
+            overflow: hidden; /* Important: contains scrollable body and fixed input */
         }
         .content-body {
             padding: 20px 25px;
-            overflow-y: auto;
-            flex-grow: 1;
+            overflow-y: auto; /* Scrollable content */
+            flex-grow: 1; /* Takes up available vertical space */
             scrollbar-width: thin; scrollbar-color: var(--discord-scrollbar-thumb) var(--discord-scrollbar-track);
             font-size: 1em; line-height: 1.7;
         }
@@ -161,9 +187,10 @@
         .message-text p { margin-bottom: 4px !important; }
 
         .discord-input-mock-wrapper {
-            margin-top: auto; 
+            margin-top: auto; /* Pushes to bottom because .content-body-wrapper is flex-column and .content-body is flex-grow:1 */
             padding: 15px 20px 20px 20px;
-            flex-shrink: 0;
+            flex-shrink: 0; /* Prevent shrinking */
+            background-color: var(--discord-bg-medium); /* Match parent background */
         }
         .discord-input-mock {
             background-color: var(--discord-bg-light);
@@ -172,31 +199,22 @@
             display: flex;
             align-items: center;
             color: var(--discord-text-muted);
-            border-top: 1px solid var(--discord-bg-darkest);
+            /* Removed border-top as wrapper now has bg color, or add if desired */
+            /* border-top: 1px solid var(--discord-bg-darkest); */
         }
         .discord-input-mock .input-placeholder { flex-grow: 1; padding-left: 8px; }
         .discord-input-mock .icon { font-size: 1.3em; color: var(--discord-text-secondary); cursor: default; margin: 0 5px; }
 
         .completion-toast {
-            display: none;
-            position: fixed;
-            bottom: -70px; 
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: var(--highlight-green);
-            color: white;
-            padding: 15px 25px;
-            border-radius: 8px;
-            z-index: 2000;
-            font-size: 1.1em;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            display: none; position: fixed; bottom: -70px; left: 50%;
+            transform: translateX(-50%); background-color: var(--highlight-green);
+            color: white; padding: 15px 25px; border-radius: 8px;
+            z-index: 2000; font-size: 1.1em; box-shadow: 0 4px 10px rgba(0,0,0,0.2);
             opacity: 0; 
         }
         .completion-toast.animate {
-            display: block !important; 
-            animation-name: slideUpFadeOutToastAnimation;
-            animation-duration: 3.5s;
-            animation-fill-mode: forwards; 
+            display: block !important; animation-name: slideUpFadeOutToastAnimation;
+            animation-duration: 3.5s; animation-fill-mode: forwards; 
             animation-timing-function: ease-in-out;
         }
         @keyframes slideUpFadeOutToastAnimation {
@@ -212,6 +230,9 @@
             .server-name-header { font-size: 16px; padding: 0 8px 0 12px;}
             .panel-toggle-button { font-size: 1.4em; padding: 5px;}
             .content-header {font-size: 15px; padding: 0 12px;}
+            #currentChannelName { /* Ensure responsiveness for smaller channel names too */
+                 font-size: 15px; /* Match header font-size */
+            }
             .content-body {padding: 15px;}
             .discord-input-mock-wrapper { padding: 10px 15px 15px 15px;} 
             .discord-input-mock { margin: 0;} 
@@ -232,7 +253,7 @@
         <div class="main-content-area">
             <div id="contentHeader" class="content-header">
                 <span class="header-icon-placeholder"><span class="channel-icon">#</span></span>
-                <span id="currentChannelName"></span>
+                <span id="currentChannelName"></span> 
             </div>
             <div id="contentBodyWrapper" class="content-body-wrapper">
                 <div id="contentBody" class="content-body">
@@ -252,280 +273,21 @@
         ];
 
         const guideTopics = [
-            {
-                id: 'welcome',
-                category: '歡迎來到可可冒險島',
-                categoryIcon: '👋',
-                icon: '#',
-                name: '開始探索之旅',
-                content: `
-                    <div class="content-section">
-                        <h3>系統精靈的歡迎</h3>
-                        <p>系統精靈：「再次歡迎你，小甜點！很高興能成為你的嚮導。」</p>
-                        <p>「這個指南模擬器將帶你熟悉可可冒險島 Discord 伺服器的重要資訊。點擊左側<strong class="highlight">不同圖標</strong>可以切換查看主指南內容或與布里歐大師的對話。在主指南中，點擊<strong class="highlight">『頻道』列表</strong>，就可以查看對應的內容了。」</p>
-                        <p>「準備好了嗎？讓我們開始探索<strong class="highlight">可可冒險島指南</strong>吧！」</p>
-                        <p style="margin-top: 20px;">如果你想查看完整的指南詳細內容，可以點擊這裡：<a href="https://drive.google.com/file/d/1gjRF8gfq2a2c-vxlLzZj79GNbplLLDZ3/view?usp=sharing" target="_blank" style="color:var(--discord-text-link); text-decoration:underline;">完整指南文件</a>。</p>
-                    </div>
-                `,
-                isCompleted: false
-            },
-            {
-                id: 'discord_connection',
-                category: '第壹章：Discord 系統',
-                categoryIcon: '🖥️',
-                icon: '#',
-                name: 'Discord 連接與操作教學',
-                content: `
-                    <div class="content-section">
-                        <h3 class="channel-title">Discord 環境建置</h3>
-                        <p>系統精靈：「要加入我們的島嶼，首先你需要 Discord！它就像我們的魔法通訊水晶。」</p>
-                        <p>取得方式:</p>
-                        <ul>
-                            <li><strong>IOS 設備:</strong> 前往 App Store 搜尋「Discord」或點擊 <a href="https://apps.apple.com/us/app/discord-talk-play-hang-out/id985746746" target="_blank" style="color:var(--discord-text-link); text-decoration:underline;">此處安裝</a>。</li>
-                            <li><strong>安卓設備:</strong> 前往 Play 商店搜尋「Discord」或點擊 <a href="https://play.google.com/store/apps/details?id=com.discord" target="_blank" style="color:var(--discord-text-link); text-decoration:underline;">此處安裝</a>。</li>
-                            <li><strong>PC/Mac:</strong> 前往瀏覽器搜尋「Discord」或點擊 <a href="https://discord.com/download" target="_blank" style="color:var(--discord-text-link); text-decoration:underline;">此處下載</a>。</li>
-                            <li><strong>網頁瀏覽:</strong> 前往瀏覽器搜尋「Discord」或直接訪問 <a href="https://discord.com/app" target="_blank" style="color:var(--discord-text-link); text-decoration:underline;">discord.com/app</a>。</li>
-                        </ul>
-                    </div>
-                    <div class="content-section">
-                        <h3 class="channel-title">Discord 系統操作</h3>
-                        <p>系統精靈：「熟悉界面很重要哦！」</p>
-                        <ul>
-                            <li><strong class="highlight">導覽 - 左側:</strong> 點擊伺服器列表旁的箭頭可看見頻道列表。</li>
-                            <li><strong class="highlight">導覽 - 右側:</strong> 系統設定、通知、搜尋等。成員上線狀態也會顯示。</li>
-                            <li><strong class="highlight">訊息操作 - 左下角 (+):</strong> 新增投票、上傳圖片/檔案 (有大小限制)。</li>
-                            <li><strong class="highlight">訊息操作 - 左下角第二個圖標:</strong> 傳送指令 (島上有三位甜點建築師可幫忙)。</li>
-                            <li><strong class="highlight">聊天室類型:</strong> 文字頻道 (#) 無法語音，可投票傳圖文；語音頻道 (🔊) 點擊即進入，可分享畫面，調整他人音量/禁音 (僅對自己有效)。</li>
-                            <li><strong class="highlight">公開性:</strong> 分為「公開」和「私人」(需權限/身份組)。</li>
-                        </ul>
-                    </div>
-                `,
-                isCompleted: false
-            },
-            {
-                id: 'island_facilities_worldtree',
-                category: '第貳章：可可冒險島',
-                categoryIcon: '🏝️',
-                icon: '#',
-                name: '世界樹設施',
-                content: `
-                    <div class="content-section">
-                        <h3 class="channel-title">烘焙大廳</h3>
-                        <p>系統精靈：「這是你初次抵達的溫馨房間，系統會在這裡歡迎你！」</p>
-                    </div>
-                    <div class="content-section">
-                        <h3 class="channel-title">世界樹-天氣中心</h3>
-                        <p>這裡的天氣和<strong class="highlight">現實世界</strong>同步哦！有天氣預報、預警等功能 (但警報太吵，訊息通知已被管理員關掉了)。</p>
-                    </div>
-                    <div class="content-section">
-                        <h3 class="channel-title">世界樹-資訊中心</h3>
-                        <p>所有重要的<strong class="highlight">系統消息</strong>都會在這裡公告。</p>
-                    </div>
-                `,
-                isCompleted: false
-            },
-            {
-                id: 'island_facilities_others',
-                category: '第貳章：可可冒險島',
-                icon: '#',
-                name: '其他重要設施',
-                content: `
-                    <div class="content-section">
-                        <h3 class="channel-title">可可冒險島事務中心</h3>
-                        <ul>
-                            <li><strong>許願池:</strong> 用來許願，不定時會有抽獎 (若沒有經費它就是個池塘 🏞️)。</li>
-                            <li><strong>能量統計:</strong> 在營隊期間，會用來關心大家的餐食狀態。</li>
-                        </ul>
-                    </div>
-                    <div class="content-section">
-                        <h3 class="channel-title">甜點嘰嘰喳喳</h3>
-                        <p>自由交談的空間，有許多文字聊天室 (#) 和語音聊天室 (🔊)。有些冠有特定股名稱的房間，則只有該股的成員才能看到和進入。</p>
-                    </div>
-                     <div class="content-section">
-                        <h3 class="channel-title">調查員聚集地 & 小甜點聚落</h3>
-                        <p>系統精靈：「這是你和管理員之間的<strong class="highlight">秘密通訊頻道</strong>！」</p>
-                        <ul>
-                            <li><strong>隱私第一:</strong> <strong class="highlight">只有你自己能看到和進入</strong>專屬空間。需身份認證開通。</li>
-                            <li><strong>重要訊息:</strong> 空間內有三則重要訊息 (包含<strong class="highlight">小甜點夥伴</strong>及匿名聊天連結)。</li>
-                            <li><span class="important-note">絕對保密事項:</span> Discord 中<strong class="highlight">黑色背景標示</strong>的內容 (匿名烘焙坊號碼(Line)、預設小甜點名、您的小甜點) <strong class="highlight">嚴禁外洩</strong>！</li>
-                            <li><strong>員工機器人 & 商品:</strong> 可使用員工2指令購物 (需先加值)。<p class="architect-warning important-note">給甜點建築師的提醒: 使用「送禮物」功能時，對方會直接收到通知，所以請不要用這個功能來給你負責的小甜點送禮哦！</p></li>
-                        </ul>
-                    </div>
-                `,
-                isCompleted: false
-            },
-            {
-                id: 'island_covenant',
-                category: '第參章：可可冒險島約定',
-                categoryIcon: '📜',
-                icon: '#',
-                name: '約定核心精神與條款',
-                content: `
-                     <div class="content-section">
-                        <h3>可可冒險島約定 - 核心精神</h3>
-                        <p>系統精靈：「約定在可可曆1000年頒布，是島嶼的基石。核心理念是：<strong class="highlight">建立一個包容與尊重個體的社會</strong>。」</p>
-                        <h3 class="channel-title">第一章：立約緣由</h3>
-                        <ul>
-                            <li>每一個甜點生而獨特，應被<strong class="highlight">尊重</strong>。</li>
-                            <li>甜點之間的相異是世界的甜美，<strong class="highlight">非缺陷</strong>。</li>
-                            <li>甜點建築師的責任是幫助甜點<strong class="highlight">發掘價值</strong>，而非改變本質。</li>
-                        </ul>
-                        <h3 class="channel-title">第二章：甜點基本權利</h3>
-                         <p>包含：存在的權利、選擇的自由、個性的尊重、公平對待、甜點建築師的責任。</p>
-                        <h3 class="channel-title">第三章：烘焙坊與社會責任</h3>
-                         <p>甜點建築師應遵守四大守則：<br>1. 不強迫小甜點改變本質；<br>2. 不評判小甜點的價值；<br>3. 耐心傾聽小甜點的心聲；<br>4. 幫助小甜點找到最適合自己的位置。</p>
-                        <h3 class="channel-title">第四章：約定的延續與修訂</h4>
-                         <p>修訂需召開「糖霜會議」。結語強調世界的美好在於無數風味的交織。</p>
-                    </div>
-                `,
-                isCompleted: false
-            },
-            {
-                id: 'island_notes_detail',
-                category: '附註：可可冒險島須知',
-                categoryIcon: '📌',
-                icon: '#',
-                name: '可可冒險島須知 (黃金守則)',
-                 content: `
-                    <div class="content-section">
-                        <h3>可可冒險島須知 (超級重要!)</h3>
-                        <p>系統精靈：「這些是島上的黃金守則，請務必牢記！」</p>
-                        <ol>
-                            <li>各個小甜點與甜點建築師登入可可冒險島後，管理員會逐步登入各甜點的身份組，当身份組確定後，各位將能夠見到各自、各組別的私人房間；若登入後各房間尚未顯現，請稍待。</li>
-                            <li>在各自私人的聊天室中（Discord），已有三則訊息，分為歡迎訊息、您的小甜點公布與匿名聊天室連結、甜點建築師匿名聊天室連結；請對於Discord顯示為<strong class="highlight">黑色</strong>的部份保密，<strong class="highlight">勿透露給他人</strong>，包含「匿名烘焙坊的號碼（Line）」、「預設小甜點的名稱」、「您的小甜點」；顯示為黑色的部分點擊後即可顯現。</li>
-                            <li>進入可可冒險島（Discord）後，請將暱稱改為<strong class="highlight">本名</strong>。</li>
-                            <li>進入「匿名烘焙坊（Line）」請以<strong class="highlight">預設的暱稱進入</strong>；或由「形容詞＋甜點名」組合成的暱稱進入，若暱稱選擇自訂，則需要將新的名稱提供給管理員。</li>
-                            <li>可可冒險島的各個空間都有各自的功能，同時對於小甜點與甜點建築師都會有著不同的權限設定，關於空間的功能可至第貳章：可可冒險島查看。</li>
-                            <li>可可冒險島的商品系統，將在密籌時開啟，將由統一商品或特別指定執行；屆時您可以先加值現金至系統中（將錢交給管理員協助儲值），並選擇商品，管理員將代為送出，另成功送出後會傳送明細，明細會在個人的訊息傳送。</li>
-                            <li>「建築師」由於法規，需要有建築師證照才能稱建築師，為保護各位不會這麼容易被告，建議各位<strong class="highlight">不要簡稱「建築師」喔～</strong></li>
-                            <li>可可冒險島共有三位員工，但他們不時會罷工，当他們罷工時，可以等一些時間再和他們互動。</li>
-                            <li>甜點建築師的存在旨在<strong class="highlight">協助小甜點自由開展</strong>，並成為小甜點的支持。</li>
-                        </ol>
-                    </div>
-                `,
-                isCompleted: false
-            },
-            {
-                id: 'manager_words',
-                category: '最終章：島嶼的溫度與祝福',
-                categoryIcon: '💖',
-                icon: '#',
-                name: '管理員的祝福與期盼',
-                content: `
-                    <div class="content-section">
-                        <h3>管理員的祝福與期盼</h3>
-                        <p>系統精靈：「小甜點，你已經完成了大部分的探索，做得非常棒！現在，請聽聽島嶼管理員們想對你說的話，這是他們對所有新成員的溫暖期盼。」</p>
-                        <p>可可冒險島上，有許多可愛的小甜點與細心呵護他們的甜點建築師。他們共同維持著這座島嶼的甜美氛圍，讓糖霜雲飄蕩在天空，巧克力河流緩緩流淌，構築出一個充滿香氣與溫暖的世界。</p>
-                        <p>然而，隨著島嶼發展，新的挑戰逐漸浮現——有些小甜點在成長過程中迷失了方向，不確定自己的未來；有些甜點建築師承擔了過多責任，無法兼顧小甜點的需求；甚至島上的三位愛罷工的員工，時常因為種種理由停下手邊工作，使得烘焙坊的運作增添不少困難與變數。</p>
-                        <p>面對這些挑戰，管理員期待建立一個<strong class="highlight">支持網路</strong>，讓甜點建築師、小甜點們，以及島上的所有居民都能互相扶持，確保每個甜點都能夠找到自己的價值與歸屬。這個支持網路不僅將提供協助與指引，也致力創造更和諧的環境，讓島嶼的甜美氣息得以延續，讓每位小甜點都能自由開展，在故事中綻放光彩。</p>
-                    </div>
-                `,
-                isCompleted: false
-            },
-            {
-                id: 'cant_reach_this',
-                category: '最終章：島嶼的溫度與祝福',
-                categoryIcon: '💖',
-                icon: '#',
-                name: '你點不到吧！',
-                content: `
-                    <div class="content-section">
-                        <h3 class="channel-title">你點不到吧！</h3>
-                        <p>系統精靈：「嘿嘿，這是一個隱藏的彩蛋頻道！你能看到這裡，說明你真的很努力在探索呢！」</p>
-                        <p>🎉🎉🎉</p>
-                        <p>其實也沒有什麼特別的內容，就是想跟你說聲「探索辛苦了！」</p>
-                        <p>希望你在可可冒險島玩得開心！</p>
-                    </div>
-                `,
-                isCompleted: false
-            }
+            { id: 'welcome', category: '歡迎來到可可冒險島', categoryIcon: '👋', icon: '#', name: '開始探索之旅', content: ` <div class="content-section"> <h3>系統精靈的歡迎</h3> <p>系統精靈：「再次歡迎你，小甜點！很高興能成為你的嚮導。」</p> <p>「這個指南模擬器將帶你熟悉可可冒險島 Discord 伺服器的重要資訊。點擊左側<strong class="highlight">不同圖標</strong>可以切換查看主指南內容或與布里歐大師的對話。在主指南中，點擊<strong class="highlight">『頻道』列表</strong>，就可以查看對應的內容了。」</p> <p>「準備好了嗎？讓我們開始探索<strong class="highlight">可可冒險島指南</strong>吧！」</p> <p style="margin-top: 20px;">如果你想查看完整的指南詳細內容，可以點擊這裡：<a href="https://drive.google.com/file/d/1gjRF8gfq2a2c-vxlLzZj79GNbplLLDZ3/view?usp=sharing" target="_blank" style="color:var(--discord-text-link); text-decoration:underline;">完整指南文件</a>。</p> </div> `, isCompleted: false },
+            { id: 'discord_connection', category: '第壹章：Discord 系統', categoryIcon: '🖥️', icon: '#', name: 'Discord 連接與操作教學', content: ` <div class="content-section"> <h3 class="channel-title">Discord 環境建置</h3> <p>系統精靈：「要加入我們的島嶼，首先你需要 Discord！它就像我們的魔法通訊水晶。」</p> <p>取得方式:</p> <ul> <li><strong>IOS 設備:</strong> 前往 App Store 搜尋「Discord」或點擊 <a href="https://apps.apple.com/us/app/discord-talk-play-hang-out/id985746746" target="_blank" style="color:var(--discord-text-link); text-decoration:underline;">此處安裝</a>。</li> <li><strong>安卓設備:</strong> 前往 Play 商店搜尋「Discord」或點擊 <a href="https://play.google.com/store/apps/details?id=com.discord" target="_blank" style="color:var(--discord-text-link); text-decoration:underline;">此處安裝</a>。</li> <li><strong>PC/Mac:</strong> 前往瀏覽器搜尋「Discord」或點擊 <a href="https://discord.com/download" target="_blank" style="color:var(--discord-text-link); text-decoration:underline;">此處下載</a>。</li> <li><strong>網頁瀏覽:</strong> 前往瀏覽器搜尋「Discord」或直接訪問 <a href="https://discord.com/app" target="_blank" style="color:var(--discord-text-link); text-decoration:underline;">discord.com/app</a>。</li> </ul> </div> <div class="content-section"> <h3 class="channel-title">Discord 系統操作</h3> <p>系統精靈：「熟悉界面很重要哦！」</p> <ul> <li><strong class="highlight">導覽 - 左側:</strong> 點擊伺服器列表旁的箭頭可看見頻道列表。</li> <li><strong class="highlight">導覽 - 右側:</strong> 系統設定、通知、搜尋等。成員上線狀態也會顯示。</li> <li><strong class="highlight">訊息操作 - 左下角 (+):</strong> 新增投票、上傳圖片/檔案 (有大小限制)。</li> <li><strong class="highlight">訊息操作 - 左下角第二個圖標:</strong> 傳送指令 (島上有三位甜點建築師可幫忙)。</li> <li><strong class="highlight">聊天室類型:</strong> 文字頻道 (#) 無法語音，可投票傳圖文；語音頻道 (🔊) 點擊即進入，可分享畫面，調整他人音量/禁音 (僅對自己有效)。</li> <li><strong class="highlight">公開性:</strong> 分為「公開」和「私人」(需權限/身份組)。</li> </ul> </div> `, isCompleted: false },
+            { id: 'island_facilities_worldtree', category: '第貳章：可可冒險島', categoryIcon: '🏝️', icon: '#', name: '世界樹設施', content: ` <div class="content-section"> <h3 class="channel-title">烘焙大廳</h3> <p>系統精靈：「這是你初次抵達的溫馨房間，系統會在這裡歡迎你！」</p> </div> <div class="content-section"> <h3 class="channel-title">世界樹-天氣中心</h3> <p>這裡的天氣和<strong class="highlight">現實世界</strong>同步哦！有天氣預報、預警等功能 (但警報太吵，訊息通知已被管理員關掉了)。</p> </div> <div class="content-section"> <h3 class="channel-title">世界樹-資訊中心</h3> <p>所有重要的<strong class="highlight">系統消息</strong>都會在這裡公告。</p> </div> `, isCompleted: false },
+            { id: 'island_facilities_others', category: '第貳章：可可冒險島', icon: '#', name: '其他重要設施', content: ` <div class="content-section"> <h3 class="channel-title">可可冒險島事務中心</h3> <ul> <li><strong>許願池:</strong> 用來許願，不定時會有抽獎 (若沒有經費它就是個池塘 🏞️)。</li> <li><strong>能量統計:</strong> 在營隊期間，會用來關心大家的餐食狀態。</li> </ul> </div> <div class="content-section"> <h3 class="channel-title">甜點嘰嘰喳喳</h3> <p>自由交談的空間，有許多文字聊天室 (#) 和語音聊天室 (🔊)。有些冠有特定股名稱的房間，則只有該股的成員才能看到和進入。</p> </div> <div class="content-section"> <h3 class="channel-title">調查員聚集地 & 小甜點聚落</h3> <p>系統精靈：「這是你和管理員之間的<strong class="highlight">秘密通訊頻道</strong>！」</p> <ul> <li><strong>隱私第一:</strong> <strong class="highlight">只有你自己能看到和進入</strong>專屬空間。需身份認證開通。</li> <li><strong>重要訊息:</strong> 空間內有三則重要訊息 (包含<strong class="highlight">小甜點夥伴</strong>及匿名聊天連結)。</li> <li><span class="important-note">絕對保密事項:</span> Discord 中<strong class="highlight">黑色背景標示</strong>的內容 (匿名烘焙坊號碼(Line)、預設小甜點名、您的小甜點) <strong class="highlight">嚴禁外洩</strong>！</li> <li><strong>員工機器人 & 商品:</strong> 可使用員工2指令購物 (需先加值)。<p class="architect-warning important-note">給甜點建築師的提醒: 使用「送禮物」功能時，對方會直接收到通知，所以請不要用這個功能來給你負責的小甜點送禮哦！</p></li> </ul> </div> `, isCompleted: false },
+            { id: 'island_covenant', category: '第參章：可可冒險島約定', categoryIcon: '📜', icon: '#', name: '約定核心精神與條款', content: ` <div class="content-section"> <h3>可可冒險島約定 - 核心精神</h3> <p>系統精靈：「約定在可可曆1000年頒布，是島嶼的基石。核心理念是：<strong class="highlight">建立一個包容與尊重個體的社會</strong>。」</p> <h3 class="channel-title">第一章：立約緣由</h3> <ul> <li>每一個甜點生而獨特，應被<strong class="highlight">尊重</strong>。</li> <li>甜點之間的相異是世界的甜美，<strong class="highlight">非缺陷</strong>。</li> <li>甜點建築師的責任是幫助甜點<strong class="highlight">發掘價值</strong>，而非改變本質。</li> </ul> <h3 class="channel-title">第二章：甜點基本權利</h3> <p>包含：存在的權利、選擇的自由、個性的尊重、公平對待、甜點建築師的責任。</p> <h3 class="channel-title">第三章：烘焙坊與社會責任</h3> <p>甜點建築師應遵守四大守則：<br>1. 不強迫小甜點改變本質；<br>2. 不評判小甜點的價值；<br>3. 耐心傾聽小甜點的心聲；<br>4. 幫助小甜點找到最適合自己的位置。</p> <h3 class="channel-title">第四章：約定的延續與修訂</h4> <p>修訂需召開「糖霜會議」。結語強調世界的美好在於無數風味的交織。</p> </div> `, isCompleted: false },
+            { id: 'island_notes_detail', category: '附註：可可冒險島須知', categoryIcon: '📌', icon: '#', name: '可可冒險島須知 (黃金守則)', content: ` <div class="content-section"> <h3>可可冒險島須知 (超級重要!)</h3> <p>系統精靈：「這些是島上的黃金守則，請務必牢記！」</p> <ol> <li>各個小甜點與甜點建築師登入可可冒險島後，管理員會逐步登入各甜點的身份組，当身份組確定後，各位將能夠見到各自、各組別的私人房間；若登入後各房間尚未顯現，請稍待。</li> <li>在各自私人的聊天室中（Discord），已有三則訊息，分為歡迎訊息、您的小甜點公布與匿名聊天室連結、甜點建築師匿名聊天室連結；請對於Discord顯示為<strong class="highlight">黑色</strong>的部份保密，<strong class="highlight">勿透露給他人</strong>，包含「匿名烘焙坊的號碼（Line）」、「預設小甜點的名稱」、「您的小甜點」；顯示為黑色的部分點擊後即可顯現。</li> <li>進入可可冒險島（Discord）後，請將暱稱改為<strong class="highlight">本名</strong>。</li> <li>進入「匿名烘焙坊（Line）」請以<strong class="highlight">預設的暱稱進入</strong>；或由「形容詞＋甜點名」組合成的暱稱進入，若暱稱選擇自訂，則需要將新的名稱提供給管理員。</li> <li>可可冒險島的各個空間都有各自的功能，同時對於小甜點與甜點建築師都會有著不同的權限設定，關於空間的功能可至第貳章：可可冒險島查看。</li> <li>可可冒險島的商品系統，將在密籌時開啟，將由統一商品或特別指定執行；屆時您可以先加值現金至系統中（將錢交給管理員協助儲值），並選擇商品，管理員將代為送出，另成功送出後會傳送明細，明細會在個人的訊息傳送。</li> <li>「建築師」由於法規，需要有建築師證照才能稱建築師，為保護各位不會這麼容易被告，建議各位<strong class="highlight">不要簡稱「建築師」喔～</strong></li> <li>可可冒險島共有三位員工，但他們不時會罷工，当他們罷工時，可以等一些時間再和他們互動。</li> <li>甜點建築師的存在旨在<strong class="highlight">協助小甜點自由開展</strong>，並成為小甜點的支持。</li> </ol> </div> `, isCompleted: false },
+            { id: 'manager_words', category: '最終章：島嶼的溫度與祝福', categoryIcon: '💖', icon: '#', name: '管理員的祝福與期盼', content: ` <div class="content-section"> <h3>管理員的祝福與期盼</h3> <p>系統精靈：「小甜點，你已經完成了大部分的探索，做得非常棒！現在，請聽聽島嶼管理員們想對你說的話，這是他們對所有新成員的溫暖期盼。」</p> <p>可可冒險島上，有許多可愛的小甜點與細心呵護他們的甜點建築師。他們共同維持著這座島嶼的甜美氛圍，讓糖霜雲飄蕩在天空，巧克力河流緩緩流淌，構築出一個充滿香氣與溫暖的世界。</p> <p>然而，隨著島嶼發展，新的挑戰逐漸浮現——有些小甜點在成長過程中迷失了方向，不確定自己的未來；有些甜點建築師承擔了過多責任，無法兼顧小甜點的需求；甚至島上的三位愛罷工的員工，時常因為種種理由停下手邊工作，使得烘焙坊的運作增添不少困難與變數。</p> <p>面對這些挑戰，管理員期待建立一個<strong class="highlight">支持網路</strong>，讓甜點建築師、小甜點們，以及島上的所有居民都能互相扶持，確保每個甜點都能夠找到自己的價值與歸屬。這個支持網路不僅將提供協助與指引，也致力創造更和諧的環境，讓島嶼的甜美氣息得以延續，讓每位小甜點都能自由開展，在故事中綻放光彩。</p> </div> `, isCompleted: false },
+            { id: 'cant_reach_this', category: '最終章：島嶼的溫度與祝福', categoryIcon: '💖', icon: '#', name: '你點不到吧！', content: ` <div class="content-section"> <h3 class="channel-title">你點不到吧！</h3> <p>系統精靈：「嘿嘿，這是一個隱藏的彩蛋頻道！你能看到這裡，說明你真的很努力在探索呢！」</p> <p>🎉🎉🎉</p> <p>其實也沒有什麼特別的內容，就是想跟你說聲「探索辛苦了！」</p> <p>希望你在可可冒險島玩得開心！</p> </div> `, isCompleted: false }
         ];
 
         const brioDialogueData = {
-            id: 'brio_server_content',
-            name: '與布里歐的記事記錄',
-            icon: '👨‍🍳',
+            id: 'brio_server_content', name: '與布里歐的記事記錄', icon: '👨‍🍳',
             subTopics: [
-                {
-                    id: 'brio_chats',
-                    icon: '💬',
-                    name: '布里歐的智慧記事',
-                    content: `
-                        <div class="message-group">
-                            <div class="message">
-                                <div class="message-avatar">布</div>
-                                <div class="message-content">
-                                    <div class="message-header">
-                                        <span class="message-username">布里歐</span>
-                                        <span class="message-timestamp">可可曆 某年某月某日 - 關於《青春》</span>
-                                    </div>
-                                    <div class="message-text">
-                                        <p>「歲月悠悠，衰微只及肌膚，熱忱拋卻，頹廢必至靈魂。」<br>——塞繆爾·厄爾曼《青春》</p>
-                                        <p>垮垮垮鬆，是這就是再說你，不只皮膚鬆鬆的，還頹廢到了靈魂。</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="message-group">
-                            <div class="message">
-                                <div class="message-avatar kua">垮</div>
-                                <div class="message-content">
-                                    <div class="message-header">
-                                        <span class="message-username kua">垮垮垮鬆</span>
-                                        <span class="message-timestamp">片刻之後</span>
-                                    </div>
-                                    <div class="message-text">
-                                        <p>在啦，幹。</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="message-group">
-                            <div class="message">
-                                <div class="message-avatar">布</div>
-                                <div class="message-content">
-                                    <div class="message-header">
-                                        <span class="message-username">布里歐</span>
-                                        <span class="message-timestamp">可可曆 另一年某月某日 - 關於《看不見的城市》</span>
-                                    </div>
-                                    <div class="message-text">
-                                        <p>「生靈的地獄，不是一個即將來臨的地方；如果真有一個地獄，它已經就在這兒存在了，那是我們每天生活其間的地獄，是我們聚在一起而形成的地獄。」<br>——卡爾維諾《看不見的城市》</p>
-                                        <p>你能夠想像一堆甜點聚在一起嗎？那簡直是個天堂。</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                         <div class="message-group">
-                            <div class="message">
-                                <div class="message-avatar">布</div>
-                                <div class="message-content">
-                                    <div class="message-header">
-                                        <span class="message-username">布里歐</span>
-                                        <span class="message-timestamp">可可曆 近期 - 關於奶龍</span>
-                                    </div>
-                                    <div class="message-text">
-                                        <p>奶龍就是沒有腮紅、耳朵及閃電形狀尾巴的皮卡丘。</p>
-                                        <p><em style="color:var(--discord-text-muted); font-size:0.9em;">(精靈画外音：這就是著名的奶龍傳說由來！XD)</em></p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    `,
-                    isCompleted: false
-                },
-                {
-                    id: 'brio_history',
-                    icon: '📜',
-                    name: '關於布里歐 (歷史片段)',
-                    content: `
-                        <div class="content-section" style="background-color:var(--discord-bg-medium); border: 1px solid var(--discord-bg-light);">
-                             <h3>關於布里歐的更多故事 (歷史片段)</h3>
-                             <p>在可可曆127年，島上就有了這位傳奇的甜點建築師——布里歐 (Brio)。他不只是製作甜點，更是小甜點們的守護者。他用奶油般溫暖的雙手，為每個即將誕生的甜點灌注靈魂，輕聲對它們說：「歡迎來到世界，你準備好探索自己的甜美人生了嗎？」</p>
-                             <p>布里歐深知每個甜點的獨特。他曾對焦慮的草莓泡芙說：「你不需要變得酥脆，柔軟也是一種可愛的特質。」他也鼓勵膽怯的可可可頌（也就是我們熟悉的『垮垮垮鬆』！）：『你經過層層折疊，才有了現在的樣子，不會這麼容易垮掉的。』他的信念是幫助甜點發掘自己的價值，而非改變它們。</p>
-                        </div>
-                    `,
-                    isCompleted: false
-                }
+                { id: 'brio_chats', icon: '💬', name: '布里歐的智慧記事', content: ` <div class="message-group"> <div class="message"> <div class="message-avatar">布</div> <div class="message-content"> <div class="message-header"> <span class="message-username">布里歐</span> <span class="message-timestamp">可可曆 某年某月某日 - 關於《青春》</span> </div> <div class="message-text"> <p>「歲月悠悠，衰微只及肌膚，熱忱拋卻，頹廢必至靈魂。」<br>——塞繆爾·厄爾曼《青春》</p> <p>垮垮垮鬆，是這就是再說你，不只皮膚鬆鬆的，還頹廢到了靈魂。</p> </div> </div> </div> </div> <div class="message-group"> <div class="message"> <div class="message-avatar kua">垮</div> <div class="message-content"> <div class="message-header"> <span class="message-username kua">垮垮垮鬆</span> <span class="message-timestamp">片刻之後</span> </div> <div class="message-text"> <p>在啦，幹。</p> </div> </div> </div> </div> <div class="message-group"> <div class="message"> <div class="message-avatar">布</div> <div class="message-content"> <div class="message-header"> <span class="message-username">布里歐</span> <span class="message-timestamp">可可曆 另一年某月某日 - 關於《看不見的城市》</span> </div> <div class="message-text"> <p>「生靈的地獄，不是一個即將來臨的地方；如果真有一個地獄，它已經就在這兒存在了，那是我們每天生活其間的地獄，是我們聚在一起而形成的地獄。」<br>——卡爾維諾《看不見的城市》</p> <p>你能夠想像一堆甜點聚在一起嗎？那簡直是個天堂。</p> </div> </div> </div> </div> <div class="message-group"> <div class="message"> <div class="message-avatar">布</div> <div class="message-content"> <div class="message-header"> <span class="message-username">布里歐</span> <span class="message-timestamp">可可曆 近期 - 關於奶龍</span> </div> <div class="message-text"> <p>奶龍就是沒有腮紅、耳朵及閃電形狀尾巴的皮卡丘。</p> <p><em style="color:var(--discord-text-muted); font-size:0.9em;">(精靈画外音：這就是著名的奶龍傳說由來！XD)</em></p> </div> </div> </div> </div> `, isCompleted: false },
+                { id: 'brio_history', icon: '📜', name: '關於布里歐 (歷史片段)', content: ` <div class="content-section" style="background-color:var(--discord-bg-medium); border: 1px solid var(--discord-bg-light);"> <h3>關於布里歐的更多故事 (歷史片段)</h3> <p>在可可曆127年，島上就有了這位傳奇的甜點建築師——布里歐 (Brio)。他不只是製作甜點，更是小甜點們的守護者。他用奶油般溫暖的雙手，為每個即將誕生的甜點灌注靈魂，輕聲對它們說：「歡迎來到世界，你準備好探索自己的甜美人生了嗎？」</p> <p>布里歐深知每個甜點的獨特。他曾對焦慮的草莓泡芙說：「你不需要變得酥脆，柔軟也是一種可愛的特質。」他也鼓勵膽怯的可可可頌（也就是我們熟悉的『垮垮垮鬆』！）：『你經過層層折疊，才有了現在的樣子，不會這麼容易垮掉的。』他的信念是幫助甜點發掘自己的價值，而非改變它們。</p> </div> `, isCompleted: false }
             ]
         };
 
@@ -534,7 +296,7 @@
             const channelsPanelEl = document.getElementById('channelsPanelEl');
             const panelToggleButtonEl = document.getElementById('panelToggleButtonEl');
             const channelListEl = document.getElementById('channelList');
-            const serverNameTextEl = document.getElementById('serverNameTextEl'); // The text element
+            const serverNameTextEl = document.getElementById('serverNameTextEl'); 
             const contentHeaderEl = document.getElementById('contentHeader');
             const currentChannelNameEl = document.getElementById('currentChannelName');
             const contentBodyWrapperEl = document.getElementById('contentBodyWrapper');
@@ -553,6 +315,8 @@
                 if (panelToggleButtonEl) {
                     panelToggleButtonEl.textContent = isChannelPanelCollapsed ? '☰' : '«';
                 }
+                // Toggling the panel should NOT directly affect the input mock's visibility
+                // The input mock's visibility is handled by selectContentItem
             }
 
             if(panelToggleButtonEl && channelsPanelEl) {
@@ -579,7 +343,6 @@
                 if (!channelListEl || !serverNameTextEl || !panelToggleButtonEl) return;
                 channelListEl.innerHTML = '';
                 const currentServer = servers.find(s => s.id === activeServerId);
-                // Ensure serverNameTextEl (the span for the server name) is updated
                 if (serverNameTextEl) {
                     serverNameTextEl.textContent = currentServer ? currentServer.name : '未知區域';
                 }
@@ -634,12 +397,22 @@
                 if (!servers.find(s => s.id === serverId)) return;
                 activeServerId = serverId;
 
+                // Important: Do NOT toggle the collapsed state here unless intended.
+                // This was `channelsPanelEl.classList.toggle('collapsed', isChannelPanelCollapsed);`
+                // which might have been an issue if `isChannelPanelCollapsed` was stale.
+                // The panel's collapsed state should only be changed by `toggleChannelsPanel`.
+                // However, we need to *apply* the current state if the class was removed by something else (unlikely here)
                 if (channelsPanelEl) {
-                    channelsPanelEl.classList.toggle('collapsed', isChannelPanelCollapsed);
+                    if (isChannelPanelCollapsed) {
+                        channelsPanelEl.classList.add('collapsed');
+                    } else {
+                        channelsPanelEl.classList.remove('collapsed');
+                    }
                 }
-                if (panelToggleButtonEl) {
+                 if (panelToggleButtonEl) {
                     panelToggleButtonEl.textContent = isChannelPanelCollapsed ? '☰' : '«';
                 }
+
 
                 renderServers();
 
@@ -665,7 +438,7 @@
             }
 
             function selectContentItem(itemId, type) {
-                activeChannelId = itemId;
+                activeChannelId = itemId; // Update active channel ID
                 let selectedItem;
                 let headerIconHtml = '<span class="channel-icon">#</span>';
                 let itemNameForHeader = '未知內容';
@@ -696,10 +469,12 @@
                     contentBodyEl.innerHTML = selectedItem.content;
                     contentBodyEl.scrollTop = 0;
 
+                    // Always remove input mock first
                     const existingInputMock = contentBodyWrapperEl.querySelector('.discord-input-mock-wrapper');
                     if (existingInputMock) existingInputMock.remove();
 
-                    if (activeServerId === 'brio' && itemId === 'brio_chats') {
+                    // Add input mock ONLY if the specific Brio chat is selected
+                    if (activeServerId === 'brio' && activeChannelId === 'brio_chats') { // Use activeChannelId
                          const inputMockWrapper = document.createElement('div');
                          inputMockWrapper.classList.add('discord-input-mock-wrapper');
                          inputMockWrapper.innerHTML = `
