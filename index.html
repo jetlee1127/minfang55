@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>可可冒險島 Discord 指南模擬</title>
     <style>
-        /* --- CSS 樣式 (基於穩定版本並包含所有調整) --- */
+        /* --- CSS 樣式 --- */
         :root {
             --discord-bg-darkest: #202225;
             --discord-bg-dark: #2f3136;
@@ -107,12 +107,30 @@
         .channel-item.active { background-color: var(--discord-active-channel-bg); color: var(--discord-text-primary); font-weight: bold; }
         .channel-item.completed .channel-name-text:after { content: " ✔️"; color: var(--highlight-green); font-size: 0.9em; margin-left: 5px; }
         .channel-icon { margin-right: 8px; color: var(--discord-text-muted); min-width: 18px; font-size: 1em; }
-        .main-content-area { flex-grow: 1; background-color: var(--discord-bg-medium); display: flex; flex-direction: column; overflow: hidden; height: 100vh; }
+
+        /* --- 主內容區樣式 --- */
+        .main-content-area {
+            flex-grow: 1; background-color: var(--discord-bg-medium);
+            display: flex; flex-direction: column; /* 改為 flex column 以便底部固定輸入框 */
+            overflow: hidden; height: 100vh;
+        }
         .content-header { height: 50px; padding: 0 18px; display: flex; align-items: center; font-size: 17px; font-weight: 600; border-bottom: 1px solid var(--discord-bg-darkest); box-shadow: 0 1px 0 rgba(0,0,0,0.2); flex-shrink: 0; }
         .content-header .header-icon-placeholder { margin-right: 10px; display: flex; align-items: center; justify-content: center; width: 30px; height: 30px; font-size: 1.2em; }
         .content-header .header-icon-placeholder .channel-icon { font-size: 1.3em; opacity: 0.8; }
         .content-header .dm-avatar-header { width: 30px; height: 30px; background-color: var(--accent-color1); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1em; color: white; }
-        .content-body { padding: 25px 30px; overflow-y: auto; flex-grow: 1; scrollbar-width: thin; scrollbar-color: var(--discord-scrollbar-thumb) var(--discord-scrollbar-track); font-size: 1em; line-height: 1.8; }
+        .content-body {
+            padding: 25px 30px; /* 原始 padding */
+            overflow-y: auto; flex-grow: 1;
+            scrollbar-width: thin; scrollbar-color: var(--discord-scrollbar-thumb) var(--discord-scrollbar-track);
+            font-size: 1em; line-height: 1.8;
+            display: flex; /* 新增，為了讓內容和模擬輸入框可以分開 */
+            flex-direction: column; /* 內容在上方，輸入框在下方 */
+        }
+        .content-scrollable-area { /* 新增，用於包裹實際滾動的內容 */
+            flex-grow: 1;
+            /* overflow-y: auto;  由 content-body 控制滾動 */
+        }
+
         .content-section { margin-bottom: 25px; padding: 20px; background-color: var(--discord-bg-dark); border-radius: 5px; }
         .content-section h3 { color: var(--discord-text-primary); font-size: 1.4em; margin-top: 0; margin-bottom: 15px; border-bottom: 1px solid var(--discord-bg-light); padding-bottom: 10px; }
         .content-section h3.channel-title, .content-section h4.channel-title { font-size: 1.3em; font-weight: 500; color: var(--discord-text-primary); margin-top: 20px; margin-bottom: 10px; padding-bottom: 5px; border-bottom: none; }
@@ -135,11 +153,16 @@
         .message-text { color: var(--discord-text-primary); line-height: 1.45rem; font-size:1.05em;}
         .message-text p { margin-bottom: 5px !important; }
 
+        /* 模擬 Discord 輸入框 */
+        .discord-input-mock-wrapper { /* 包裹輸入框，使其在 flex 佈局中置底 */
+            margin-top: auto; /* 將其推到底部 */
+            padding-top: 15px; /* 與上方內容的一些間距 */
+            flex-shrink: 0; /* 防止被壓縮 */
+        }
         .discord-input-mock {
             background-color: var(--discord-bg-light);
             border-radius: 8px;
             padding: 10px 15px;
-            margin-top: 25px; /* 與上方內容間隔 */
             display: flex;
             align-items: center;
             color: var(--discord-text-muted);
@@ -152,14 +175,14 @@
         .discord-input-mock .icon {
             font-size: 1.3em;
             color: var(--discord-text-secondary);
-            cursor: default; /* 只是裝飾 */
+            cursor: default;
             margin: 0 5px;
         }
 
         .completion-toast {
             display: none;
             position: fixed;
-            bottom: -70px; /* 確保初始在屏幕外 */
+            bottom: -70px;
             left: 50%;
             transform: translateX(-50%);
             background-color: var(--highlight-green);
@@ -171,15 +194,15 @@
             box-shadow: 0 4px 10px rgba(0,0,0,0.2);
             opacity: 0;
         }
-        .completion-toast.animate { /* 用於觸發動畫 */
+        .completion-toast.animate {
             display: block !important;
             animation: slideUpFadeOutToastAnimation 3.5s forwards ease-in-out;
         }
         @keyframes slideUpFadeOutToastAnimation {
             0% { bottom: -70px; opacity: 0; }
-            15% { bottom: 30px; opacity: 1; } /* 上升並完全顯示 */
-            85% { bottom: 30px; opacity: 1; } /* 停留 */
-            100% { bottom: -70px; opacity: 0; } /* 下降並消失 */
+            15% { bottom: 30px; opacity: 1; }
+            85% { bottom: 30px; opacity: 1; }
+            100% { bottom: -70px; opacity: 0; }
         }
         @media (max-width: 768px) { body { font-size: 14px; } .channels-panel:not(.collapsed) { width: 220px; } .channels-panel.collapsed { width: 50px; } .server-name-header { font-size: 16px; padding: 0 8px 0 12px;} .panel-toggle-button { font-size: 1.4em; padding: 5px;} .channels-panel.collapsed .server-name-header { justify-content: center; } .content-header {font-size: 15px; padding: 0 12px;} .content-body {padding: 15px 20px;} }
 
@@ -202,12 +225,15 @@
                 <span id="currentChannelName"></span>
             </div>
             <div id="contentBody" class="content-body">
-                <!-- Content and mock input bar will be rendered here by JS -->
+                <div class="content-scrollable-area">
+                    {/* 主要內容會插入這裡 */}
+                </div>
+                {/* 模擬輸入框將由 JS 在特定條件下插入這裡的外部 */}
             </div>
         </div>
     </div>
     <div id="completionToast" class="completion-toast">
-        <!-- Text updated in JS -->
+        {/* Text updated in JS */}
     </div>
 
     <script>
@@ -408,7 +434,7 @@
             }
         ];
 
-        const brioDialogueData = { // Changed variable name for clarity
+        const brioDialogueData = {
             id: 'brio_server_content',
             name: '與布里歐的記事記錄',
             icon: '👨‍🍳',
@@ -627,7 +653,7 @@
                     activeChannelId = guideTopics[0] ? guideTopics[0].id : 'welcome';
                     selectContentItem(activeChannelId, 'topic');
                 } else if (activeServerId === 'brio') {
-                    activeChannelId = brioDialogueData.subTopics[0] ? brioDialogueData.subTopics[0].id : null;
+                    activeChannelId = brioDialogueData.subTopics[0] ? brioDialogueData.subTopics[0].id : null; // Default to first subtopic
                     if (activeChannelId) {
                         selectContentItem(activeChannelId, 'brio_subtopic');
                     } else {
@@ -671,14 +697,18 @@
                     currentChannelNameEl.textContent = itemNameForHeader;
 
 
-                    contentBodyEl.innerHTML = selectedItem.content;
-                    if (type === 'brio_subtopic' && itemId === 'brio_chats') { // Add input mock only for brio_chats
+                    contentBodyEl.innerHTML = '<div class="content-scrollable-area">' + selectedItem.content + '</div>'; // Wrap content
+
+                    // Add mock input bar for Brio's dialogue sections
+                    if (activeServerId === 'brio') {
                          contentBodyEl.innerHTML += `
-                            <div class="discord-input-mock">
-                                <span class="icon">+</span>
-                                <span class="input-placeholder">向 布里歐 傳送訊息</span>
-                                <span class="icon">🎁</span>
-                                <span class="icon">🙂</span>
+                            <div class="discord-input-mock-wrapper">
+                                <div class="discord-input-mock">
+                                    <span class="icon">⊕</span>
+                                    <span class="input-placeholder">向 ${currentChannelNameEl.textContent} 傳送訊息...</span>
+                                    <span class="icon">😊</span>
+                                    <span class="icon">🎤</span>
+                                </div>
                             </div>`;
                     }
                     contentBodyEl.scrollTop = 0;
@@ -699,15 +729,16 @@
                     if (!completionToastEl.classList.contains('animate')) {
                         completionToastEl.textContent = '太棒了，小甜點！你已掌握所有指南精華！準備好在島上大顯身手了嗎？🥳';
                         completionToastEl.style.display = 'block';
-                        requestAnimationFrame(() => { // Use rAF for smoother animation trigger
+                        requestAnimationFrame(() => { // Ensure display:block is applied before animation
                             completionToastEl.classList.add('animate');
                         });
 
-                        completionToastEl.onanimationend = () => { // More reliable way to hide after animation
+                        const animationEndHandler = () => {
                             completionToastEl.style.display = 'none';
                             completionToastEl.classList.remove('animate');
-                            completionToastEl.onanimationend = null; // Clean up listener
+                            completionToastEl.removeEventListener('animationend', animationEndHandler);
                         };
+                        completionToastEl.addEventListener('animationend', animationEndHandler, {once: true});
                     }
                 }
             }
