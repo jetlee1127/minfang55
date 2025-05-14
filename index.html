@@ -116,12 +116,12 @@
             flex-grow: 1;
             display: flex;
             flex-direction: column;
-            overflow: hidden;
+            overflow: hidden; /* Important: Parent of .content-body should handle overflow or sizing */
         }
         .content-body {
             padding: 20px 25px;
             overflow-y: auto;
-            flex-grow: 1;
+            flex-grow: 1; /* Allows content to take up space and scroll */
             scrollbar-width: thin; scrollbar-color: var(--discord-scrollbar-thumb) var(--discord-scrollbar-track);
             font-size: 1em; line-height: 1.7;
         }
@@ -148,8 +148,8 @@
         .message-text p { margin-bottom: 4px !important; }
 
         .discord-input-mock-wrapper {
-            margin-top: auto;
-            padding-top: 15px;
+            margin-top: auto; /* Pushes it to the bottom of the flex container (.content-body-wrapper) */
+            padding: 15px 20px 20px 20px; /* Add padding, esp. bottom */
             flex-shrink: 0;
         }
         .discord-input-mock {
@@ -181,12 +181,12 @@
         }
         .completion-toast.animate {
             display: block !important;
-            animation-name: slideUpFadeOutToastAnimation;
+            animation-name: slideUpFadeOutToastAnimation; /* Ensure this matches the @keyframes name */
             animation-duration: 3.5s;
             animation-fill-mode: forwards;
             animation-timing-function: ease-in-out;
         }
-        @keyframes slideUpFadeOutToastAnimation {
+        @keyframes slideUpFadeOutToastAnimation { /* Renamed to match class if needed */
             0% { bottom: -70px; opacity: 0; }
             15% { bottom: 30px; opacity: 1; }
             85% { bottom: 30px; opacity: 1; }
@@ -214,8 +214,9 @@
             </div>
             <div id="contentBodyWrapper" class="content-body-wrapper">
                 <div id="contentBody" class="content-body">
-                    {/* HTML content will be inserted here by JS */}
+                    {/* 主要內容會插入這裡 */}
                 </div>
+                {/* 模擬輸入框會由 JS 添加到 contentBodyWrapperEl 的末尾 */}
             </div>
         </div>
     </div>
@@ -232,7 +233,7 @@
 
         const guideTopics = [
             // !! 請確保這裡的 content 內容是完整且經過所有文本修正的 !!
-            {
+             {
                 id: 'welcome',
                 category: '歡迎來到可可冒險島',
                 categoryIcon: '👋',
@@ -416,7 +417,6 @@
                         <p>其實也沒有什麼特別的內容，就是想跟你說聲「探索辛苦了！」</p>
                         <p>希望你在可可冒險島玩得開心！</p>
                     </div>
-                    <div style="height: 30vh;"></div>
                 `,
                 isCompleted: false
             }
@@ -526,7 +526,7 @@
             let activeServerId = 'guide';
             let activeChannelId = 'welcome';
             let isChannelPanelCollapsed = false;
-            let toastTimer = null; // 用於管理 toast 的計時器
+            let toastTimer = null; // Timer for completion toast
 
             function toggleChannelsPanel() {
                 isChannelPanelCollapsed = !isChannelPanelCollapsed;
@@ -648,7 +648,7 @@
                         selectContentItem(activeChannelId, 'brio_subtopic');
                     } else {
                         if(contentBodyWrapperEl && currentChannelNameEl && contentHeaderEl) {
-                             contentBodyWrapperEl.querySelector('#contentBody').innerHTML = '<div class="content-scrollable-area"><div class="content-section"><p>布里歐暫時沒有記事可看。</p></div></div>';
+                             contentBodyWrapperEl.querySelector('#contentBody').innerHTML = '<div class="content-section"><p>布里歐暫時沒有記事可看。</p></div>';
                              const existingInputMock = contentBodyWrapperEl.querySelector('.discord-input-mock-wrapper');
                              if (existingInputMock) existingInputMock.remove();
                              currentChannelNameEl.textContent = brioDialogueData.name;
@@ -697,7 +697,7 @@
                         existingInputMock.remove();
                     }
 
-                    if (activeServerId === 'brio') {
+                    if (activeServerId === 'brio' && itemId === 'brio_chats') { // 只在布里歐的聊天記事顯示輸入框
                          const inputMockWrapper = document.createElement('div');
                          inputMockWrapper.classList.add('discord-input-mock-wrapper');
                          inputMockWrapper.innerHTML = `
@@ -724,29 +724,26 @@
                 const allBrioSubTopicsDone = brioDialogueData.subTopics.every(subTopic => subTopic.isCompleted);
 
                 if (allTopicsDone && allBrioSubTopicsDone && completionToastEl) {
-                    // 確保動畫相關的 class 和 style 被正確重置，以便動畫可以重新播放
-                    completionToastEl.classList.remove('animate');
-                    completionToastEl.style.display = 'none'; // 先隱藏
-                    completionToastEl.style.opacity = '0'; // 重置透明度
-                    completionToastEl.style.bottom = '-70px'; // 重置位置
-
-                    // 使用 requestAnimationFrame 確保 DOM 更新後再添加 animate class
-                    requestAnimationFrame(() => {
+                    if (!completionToastEl.classList.contains('animate')) {
                         completionToastEl.textContent = '太棒了，小甜點！你已掌握所有指南精華！準備好在島上大顯身手了嗎？🥳';
-                        completionToastEl.style.display = 'block'; // 設為 block 以便動畫可見
-                        requestAnimationFrame(() => { // 再一幀確保 display 生效
-                             completionToastEl.classList.add('animate');
-                        });
-                    });
+                        completionToastEl.style.display = 'block';
+                        // Force reflow before adding class to ensure animation plays from start
+                        completionToastEl.classList.remove('animate'); // Ensure it's not already there
+                        void completionToastEl.offsetWidth; // Trigger reflow
+                        completionToastEl.classList.add('animate'); // Add class to trigger animation
 
-                    // 使用 animationend 事件來在動畫結束後可靠地隱藏元素
-                    const handleAnimationEnd = () => {
-                        completionToastEl.style.display = 'none';
-                        completionToastEl.classList.remove('animate');
-                        completionToastEl.removeEventListener('animationend', handleAnimationEnd);
-                    };
-                    completionToastEl.removeEventListener('animationend', handleAnimationEnd); // 先移除舊的監聽器以防重複
-                    completionToastEl.addEventListener('animationend', handleAnimationEnd, { once: true });
+                        // Use a flag to prevent multiple animationend listeners if checkAllCompleted is called rapidly
+                        if (!completionToastEl.isAnimating) {
+                            completionToastEl.isAnimating = true;
+                            const handleAnimationEnd = () => {
+                                completionToastEl.style.display = 'none';
+                                completionToastEl.classList.remove('animate');
+                                completionToastEl.isAnimating = false; // Reset flag
+                                completionToastEl.removeEventListener('animationend', handleAnimationEnd);
+                            };
+                            completionToastEl.addEventListener('animationend', handleAnimationEnd, { once: true });
+                        }
+                    }
                 }
             }
 
@@ -761,7 +758,7 @@
             } else {
                 console.error("一個或多個必要的 DOM 元素未找到，遊戲無法初始化。請檢查HTML中的ID。");
                  initialElements.forEach((el, index) => {
-                    if (!el) console.error(`Element with expected ID '${['serverList', 'channelsPanelEl', 'panelToggleButtonEl', 'channelList', 'serverNameTextEl', 'contentHeader', 'contentBodyWrapperEl', 'contentBody',  'completionToast'][index]}' not found.`);
+                    if (!el) console.error(`Element at index ${index} is null. Expected ID: ${['serverList', 'channelsPanelEl', 'panelToggleButtonEl', 'channelList', 'serverNameTextEl', 'contentHeader', 'contentBodyWrapperEl', 'contentBody',  'completionToast'][index]}' not found.`);
                 });
             }
         });
