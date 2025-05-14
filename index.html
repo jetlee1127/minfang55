@@ -30,7 +30,7 @@
             height: 100%;
             margin: 0;
             overflow: hidden;
-            box-sizing: border-box; /* Apply to all elements for consistent box model */
+            box-sizing: border-box; 
         }
         *, *:before, *:after {
             box-sizing: inherit;
@@ -121,7 +121,7 @@
         }
 
         .channel-list-container {
-            padding: 18px 10px 70px 18px; /* MAXIMIZED padding-bottom */
+            padding: 18px 10px 70px 18px; 
             overflow-y: auto; 
             flex-grow: 1; 
             scrollbar-width: thin; scrollbar-color: var(--discord-scrollbar-thumb) var(--discord-scrollbar-track);
@@ -147,7 +147,7 @@
         .main-content-area { 
             flex-grow: 1; background-color: var(--discord-bg-medium); 
             display: flex; flex-direction: column; 
-            overflow: hidden; height: 100%; /* Changed from 100vh to 100% to respect flex parent */
+            overflow: hidden; height: 100%;
         }
         
         .content-header { 
@@ -191,15 +191,28 @@
         .content-section strong.highlight { color: var(--accent-color1); font-weight: bold; }
         .content-section .important-note { color: #faa61a; font-weight: bold; }
         .content-section .architect-warning { display: block; margin-top: 8px; color: #faa61a; font-weight: bold; }
+        
         .message-group { margin-bottom: 15px; }
         .message { display: flex; align-items: flex-start; padding: 2px 0; }
         .message-avatar { width: 38px; height: 38px; margin-right: 15px; font-size: 1em; border-radius: 50%; background-color: var(--accent-color1); flex-shrink: 0; display:flex; align-items:center; justify-content:center; font-weight:bold; color:white; }
         .message-avatar.kua { background-color: #7289da; }
         .message-content { flex-grow: 1; }
-        .message-header { display: flex; align-items: baseline; margin-bottom: 3px; }
-        .message-username { font-weight: 500; color: var(--discord-text-primary); margin-right: 6px; font-size: 1em;}
+        .message-header { 
+            /*display: flex; align-items: baseline; (Original)*/
+            display: block; /* Changed for username and timestamp to stack */
+            margin-bottom: 4px; 
+        }
+        .message-username { 
+            font-weight: 500; color: var(--discord-text-primary); 
+            margin-right: 6px; font-size: 1em;
+            /* display: inline-block; (Can be block or inline-block) */
+        }
         .message-username.kua { color: #9099dd; }
-        .message-timestamp { font-size: 0.75em; color: var(--discord-text-muted); }
+        .message-timestamp { 
+            font-size: 0.75em; color: var(--discord-text-muted);
+            display: block; /* Makes timestamp take its own line */
+            margin-top: 2px; /* Add a little space from username */
+        }
         .message-text { color: var(--discord-text-primary); line-height: 1.4rem; font-size:1em;}
         .message-text p { margin-bottom: 4px !important; }
 
@@ -208,7 +221,6 @@
             flex-shrink: 0; 
             background-color: var(--discord-bg-medium); 
             border-top: 1px solid var(--discord-bg-darkest);
-            /* This will be controlled by JS now, so no display:none here initially */
         }
         .discord-input-mock {
             background-color: var(--discord-bg-light); border-radius: 8px;
@@ -268,7 +280,7 @@
                 <div id="contentBody" class="content-body">
                     {/* HTML content will be inserted here by JS */}
                 </div>
-                {/* Input mock is now managed by updateInputMockVisibility() */}
+                {/* Input mock is now managed by updateInputMockVisibility() and appended here */}
             </div>
         </div>
     </div>
@@ -313,36 +325,28 @@
 
             let activeServerId = 'guide';
             let activeChannelId = 'welcome';
-            let isChannelPanelCollapsed = false; // Panel is initially expanded
+            let isChannelPanelCollapsed = false;
 
-            // --- Function to control input mock visibility ---
             function updateInputMockVisibility() {
                 if (!contentBodyWrapperEl) return;
-
-                // 1. Always try to remove any existing input mock
                 const existingInputMock = contentBodyWrapperEl.querySelector('.discord-input-mock-wrapper');
                 if (existingInputMock) {
                     existingInputMock.remove();
                 }
 
-                // 2. Add new input mock ONLY if all conditions are met:
-                //    - Channels panel is collapsed
-                //    - Active server is 'brio'
-                //    - Active channel in Brio is 'brio_chats'
                 if (isChannelPanelCollapsed && activeServerId === 'brio' && activeChannelId === 'brio_chats') {
                     const inputMockWrapper = document.createElement('div');
                     inputMockWrapper.classList.add('discord-input-mock-wrapper');
                     inputMockWrapper.innerHTML = `
                         <div class="discord-input-mock">
                             <span class="icon">⊕</span>
-                            <span class="input-placeholder">向 ${brioDialogueData.name} 傳送訊息... (閉合時顯示)</span>
+                            <span class="input-placeholder">向 ${brioDialogueData.name} 傳送訊息...</span>
                             <span class="icon">😊</span>
                             <span class="icon">🎤</span>
                         </div>`;
                     contentBodyWrapperEl.appendChild(inputMockWrapper);
                 }
             }
-
 
             function toggleChannelsPanel() {
                 isChannelPanelCollapsed = !isChannelPanelCollapsed;
@@ -352,7 +356,7 @@
                 if (panelToggleButtonEl) {
                     panelToggleButtonEl.textContent = isChannelPanelCollapsed ? '☰' : '«';
                 }
-                updateInputMockVisibility(); // Update mock based on new panel state
+                updateInputMockVisibility();
             }
 
             if(panelToggleButtonEl && channelsPanelEl) {
@@ -429,11 +433,10 @@
                 }
             }
 
-            function selectServer(serverId) {
+            function selectServer(serverId) { /* Unchanged logic for panel state */
                 if (!servers.find(s => s.id === serverId)) return;
                 activeServerId = serverId;
 
-                // Apply current collapsed state to panel
                 if (channelsPanelEl) {
                     if (isChannelPanelCollapsed) channelsPanelEl.classList.add('collapsed');
                     else channelsPanelEl.classList.remove('collapsed');
@@ -442,25 +445,22 @@
                     panelToggleButtonEl.textContent = isChannelPanelCollapsed ? '☰' : '«';
                 }
 
-                renderServers(); // Update server icons
+                renderServers();
 
                 if (activeServerId === 'guide') {
                     activeChannelId = guideTopics[0] ? guideTopics[0].id : 'welcome';
                     selectContentItem(activeChannelId, 'topic');
                 } else if (activeServerId === 'brio') {
-                    activeChannelId = brioDialogueData.subTopics[0] ? brioDialogueData.subTopics[0].id : 'brio_chats'; // Default to brio_chats
+                    activeChannelId = brioDialogueData.subTopics[0] ? brioDialogueData.subTopics[0].id : 'brio_chats';
                     selectContentItem(activeChannelId, 'brio_subtopic');
-                } else {
-                    // If it's neither guide nor brio, or brio has no subtopics (edge case)
-                    // Ensure a clean state for content and input mock
+                } else { 
                     if(contentBodyEl) contentBodyEl.innerHTML = '<div class="content-section"><p>請選擇一個伺服器和頻道。</p></div>';
                     if(currentChannelNameEl) currentChannelNameEl.textContent = "無";
                     const headerIconPlaceholder = contentHeaderEl.querySelector('.header-icon-placeholder');
                     if(headerIconPlaceholder) headerIconPlaceholder.innerHTML = `<span></span>`;
-
                 }
                 renderChannelsOrDialogueTitle(); 
-                updateInputMockVisibility(); // Update mock based on new server/channel
+                updateInputMockVisibility(); 
             }
 
             function selectContentItem(itemId, type) {
@@ -500,7 +500,7 @@
                         checkAllCompleted();
                     }
                     renderChannelsOrDialogueTitle(); 
-                    updateInputMockVisibility(); // Update mock based on new channel
+                    updateInputMockVisibility(); 
                 }
             }
 
@@ -524,16 +524,14 @@
                 }
             }
 
-            // Initial Setup
-            const initialElements = [
+            const initialElements = [ /* Unchanged */
                 serverListEl, channelsPanelEl, panelToggleButtonEl, channelListEl,
                 serverNameTextEl, contentHeaderEl, currentChannelNameEl,
                 contentBodyWrapperEl, contentBodyEl, completionToastEl
             ];
             if (initialElements.every(el => el)) {
                 renderServers();
-                selectServer(activeServerId); // This will call selectContentItem and updateInputMockVisibility
-                // Initial panel state (expanded) means input mock should be hidden by default by updateInputMockVisibility
+                selectServer(activeServerId); 
             } else {
                 console.error("一個或多個必要的 DOM 元素未找到，指南模擬無法初始化。請檢查HTML中的ID。");
                  initialElements.forEach((el, index) => {
