@@ -214,9 +214,9 @@
             </div>
             <div id="contentBodyWrapper" class="content-body-wrapper">
                 <div id="contentBody" class="content-body">
-                    {/* 主要內容會插入這裡 */}
+                    {/* Content will be inserted here by JS */}
                 </div>
-                {/* 模擬輸入框會由 JS 添加到此 wrapper 的末尾 */}
+                {/* Mock input is now correctly handled by JS */}
             </div>
         </div>
     </div>
@@ -647,7 +647,7 @@
                         selectContentItem(activeChannelId, 'brio_subtopic');
                     } else {
                         if(contentBodyWrapperEl && currentChannelNameEl && contentHeaderEl) {
-                             contentBodyWrapperEl.querySelector('#contentBody').innerHTML = '<div class="content-section"><p>布里歐暫時沒有記事可看。</p></div>';
+                             contentBodyWrapperEl.querySelector('#contentBody').innerHTML = '<div class="content-scrollable-area"><div class="content-section"><p>布里歐暫時沒有記事可看。</p></div></div>';
                              const existingInputMock = contentBodyWrapperEl.querySelector('.discord-input-mock-wrapper');
                              if (existingInputMock) existingInputMock.remove();
                              currentChannelNameEl.textContent = brioDialogueData.name;
@@ -723,25 +723,23 @@
                 const allBrioSubTopicsDone = brioDialogueData.subTopics.every(subTopic => subTopic.isCompleted);
 
                 if (allTopicsDone && allBrioSubTopicsDone && completionToastEl) {
-                    // Ensure animation is ready to play again if already played
-                    completionToastEl.classList.remove('animate');
-                    // Force reflow to reset animation state
-                    void completionToastEl.offsetWidth;
-
-                    completionToastEl.textContent = '太棒了，小甜點！你已掌握所有指南精華！準備好在島上大顯身手了嗎？🥳';
-                    completionToastEl.style.display = 'block'; // Make it visible for animation
-                    requestAnimationFrame(() => { // Ensure display:block is applied before adding animate class
+                    if (!completionToastEl.classList.contains('animate')) {
+                        completionToastEl.textContent = '太棒了，小甜點！你已掌握所有指南精華！準備好在島上大顯身手了嗎？🥳';
+                        completionToastEl.style.display = 'block'; // 確保動畫前元素是可見的
+                        // 強制重繪以確保 display:block 已應用，然後再添加動畫 class
+                        void completionToastEl.offsetWidth;
                         completionToastEl.classList.add('animate');
-                    });
 
-                    const handleAnimationEnd = () => {
-                        completionToastEl.style.display = 'none'; // Hide after animation
-                        completionToastEl.classList.remove('animate'); // Reset for next time
+                        // 使用 animationend 事件來確保在動畫完成後才隱藏
+                        const handleAnimationEnd = () => {
+                            completionToastEl.style.display = 'none';
+                            completionToastEl.classList.remove('animate'); // 為下次播放重置 class
+                            completionToastEl.removeEventListener('animationend', handleAnimationEnd); // 清理事件監聽器
+                        };
+                        // 先移除可能存在的舊監聽器，再添加新的
                         completionToastEl.removeEventListener('animationend', handleAnimationEnd);
-                    };
-                    // Remove previous listener if any to avoid multiple triggers
-                    completionToastEl.removeEventListener('animationend', handleAnimationEnd);
-                    completionToastEl.addEventListener('animationend', handleAnimationEnd, { once: true });
+                        completionToastEl.addEventListener('animationend', handleAnimationEnd, { once: true });
+                    }
                 }
             }
 
