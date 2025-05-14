@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>可可冒險島 Discord 指南模擬</title>
     <style>
-        /* --- CSS 樣式 --- */
+        /* --- CSS 樣式 (與上一個版本基本相同) --- */
         :root {
             --discord-bg-darkest: #202225;
             --discord-bg-dark: #2f3136;
@@ -107,57 +107,50 @@
         .channel-item.active { background-color: var(--discord-active-channel-bg); color: var(--discord-text-primary); font-weight: bold; }
         .channel-item.completed .channel-name-text:after { content: " ✔️"; color: var(--highlight-green); font-size: 0.9em; margin-left: 5px; }
         .channel-icon { margin-right: 8px; color: var(--discord-text-muted); min-width: 18px; font-size: 1em; }
-
-        /* --- 主內容區樣式 --- */
-        .main-content-area {
-            flex-grow: 1; background-color: var(--discord-bg-medium);
-            display: flex; flex-direction: column; /* 改為 flex column 以便底部固定輸入框 */
-            overflow: hidden; height: 100vh;
-        }
+        .main-content-area { flex-grow: 1; background-color: var(--discord-bg-medium); display: flex; flex-direction: column; overflow: hidden; height: 100vh; }
         .content-header { height: 50px; padding: 0 18px; display: flex; align-items: center; font-size: 17px; font-weight: 600; border-bottom: 1px solid var(--discord-bg-darkest); box-shadow: 0 1px 0 rgba(0,0,0,0.2); flex-shrink: 0; }
         .content-header .header-icon-placeholder { margin-right: 10px; display: flex; align-items: center; justify-content: center; width: 30px; height: 30px; font-size: 1.2em; }
         .content-header .header-icon-placeholder .channel-icon { font-size: 1.3em; opacity: 0.8; }
         .content-header .dm-avatar-header { width: 30px; height: 30px; background-color: var(--accent-color1); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1em; color: white; }
-        .content-body {
-            padding: 25px 30px; /* 原始 padding */
-            overflow-y: auto; flex-grow: 1;
-            scrollbar-width: thin; scrollbar-color: var(--discord-scrollbar-thumb) var(--discord-scrollbar-track);
-            font-size: 1em; line-height: 1.8;
-            display: flex; /* 新增，為了讓內容和模擬輸入框可以分開 */
-            flex-direction: column; /* 內容在上方，輸入框在下方 */
-        }
-        .content-scrollable-area { /* 新增，用於包裹實際滾動的內容 */
+        .content-body-wrapper {
             flex-grow: 1;
-            /* overflow-y: auto;  由 content-body 控制滾動 */
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
         }
-
-        .content-section { margin-bottom: 25px; padding: 20px; background-color: var(--discord-bg-dark); border-radius: 5px; }
-        .content-section h3 { color: var(--discord-text-primary); font-size: 1.4em; margin-top: 0; margin-bottom: 15px; border-bottom: 1px solid var(--discord-bg-light); padding-bottom: 10px; }
-        .content-section h3.channel-title, .content-section h4.channel-title { font-size: 1.3em; font-weight: 500; color: var(--discord-text-primary); margin-top: 20px; margin-bottom: 10px; padding-bottom: 5px; border-bottom: none; }
+        .content-body {
+            padding: 20px 25px;
+            overflow-y: auto;
+            flex-grow: 1;
+            scrollbar-width: thin; scrollbar-color: var(--discord-scrollbar-thumb) var(--discord-scrollbar-track);
+            font-size: 1em; line-height: 1.7;
+        }
+        .content-section { margin-bottom: 20px; padding: 18px; background-color: var(--discord-bg-dark); border-radius: 5px; }
+        .content-section h3 { color: var(--discord-text-primary); font-size: 1.35em; margin-top: 0; margin-bottom: 12px; border-bottom: 1px solid var(--discord-bg-light); padding-bottom: 8px; }
+        .content-section h3.channel-title, .content-section h4.channel-title { font-size: 1.25em; font-weight: 500; color: var(--discord-text-primary); margin-top: 18px; margin-bottom: 8px; padding-bottom: 4px; border-bottom: none; }
         .content-section h3.channel-title:first-child, .content-section h4.channel-title:first-child { margin-top: 0; }
         .content-section h3.channel-title:before, .content-section h4.channel-title:before { content: "# "; color: var(--discord-text-muted); font-weight: bold; margin-right: 4px; }
-        .content-section p, .content-section li { color: var(--discord-text-secondary); margin-bottom: 10px; font-size: 1.05em; }
-        .content-section ul, .content-section ol { padding-left: 30px; }
+        .content-section p, .content-section li { color: var(--discord-text-secondary); margin-bottom: 8px; font-size: 1em; }
+        .content-section ul, .content-section ol { padding-left: 25px; }
         .content-section strong.highlight { color: var(--accent-color1); font-weight: bold; }
         .content-section .important-note { color: #faa61a; font-weight: bold; }
-        .content-section .architect-warning { display: block; margin-top: 10px; color: #faa61a; font-weight: bold; }
-        .message-group { margin-bottom: 18px; }
+        .content-section .architect-warning { display: block; margin-top: 8px; color: #faa61a; font-weight: bold; }
+        .message-group { margin-bottom: 15px; }
         .message { display: flex; align-items: flex-start; padding: 2px 0; }
-        .message-avatar { width: 42px; height: 42px; margin-right: 18px; font-size: 1.1em; border-radius: 50%; background-color: var(--accent-color1); flex-shrink: 0; display:flex; align-items:center; justify-content:center; font-weight:bold; color:white; }
+        .message-avatar { width: 38px; height: 38px; margin-right: 15px; font-size: 1em; border-radius: 50%; background-color: var(--accent-color1); flex-shrink: 0; display:flex; align-items:center; justify-content:center; font-weight:bold; color:white; }
         .message-avatar.kua { background-color: #7289da; }
         .message-content { flex-grow: 1; }
-        .message-header { display: flex; align-items: baseline; margin-bottom: 4px; }
-        .message-username { font-weight: 500; color: var(--discord-text-primary); margin-right: 8px; font-size: 1.05em;}
+        .message-header { display: flex; align-items: baseline; margin-bottom: 3px; }
+        .message-username { font-weight: 500; color: var(--discord-text-primary); margin-right: 6px; font-size: 1em;}
         .message-username.kua { color: #9099dd; }
-        .message-timestamp { font-size: 0.8em; color: var(--discord-text-muted); }
-        .message-text { color: var(--discord-text-primary); line-height: 1.45rem; font-size:1.05em;}
-        .message-text p { margin-bottom: 5px !important; }
+        .message-timestamp { font-size: 0.75em; color: var(--discord-text-muted); }
+        .message-text { color: var(--discord-text-primary); line-height: 1.4rem; font-size:1em;}
+        .message-text p { margin-bottom: 4px !important; }
 
-        /* 模擬 Discord 輸入框 */
-        .discord-input-mock-wrapper { /* 包裹輸入框，使其在 flex 佈局中置底 */
-            margin-top: auto; /* 將其推到底部 */
-            padding-top: 15px; /* 與上方內容的一些間距 */
-            flex-shrink: 0; /* 防止被壓縮 */
+        .discord-input-mock-wrapper {
+            margin-top: auto;
+            padding-top: 15px;
+            flex-shrink: 0;
         }
         .discord-input-mock {
             background-color: var(--discord-bg-light);
@@ -166,23 +159,15 @@
             display: flex;
             align-items: center;
             color: var(--discord-text-muted);
-            border: 1px solid var(--discord-bg-darkest);
+            border-top: 1px solid var(--discord-bg-darkest);
         }
-        .discord-input-mock .input-placeholder {
-            flex-grow: 1;
-            padding-left: 8px;
-        }
-        .discord-input-mock .icon {
-            font-size: 1.3em;
-            color: var(--discord-text-secondary);
-            cursor: default;
-            margin: 0 5px;
-        }
+        .discord-input-mock .input-placeholder { flex-grow: 1; padding-left: 8px; }
+        .discord-input-mock .icon { font-size: 1.3em; color: var(--discord-text-secondary); cursor: default; margin: 0 5px; }
 
         .completion-toast {
             display: none;
             position: fixed;
-            bottom: -70px;
+            bottom: -70px; /* Start off-screen for animation */
             left: 50%;
             transform: translateX(-50%);
             background-color: var(--highlight-green);
@@ -192,10 +177,10 @@
             z-index: 2000;
             font-size: 1.1em;
             box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-            opacity: 0;
+            opacity: 0; /* Start transparent */
         }
         .completion-toast.animate {
-            display: block !important;
+            display: block !important; /* Use !important for a brief moment to ensure visibility for animation start */
             animation: slideUpFadeOutToastAnimation 3.5s forwards ease-in-out;
         }
         @keyframes slideUpFadeOutToastAnimation {
@@ -204,7 +189,7 @@
             85% { bottom: 30px; opacity: 1; }
             100% { bottom: -70px; opacity: 0; }
         }
-        @media (max-width: 768px) { body { font-size: 14px; } .channels-panel:not(.collapsed) { width: 220px; } .channels-panel.collapsed { width: 50px; } .server-name-header { font-size: 16px; padding: 0 8px 0 12px;} .panel-toggle-button { font-size: 1.4em; padding: 5px;} .channels-panel.collapsed .server-name-header { justify-content: center; } .content-header {font-size: 15px; padding: 0 12px;} .content-body {padding: 15px 20px;} }
+        @media (max-width: 768px) { body { font-size: 14px; } .channels-panel:not(.collapsed) { width: 220px; } .channels-panel.collapsed { width: 50px; } .server-name-header { font-size: 16px; padding: 0 8px 0 12px;} .panel-toggle-button { font-size: 1.4em; padding: 5px;} .channels-panel.collapsed .server-name-header { justify-content: center; } .content-header {font-size: 15px; padding: 0 12px;} .content-body {padding: 15px;} .discord-input-mock-wrapper { margin: 10px 15px 15px 15px;} .discord-input-mock { margin: 0;} }
 
     </style>
 </head>
@@ -224,11 +209,11 @@
                 <span class="header-icon-placeholder"><span class="channel-icon">#</span></span>
                 <span id="currentChannelName"></span>
             </div>
-            <div id="contentBody" class="content-body">
-                <div class="content-scrollable-area">
-                    {/* 主要內容會插入這裡 */}
+            <div id="contentBodyWrapper" class="content-body-wrapper">
+                <div id="contentBody" class="content-body">
+                    {/* HTML content will be inserted here by JS */}
                 </div>
-                {/* 模擬輸入框將由 JS 在特定條件下插入這裡的外部 */}
+                {/*  */}
             </div>
         </div>
     </div>
@@ -244,8 +229,8 @@
         ];
 
         const guideTopics = [
-            // !! 請確保這裡的 content 內容是完整且經過所有文本修正的 !!
-            {
+            // !! 確保 guideTopics 的 content 內容是完整且正確的 !!
+             {
                 id: 'welcome',
                 category: '歡迎來到可可冒險島',
                 categoryIcon: '👋',
@@ -531,6 +516,7 @@
             const serverNameTextEl = document.getElementById('serverNameTextEl');
             const contentHeaderEl = document.getElementById('contentHeader');
             const currentChannelNameEl = document.getElementById('currentChannelName');
+            const contentBodyWrapperEl = document.getElementById('contentBodyWrapper');
             const contentBodyEl = document.getElementById('contentBody');
             const completionToastEl = document.getElementById('completionToast');
 
@@ -653,14 +639,18 @@
                     activeChannelId = guideTopics[0] ? guideTopics[0].id : 'welcome';
                     selectContentItem(activeChannelId, 'topic');
                 } else if (activeServerId === 'brio') {
-                    activeChannelId = brioDialogueData.subTopics[0] ? brioDialogueData.subTopics[0].id : null; // Default to first subtopic
+                    activeChannelId = brioDialogueData.subTopics[0] ? brioDialogueData.subTopics[0].id : null;
                     if (activeChannelId) {
                         selectContentItem(activeChannelId, 'brio_subtopic');
                     } else {
-                        if(contentBodyEl) contentBodyEl.innerHTML = '<div class="content-section"><p>布里歐暫時沒有記事可看。</p></div>';
-                        if(currentChannelNameEl) currentChannelNameEl.textContent = brioDialogueData.name;
-                         const headerIconPlaceholder = contentHeaderEl.querySelector('.header-icon-placeholder');
-                        if(headerIconPlaceholder) headerIconPlaceholder.innerHTML = `<div class="dm-avatar-header">${brioDialogueData.icon || brioDialogueData.name.charAt(0)}</div>`;
+                        if(contentBodyWrapperEl && currentChannelNameEl && contentHeaderEl) {
+                             contentBodyWrapperEl.querySelector('#contentBody').innerHTML = '<div class="content-scrollable-area"><div class="content-section"><p>布里歐暫時沒有記事可看。</p></div></div>';
+                             const existingInputMock = contentBodyWrapperEl.querySelector('.discord-input-mock-wrapper');
+                             if (existingInputMock) existingInputMock.remove();
+                             currentChannelNameEl.textContent = brioDialogueData.name;
+                             const headerIconPlaceholder = contentHeaderEl.querySelector('.header-icon-placeholder');
+                             if(headerIconPlaceholder) headerIconPlaceholder.innerHTML = `<div class="dm-avatar-header">${brioDialogueData.icon || brioDialogueData.name.charAt(0)}</div>`;
+                        }
                     }
                 }
                 renderChannelsOrDialogueTitle();
@@ -686,7 +676,7 @@
                     }
                 }
 
-                if (selectedItem && contentHeaderEl && currentChannelNameEl && contentBodyEl) {
+                if (selectedItem && contentHeaderEl && currentChannelNameEl && contentBodyEl && contentBodyWrapperEl) {
                     let headerIconPlaceholder = contentHeaderEl.querySelector('.header-icon-placeholder');
                     if (!headerIconPlaceholder) {
                         headerIconPlaceholder = document.createElement('span');
@@ -696,20 +686,24 @@
                     headerIconPlaceholder.innerHTML = headerIconHtml;
                     currentChannelNameEl.textContent = itemNameForHeader;
 
+                    contentBodyEl.innerHTML = selectedItem.content;
 
-                    contentBodyEl.innerHTML = '<div class="content-scrollable-area">' + selectedItem.content + '</div>'; // Wrap content
+                    const existingInputMock = contentBodyWrapperEl.querySelector('.discord-input-mock-wrapper');
+                    if (existingInputMock) {
+                        existingInputMock.remove();
+                    }
 
-                    // Add mock input bar for Brio's dialogue sections
-                    if (activeServerId === 'brio') {
-                         contentBodyEl.innerHTML += `
-                            <div class="discord-input-mock-wrapper">
-                                <div class="discord-input-mock">
-                                    <span class="icon">⊕</span>
-                                    <span class="input-placeholder">向 ${currentChannelNameEl.textContent} 傳送訊息...</span>
-                                    <span class="icon">😊</span>
-                                    <span class="icon">🎤</span>
-                                </div>
+                    if (activeServerId === 'brio') { // 始終為布里歐視圖添加輸入框（放在 wrapper 的末尾）
+                         const inputMockWrapper = document.createElement('div');
+                         inputMockWrapper.classList.add('discord-input-mock-wrapper');
+                         inputMockWrapper.innerHTML = `
+                            <div class="discord-input-mock">
+                                <span class="icon">⊕</span>
+                                <span class="input-placeholder">向 ${brioDialogueData.name} 傳送訊息...</span>
+                                <span class="icon">😊</span>
+                                <span class="icon">🎤</span>
                             </div>`;
+                        contentBodyWrapperEl.appendChild(inputMockWrapper);
                     }
                     contentBodyEl.scrollTop = 0;
 
@@ -728,17 +722,18 @@
                 if (allTopicsDone && allBrioSubTopicsDone && completionToastEl) {
                     if (!completionToastEl.classList.contains('animate')) {
                         completionToastEl.textContent = '太棒了，小甜點！你已掌握所有指南精華！準備好在島上大顯身手了嗎？🥳';
-                        completionToastEl.style.display = 'block';
-                        requestAnimationFrame(() => { // Ensure display:block is applied before animation
+                        completionToastEl.style.display = 'block'; // 確保元素可見以播放動畫
+                        requestAnimationFrame(() => { // 在下一瀏覽器重繪前添加 class
                             completionToastEl.classList.add('animate');
                         });
 
-                        const animationEndHandler = () => {
-                            completionToastEl.style.display = 'none';
-                            completionToastEl.classList.remove('animate');
-                            completionToastEl.removeEventListener('animationend', animationEndHandler);
+                        // 使用 animationend 事件來確保在動畫完成後才隱藏
+                        const handleAnimationEnd = () => {
+                            completionToastEl.style.display = 'none'; // 隱藏元素
+                            completionToastEl.classList.remove('animate'); // 移除動畫 class，以便下次可以重新觸發
+                            completionToastEl.removeEventListener('animationend', handleAnimationEnd); // 清理事件監聽器
                         };
-                        completionToastEl.addEventListener('animationend', animationEndHandler, {once: true});
+                        completionToastEl.addEventListener('animationend', handleAnimationEnd, { once: true }); // 確保只觸發一次
                     }
                 }
             }
@@ -746,7 +741,7 @@
             // 初始化
             const initialElements = [
                 serverListEl, channelsPanelEl, panelToggleButtonEl, channelListEl,
-                serverNameTextEl, contentHeaderEl, contentBodyEl, completionToastEl
+                serverNameTextEl, contentHeaderEl, contentBodyWrapperEl, contentBodyEl, completionToastEl
             ];
             if (initialElements.every(el => el)) {
                 renderServers();
@@ -754,7 +749,7 @@
             } else {
                 console.error("一個或多個必要的 DOM 元素未找到，遊戲無法初始化。請檢查HTML中的ID。");
                  initialElements.forEach((el, index) => {
-                    if (!el) console.error(`Element with expected ID '${['serverList', 'channelsPanelEl', 'panelToggleButtonEl', 'channelList', 'serverNameTextEl', 'contentHeader', 'contentBody', 'completionToast'][index]}' not found.`);
+                    if (!el) console.error(`Element with expected ID '${['serverList', 'channelsPanelEl', 'panelToggleButtonEl', 'channelList', 'serverNameTextEl', 'contentHeader', 'contentBodyWrapperEl', 'contentBody',  'completionToast'][index]}' not found.`);
                 });
             }
         });
