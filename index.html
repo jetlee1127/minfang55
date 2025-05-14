@@ -116,12 +116,12 @@
             flex-grow: 1;
             display: flex;
             flex-direction: column;
-            overflow: hidden; /* Important: Parent of .content-body should handle overflow or sizing */
+            overflow: hidden;
         }
         .content-body {
             padding: 20px 25px;
             overflow-y: auto;
-            flex-grow: 1; /* Allows content to take up space and scroll */
+            flex-grow: 1;
             scrollbar-width: thin; scrollbar-color: var(--discord-scrollbar-thumb) var(--discord-scrollbar-track);
             font-size: 1em; line-height: 1.7;
         }
@@ -148,8 +148,8 @@
         .message-text p { margin-bottom: 4px !important; }
 
         .discord-input-mock-wrapper {
-            margin-top: auto; /* Pushes it to the bottom of the flex container (.content-body-wrapper) */
-            padding: 15px 20px 20px 20px; /* Add padding, esp. bottom */
+            margin-top: auto;
+            padding: 15px 20px 20px 20px; /* Increased bottom padding */
             flex-shrink: 0;
         }
         .discord-input-mock {
@@ -181,12 +181,12 @@
         }
         .completion-toast.animate {
             display: block !important;
-            animation-name: slideUpFadeOutToastAnimation; /* Ensure this matches the @keyframes name */
+            animation-name: slideUpFadeOutToastAnimation;
             animation-duration: 3.5s;
             animation-fill-mode: forwards;
             animation-timing-function: ease-in-out;
         }
-        @keyframes slideUpFadeOutToastAnimation { /* Renamed to match class if needed */
+        @keyframes slideUpFadeOutToastAnimation {
             0% { bottom: -70px; opacity: 0; }
             15% { bottom: 30px; opacity: 1; }
             85% { bottom: 30px; opacity: 1; }
@@ -214,8 +214,9 @@
             </div>
             <div id="contentBodyWrapper" class="content-body-wrapper">
                 <div id="contentBody" class="content-body">
-                    {/* 主要內容會插入這裡 */}
+                    {/* Content will be inserted here by JS */}
                 </div>
+                {/* Mock input is now appended to contentBodyWrapper if activeServerId is 'brio' */}
             </div>
         </div>
     </div>
@@ -525,7 +526,6 @@
             let activeServerId = 'guide';
             let activeChannelId = 'welcome';
             let isChannelPanelCollapsed = false;
-            let toastTimer = null; // Timer for completion toast
 
             function toggleChannelsPanel() {
                 isChannelPanelCollapsed = !isChannelPanelCollapsed;
@@ -696,13 +696,13 @@
                         existingInputMock.remove();
                     }
 
-                    if (activeServerId === 'brio' && itemId === 'brio_chats') { // 只在布里歐的聊天記事顯示輸入框
+                    if (activeServerId === 'brio' && itemId === 'brio_chats') {
                          const inputMockWrapper = document.createElement('div');
                          inputMockWrapper.classList.add('discord-input-mock-wrapper');
                          inputMockWrapper.innerHTML = `
                             <div class="discord-input-mock">
                                 <span class="icon">⊕</span>
-                                <span class="input-placeholder">向 ${brioDialogueData.name} 傳送訊息...</span>
+                                <span class="input-placeholder">向 布里歐 傳送訊息...</span>
                                 <span class="icon">😊</span>
                                 <span class="icon">🎤</span>
                             </div>`;
@@ -723,26 +723,29 @@
                 const allBrioSubTopicsDone = brioDialogueData.subTopics.every(subTopic => subTopic.isCompleted);
 
                 if (allTopicsDone && allBrioSubTopicsDone && completionToastEl) {
-                    if (!completionToastEl.classList.contains('animate')) {
-                        completionToastEl.textContent = '太棒了，小甜點！你已掌握所有指南精華！準備好在島上大顯身手了嗎？🥳';
-                        completionToastEl.style.display = 'block';
-                        // Force reflow before adding class to ensure animation plays from start
-                        completionToastEl.classList.remove('animate'); // Ensure it's not already there
-                        void completionToastEl.offsetWidth; // Trigger reflow
-                        completionToastEl.classList.add('animate'); // Add class to trigger animation
-
-                        // Use a flag to prevent multiple animationend listeners if checkAllCompleted is called rapidly
-                        if (!completionToastEl.isAnimating) {
-                            completionToastEl.isAnimating = true;
-                            const handleAnimationEnd = () => {
-                                completionToastEl.style.display = 'none';
-                                completionToastEl.classList.remove('animate');
-                                completionToastEl.isAnimating = false; // Reset flag
-                                completionToastEl.removeEventListener('animationend', handleAnimationEnd);
-                            };
-                            completionToastEl.addEventListener('animationend', handleAnimationEnd, { once: true });
-                        }
+                    // 清除可能存在的舊計時器
+                    if (completionToastEl.animationTimeout) {
+                        clearTimeout(completionToastEl.animationTimeout);
                     }
+                    if (completionToastEl.hideTimeout) {
+                         clearTimeout(completionToastEl.hideTimeout);
+                    }
+
+
+                    completionToastEl.textContent = '太棒了，小甜點！你已掌握所有指南精華！準備好在島上大顯身手了嗎？🥳';
+                    completionToastEl.classList.remove('animate'); // 先移除，確保動畫能重新開始
+                    completionToastEl.style.display = 'block'; // 確保元素可見
+
+                    // 使用 requestAnimationFrame 確保 display:block 生效後再添加 animate class
+                    requestAnimationFrame(() => {
+                        completionToastEl.classList.add('animate');
+                    });
+
+                    // 設置一個計時器，在動畫結束後隱藏元素並移除class，以備下次觸發
+                    completionToastEl.animationTimeout = setTimeout(() => {
+                        completionToastEl.classList.remove('animate');
+                        completionToastEl.style.display = 'none';
+                    }, 3500); // 匹配CSS動畫時間
                 }
             }
 
@@ -757,7 +760,7 @@
             } else {
                 console.error("一個或多個必要的 DOM 元素未找到，遊戲無法初始化。請檢查HTML中的ID。");
                  initialElements.forEach((el, index) => {
-                    if (!el) console.error(`Element at index ${index} is null. Expected ID: ${['serverList', 'channelsPanelEl', 'panelToggleButtonEl', 'channelList', 'serverNameTextEl', 'contentHeader', 'contentBodyWrapperEl', 'contentBody',  'completionToast'][index]}' not found.`);
+                    if (!el) console.error(`Element with expected ID '${['serverList', 'channelsPanelEl', 'panelToggleButtonEl', 'channelList', 'serverNameTextEl', 'contentHeader', 'contentBodyWrapperEl', 'contentBody',  'completionToast'][index]}' not found.`);
                 });
             }
         });
