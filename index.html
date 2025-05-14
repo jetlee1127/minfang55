@@ -149,7 +149,7 @@
 
         .discord-input-mock-wrapper {
             margin-top: auto;
-            padding-top: 15px;
+            padding: 15px 20px 20px 20px;
             flex-shrink: 0;
         }
         .discord-input-mock {
@@ -214,14 +214,13 @@
             </div>
             <div id="contentBodyWrapper" class="content-body-wrapper">
                 <div id="contentBody" class="content-body">
-                    <!-- 主要內容會插入這裡 -->
+                    {/* HTML content will be inserted here by JS */}
                 </div>
-                <!-- 模擬輸入框會由 JS 添加到此 wrapper 的末尾 -->
             </div>
         </div>
     </div>
     <div id="completionToast" class="completion-toast">
-        <!-- Text updated in JS -->
+        {/* Text updated in JS */}
     </div>
 
     <script>
@@ -232,8 +231,8 @@
         ];
 
         const guideTopics = [
-            // !! 所有 guideTopics 的 content 內容都已更新，移除了錯誤的 HTML 註釋 !!
-             {
+            // !! 請確保這裡的 content 內容是完整且經過所有文本修正的 !!
+            {
                 id: 'welcome',
                 category: '歡迎來到可可冒險島',
                 categoryIcon: '👋',
@@ -648,7 +647,7 @@
                         selectContentItem(activeChannelId, 'brio_subtopic');
                     } else {
                         if(contentBodyWrapperEl && currentChannelNameEl && contentHeaderEl) {
-                             contentBodyWrapperEl.querySelector('#contentBody').innerHTML = '<div class="content-scrollable-area"><div class="content-section"><p>布里歐暫時沒有記事可看。</p></div></div>';
+                             contentBodyWrapperEl.querySelector('#contentBody').innerHTML = '<div class="content-section"><p>布里歐暫時沒有記事可看。</p></div>';
                              const existingInputMock = contentBodyWrapperEl.querySelector('.discord-input-mock-wrapper');
                              if (existingInputMock) existingInputMock.remove();
                              currentChannelNameEl.textContent = brioDialogueData.name;
@@ -724,38 +723,28 @@
                 const allBrioSubTopicsDone = brioDialogueData.subTopics.every(subTopic => subTopic.isCompleted);
 
                 if (allTopicsDone && allBrioSubTopicsDone && completionToastEl) {
-                    // Clear any existing timer to prevent multiple hide attempts
-                    if (completionToastEl.hideTimer) {
-                        clearTimeout(completionToastEl.hideTimer);
+                    if (completionToastEl.style.display === 'block' && completionToastEl.classList.contains('animate')) {
+                        return; // Animation is already playing
                     }
 
                     completionToastEl.textContent = '太棒了，小甜點！你已掌握所有指南精華！準備好在島上大顯身手了嗎？🥳';
-                    completionToastEl.classList.remove('animate'); // Remove animate if it's already there
-                    completionToastEl.style.display = 'block';    // Make sure it's visible
-                    completionToastEl.style.opacity = '0';      // Reset opacity for animation
-                    completionToastEl.style.bottom = '-70px';   // Reset bottom for animation
+                    completionToastEl.classList.remove('animate'); // Remove class to reset animation if it was there
+                    completionToastEl.style.display = 'block';    // Make it visible
 
-                    // Force reflow to ensure browser picks up the style changes before adding class
+                    // Force reflow to ensure browser applies display:block and removes class before re-adding
                     void completionToastEl.offsetWidth;
 
                     completionToastEl.classList.add('animate'); // Add class to trigger animation
 
-                    // Set a timeout to hide the toast after the animation duration
-                    // This is a fallback in case animationend event doesn't fire or is missed
-                    completionToastEl.hideTimer = setTimeout(() => {
-                        completionToastEl.style.display = 'none';
-                        completionToastEl.classList.remove('animate');
-                    }, 3500); // Match animation duration
-
-                    // More reliable way to hide after animation: use animationend event
                     const handleAnimationEnd = () => {
-                        if (completionToastEl.classList.contains('animate')) { // Check if it's still supposed to be showing
+                        // Check if the animation is still 'animate' to prevent hiding if rapidly re-triggered
+                        if (completionToastEl.classList.contains('animate')) {
                             completionToastEl.style.display = 'none';
                             completionToastEl.classList.remove('animate');
                         }
                         completionToastEl.removeEventListener('animationend', handleAnimationEnd);
                     };
-                    completionToastEl.removeEventListener('animationend', handleAnimationEnd); // Remove previous if any
+                    completionToastEl.removeEventListener('animationend', handleAnimationEnd); // Remove previous listener first
                     completionToastEl.addEventListener('animationend', handleAnimationEnd, { once: true });
                 }
             }
