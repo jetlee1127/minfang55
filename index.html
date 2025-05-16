@@ -103,10 +103,11 @@
             flex-grow: 1; margin-right: 5px; display: inline-block;
             opacity: 1; 
             max-width: calc(100% - 50px); 
-            transition: opacity 0.15s ease-out, max-width 0.25s ease-in-out; 
+            transition: opacity 0.15s ease-out, max-width 0.25s ease-in-out, visibility 0s; 
         }
         .channels-panel.collapsed .server-name-text { 
             opacity: 0; max-width: 0; margin-right: 0; padding: 0; pointer-events: none; 
+            visibility: hidden;
         }
         .panel-toggle-button {
             background: none; border: none; color: var(--discord-text-muted);
@@ -287,7 +288,7 @@
 
     <script>
         const servers = [ 
-            // { id: 'guide', name: '可可冒險島指南', icon: '🏝️', type: 'guide' }, // Removed this server
+            { id: 'guide', name: '可可冒險島指南', icon: '🏝️', type: 'guide' }, // Restored this server
             { id: 'brio', name: '與布里歐的對話', icon: '👨‍🍳', type: 'dialogue' }
         ];
 
@@ -393,7 +394,7 @@
             const contentBodyEl = document.getElementById('contentBody');
             const completionToastEl = document.getElementById('completionToast');
 
-            let activeServerId = servers.length > 0 ? servers[0].id : null; 
+            let activeServerId = 'guide'; // Default to the 'guide' server
             let activeChannelId = 'welcome'; 
             let isChannelPanelCollapsed = false;
 
@@ -472,8 +473,16 @@
                 if (!channelListEl || !serverNameTextEl || !panelToggleButtonEl) return;
                 channelListEl.innerHTML = '';
                 const currentServer = servers.find(s => s.id === activeServerId);
+
                 if (serverNameTextEl) {
-                    serverNameTextEl.textContent = currentServer ? currentServer.name : '未知區域';
+                    // If the current server is 'guide', do not display its name in the header.
+                    if (activeServerId === 'guide' && currentServer && currentServer.name === '可可冒險島指南') {
+                        serverNameTextEl.textContent = ''; 
+                        serverNameTextEl.style.visibility = 'hidden'; // Hide but keep space for layout
+                    } else {
+                        serverNameTextEl.textContent = currentServer ? currentServer.name : '未知區域';
+                        serverNameTextEl.style.visibility = 'visible';
+                    }
                 }
                 panelToggleButtonEl.style.display = 'flex';
 
@@ -543,13 +552,10 @@
                     panelToggleButtonEl.textContent = isChannelPanelCollapsed ? '☰' : '«';
                 }
 
-                renderServers();
+                renderServers(); // Update active server icon
 
                 if (activeServerId === 'guide') { 
-                    // This logic might need adjustment if 'guide' server could be re-added dynamically
-                    // For now, assuming 'guide' server means using guideTopics
-                    const firstGuideTopic = guideTopics.find(topic => servers.find(s => s.id === 'guide' && s.type === 'guide'));
-                    activeChannelId = firstGuideTopic ? firstGuideTopic.id : (guideTopics[0] ? guideTopics[0].id : 'welcome');
+                    activeChannelId = guideTopics[0] ? guideTopics[0].id : 'welcome'; // Default to first guide topic
                     selectContentItem(activeChannelId, 'topic');
                 } else if (activeServerId === 'brio') {
                     activeChannelId = brioDialogueData.subTopics[0] ? brioDialogueData.subTopics[0].id : 'brio_chats';
@@ -560,7 +566,7 @@
                     const headerIconPlaceholder = contentHeaderEl.querySelector('.header-icon-placeholder');
                     if(headerIconPlaceholder) headerIconPlaceholder.innerHTML = `<span></span>`;
                 }
-                renderChannelsOrDialogueTitle(); 
+                renderChannelsOrDialogueTitle(); // This will handle the server name display logic
                 updateInputMockVisibility(); 
             }
 
@@ -606,12 +612,7 @@
             }
 
             function checkAllCompleted() {
-                // Check if the 'guide' server conceptually exists and if its topics are used.
-                // Since 'guide' server was removed from `servers` array, we assume its topics are not actively tracked for completion
-                // unless it's re-added or the logic changes.
-                // For now, `allTopicsDone` will be true if guideTopics is empty or all its items are completed (irrespective of server existence).
-                // This might need refinement if the "guide" server can be re-enabled.
-                const allTopicsDone = guideTopics.length === 0 || guideTopics.every(topic => topic.isCompleted);
+                const allTopicsDone = guideTopics.every(topic => topic.isCompleted); // Restored original logic
                 const allBrioSubTopicsDone = brioDialogueData.subTopics.every(subTopic => subTopic.isCompleted);
 
                 if (allTopicsDone && allBrioSubTopicsDone && completionToastEl) {
@@ -636,20 +637,7 @@
                 contentBodyWrapperEl, contentBodyEl, completionToastEl
             ];
             if (initialElements.every(el => el)) {
-                if (servers.length > 0) {
-                    // If 'guide' was the default and is removed, select the first available.
-                    const defaultServerId = servers[0].id;
-                    if (activeServerId !== defaultServerId && !servers.find(s => s.id === activeServerId)) {
-                        activeServerId = defaultServerId;
-                    }
-                    selectServer(activeServerId); 
-                } else {
-                    if(contentBodyEl) contentBodyEl.innerHTML = '<div class="content-section"><p>目前沒有可供瀏覽的伺服器。</p></div>';
-                    if(currentChannelNameEl) currentChannelNameEl.textContent = "無";
-                    if(serverNameTextEl) serverNameTextEl.textContent = '無伺服器';
-                    if(channelListEl) channelListEl.innerHTML = '';
-                    renderServers(); 
-                }
+                selectServer(activeServerId); // Initialize with the default server
             } else {
                 console.error("一個或多個必要的 DOM 元素未找到，指南模擬無法初始化。請檢查HTML中的ID。");
                  initialElements.forEach((el, index) => {
