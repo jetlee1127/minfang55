@@ -287,13 +287,36 @@
 
     <script>
         const servers = [ 
-            { id: 'guide', name: '可可冒險島指南', icon: '🏝️', type: 'guide' },
+            // { id: 'guide', name: '可可冒險島指南', icon: '🏝️', type: 'guide' }, // Removed this server
             { id: 'brio', name: '與布里歐的對話', icon: '👨‍🍳', type: 'dialogue' }
         ];
 
         const guideTopics = [ 
             { id: 'welcome', category: '歡迎來到可可冒險島', categoryIcon: '👋', icon: '#', name: '開始探索之旅', content: ` <div class="content-section"> <h3>系統精靈的歡迎</h3> <p>系統精靈：「再次歡迎你，小甜點！很高興能成為你的嚮導。」</p> <p>「這個指南模擬器將帶你熟悉可可冒險島 Discord 伺服器的重要資訊。點擊左側<strong class="highlight">不同圖標</strong>可以切換查看主指南內容或與布里歐大師的對話。在主指南中，點擊<strong class="highlight">『頻道』列表</strong>，就可以查看對應的內容了。」</p> <p>「準備好了嗎？讓我們開始探索<strong class="highlight">可可冒險島指南</strong>吧！」</p> <p style="margin-top: 20px;">如果你想查看完整的指南詳細內容，可以點擊這裡：<a href="https://drive.google.com/file/d/1gjRF8gfq2a2c-vxlLzZj79GNbplLLDZ3/view?usp=sharing" target="_blank" style="color:var(--discord-text-link); text-decoration:underline;">完整指南文件</a>。</p> </div> `, isCompleted: false },
             { id: 'discord_connection', category: '第壹章：Discord 系統', categoryIcon: '🖥️', icon: '#', name: 'Discord 連接與操作教學', content: ` <div class="content-section"> <h3 class="channel-title">Discord 環境建置</h3> <p>系統精靈：「要加入我們的島嶼，首先你需要 Discord！它就像我們的魔法通訊水晶。」</p> <p>取得方式:</p> <ul> <li><strong>IOS 設備:</strong> 前往 App Store 搜尋「Discord」或點擊 <a href="https://apps.apple.com/us/app/discord-talk-play-hang-out/id985746746" target="_blank" style="color:var(--discord-text-link); text-decoration:underline;">此處安裝</a>。</li> <li><strong>安卓設備:</strong> 前往 Play 商店搜尋「Discord」或點擊 <a href="https://play.google.com/store/apps/details?id=com.discord" target="_blank" style="color:var(--discord-text-link); text-decoration:underline;">此處安裝</a>。</li> <li><strong>PC/Mac:</strong> 前往瀏覽器搜尋「Discord」或點擊 <a href="https://discord.com/download" target="_blank" style="color:var(--discord-text-link); text-decoration:underline;">此處下載</a>。</li> <li><strong>網頁瀏覽:</strong> 前往瀏覽器搜尋「Discord」或直接訪問 <a href="https://discord.com/app" target="_blank" style="color:var(--discord-text-link); text-decoration:underline;">discord.com/app</a>。</li> </ul> </div> <div class="content-section"> <h3 class="channel-title">Discord 系統操作</h3> <p>系統精靈：「熟悉界面很重要哦！」</p> <ul> <li><strong class="highlight">導覽 - 左側:</strong> 點擊伺服器列表旁的箭頭可看見頻道列表。</li> <li><strong class="highlight">導覽 - 右側:</strong> 系統設定、通知、搜尋等。成員上線狀態也會顯示。</li> <li><strong class="highlight">訊息操作 - 左下角 (+):</strong> 新增投票、上傳圖片/檔案 (有大小限制)。</li> <li><strong class="highlight">訊息操作 - 左下角第二個圖標:</strong> 傳送指令 (島上有三位甜點建築師可幫忙)。</li> <li><strong class="highlight">聊天室類型:</strong> 文字頻道 (#) 無法語音，可投票傳圖文；語音頻道 (🔊) 點擊即進入，可分享畫面，調整他人音量/禁音 (僅對自己有效)。</li> <li><strong class="highlight">公開性:</strong> 分為「公開」和「私人」(需權限/身份組)。</li> </ul> </div> `, isCompleted: false },
+            {
+                id: 'island_overview', 
+                category: '第貳章：可可冒險島',
+                categoryIcon: '🏝️',
+                icon: '#',
+                name: '可可冒險島概覽',
+                content: `
+                    <div class="content-section">
+                        <h3>可可冒險島：夢想的起點</h3>
+                        <p>系統精靈：「再次歡迎你踏上可可冒險島！這是一座洋溢著香甜氣息、乘載著無數夢想的島嶼，同時也是所有小甜點與甜點建築師們溫馨的家園。」</p>
+                        <p>「在這片奇妙的土地上，有許多辛勤工作的員工們，以及各具特色的神奇場域。每一位員工都有著他們獨特的職責，而不同的場域之間，也擁有著各自專屬的功能與秘密等待著你去發掘。」</p>
+                        <p>「在本章節的探索中，我將會像一位親切的嚮導，帶領你一同遊歷以下幾個島上的主要區域：」</p>
+                        <ul>
+                            <li><strong class="highlight">世界樹</strong> - 島嶼的心臟與資訊中心。</li>
+                            <li><strong class="highlight">可可冒險島事務中心</strong> - 處理島上大小事宜的地方。</li>
+                            <li><strong class="highlight">甜點嘰嘰喳喳</strong> - 自由交流的歡樂天地。</li>
+                            <li><strong class="highlight">調查員聚集地 & 小甜點聚落</strong> - 你與管理員的秘密通訊基地。</li>
+                        </ul>
+                        <p>「準備好深入了解這座美麗島嶼的點點滴滴了嗎？讓我們開始這趟精彩的環島旅程吧！」</p>
+                    </div>
+                `,
+                isCompleted: false
+            },
             { id: 'island_facilities_worldtree', category: '第貳章：可可冒險島', categoryIcon: '🏝️', icon: '#', name: '世界樹', content: ` <div class="content-section"> <h3 class="channel-title">烘焙大廳</h3> <p>系統精靈：「這是你初次抵達的溫馨房間，系統會在這裡歡迎你！」</p> </div> <div class="content-section"> <h3 class="channel-title">世界樹-天氣中心</h3> <p>這裡的天氣和<strong class="highlight">現實世界</strong>同步哦！有天氣預報、預警等功能 (但警報太吵，訊息通知已被管理員關掉了)。</p> </div> <div class="content-section"> <h3 class="channel-title">世界樹-資訊中心</h3> <p>所有重要的<strong class="highlight">系統消息</strong>都會在這裡公告。</p> </div> `, isCompleted: false },
             { id: 'island_facilities_others', category: '第貳章：可可冒險島', icon: '#', name: '其他重要設施', content: ` <div class="content-section"> <h3 class="channel-title">可可冒險島事務中心</h3> <ul> <li><strong>許願池:</strong> 用來許願，不定時會有抽獎 (若沒有經費它就是個池塘 ⛲️)。</li> <li><strong>能量統計:</strong> 在營隊期間，會用來關心大家的餐食狀態。</li> </ul> </div> <div class="content-section"> <h3 class="channel-title">甜點嘰嘰喳喳</h3> <p>自由交談的空間，有許多文字聊天室 (#) 和語音聊天室 (🔊)。有些冠有特定股名稱的房間，則只有該股的成員才能看到和進入。</p> </div> <div class="content-section"> <h3 class="channel-title">調查員聚集地 & 小甜點聚落</h3> <p>系統精靈：「這是你和管理員之間的<strong class="highlight">秘密通訊頻道</strong>！」</p> <ul> <li><strong>隱私第一:</strong> <strong class="highlight">只有你自己能看到和進入</strong>專屬空間。需身份認證開通。</li> <li><strong>重要訊息:</strong> 空間內有三則重要訊息 (包含<strong class="highlight">小甜點夥伴</strong>及匿名聊天連結)。</li> <li><span class="important-note">絕對保密事項:</span> Discord 中<strong class="highlight">黑色背景標示</strong>的內容 (匿名烘焙坊號碼(Line)、預設小甜點名、您的小甜點) <strong class="highlight">嚴禁外洩</strong>！</li> <li><strong>員工機器人 & 商品:</strong> 可使用員工2指令購物 (需先加值)。<p class="architect-warning important-note">給甜點建築師的提醒: 使用「送禮物」功能時，對方會直接收到通知，所以請不要用這個功能來給你負責的小甜點送禮哦！</p></li> </ul> </div> `, isCompleted: false },
             { id: 'island_covenant', category: '第參章：可可冒險島約定', categoryIcon: '📜', icon: '#', name: '約定核心精神', content: ` <div class="content-section"> <h3>可可冒險島約定 - 核心精神</h3> <p>系統精靈：「約定在可可曆1000年頒布，是島嶼的基石。核心理念是：<strong class="highlight">建立一個包容與尊重個體的社會</strong>。」</p> <h3 class="channel-title">第一章：立約緣由</h3> <ul> <li>每一個甜點生而獨特，應被<strong class="highlight">尊重</strong>。</li> <li>甜點之間的相異是世界的甜美，<strong class="highlight">非缺陷</strong>。</li> <li>甜點建築師的責任是幫助甜點<strong class="highlight">發掘價值</strong>，而非改變本質。</li> </ul> <h3 class="channel-title">第二章：甜點基本權利</h3> <p>包含：存在的權利、選擇的自由、個性的尊重、公平對待、甜點建築師的責任。</p> <h3 class="channel-title">第三章：烘焙坊與社會責任</h3> <p>甜點建築師應遵守四大守則：<br>1. 不強迫小甜點改變本質；<br>2. 不評判小甜點的價值；<br>3. 耐心傾聽小甜點的心聲；<br>4. 幫助小甜點找到最適合自己的位置。</p> <h3 class="channel-title">第四章：約定的延續與修訂</h3> <p>修訂需召開「糖霜會議」。結語強調世界的美好在於無數風味的交織。</p> </div> `, isCompleted: false },
@@ -370,8 +393,8 @@
             const contentBodyEl = document.getElementById('contentBody');
             const completionToastEl = document.getElementById('completionToast');
 
-            let activeServerId = 'guide';
-            let activeChannelId = 'welcome';
+            let activeServerId = servers.length > 0 ? servers[0].id : null; 
+            let activeChannelId = 'welcome'; 
             let isChannelPanelCollapsed = false;
 
             function updateInputMockVisibility() {
@@ -429,7 +452,7 @@
                 resizeTimer = setTimeout(updateInputMockVisibility, 150); 
             });
 
-            function renderServers() { /* Unchanged */
+            function renderServers() { 
                 if (!serverListEl) return;
                 serverListEl.innerHTML = '';
                 servers.forEach(server => {
@@ -445,7 +468,7 @@
                 });
             }
 
-            function renderChannelsOrDialogueTitle() { /* Unchanged */
+            function renderChannelsOrDialogueTitle() { 
                 if (!channelListEl || !serverNameTextEl || !panelToggleButtonEl) return;
                 channelListEl.innerHTML = '';
                 const currentServer = servers.find(s => s.id === activeServerId);
@@ -454,7 +477,7 @@
                 }
                 panelToggleButtonEl.style.display = 'flex';
 
-                if (activeServerId === 'guide') {
+                if (activeServerId === 'guide') { 
                     let lastCategory = null;
                     guideTopics.forEach(topic => {
                         if (topic.category && topic.category !== lastCategory) {
@@ -499,8 +522,17 @@
                 }
             }
 
-            function selectServer(serverId) { /* Unchanged logic for panel state */
-                if (!servers.find(s => s.id === serverId)) return;
+            function selectServer(serverId) { 
+                if (!serverId || !servers.find(s => s.id === serverId)) {
+                     if(contentBodyEl) contentBodyEl.innerHTML = '<div class="content-section"><p>沒有可用的伺服器或頻道。</p></div>';
+                    if(currentChannelNameEl) currentChannelNameEl.textContent = "無";
+                    const headerIconPlaceholder = contentHeaderEl.querySelector('.header-icon-placeholder');
+                    if(headerIconPlaceholder) headerIconPlaceholder.innerHTML = `<span></span>`;
+                    if (serverNameTextEl) serverNameTextEl.textContent = '未知區域';
+                    if (channelListEl) channelListEl.innerHTML = '';
+                    renderServers(); 
+                    return;
+                }
                 activeServerId = serverId;
 
                 if (channelsPanelEl) {
@@ -513,14 +545,17 @@
 
                 renderServers();
 
-                if (activeServerId === 'guide') {
-                    activeChannelId = guideTopics[0] ? guideTopics[0].id : 'welcome';
+                if (activeServerId === 'guide') { 
+                    // This logic might need adjustment if 'guide' server could be re-added dynamically
+                    // For now, assuming 'guide' server means using guideTopics
+                    const firstGuideTopic = guideTopics.find(topic => servers.find(s => s.id === 'guide' && s.type === 'guide'));
+                    activeChannelId = firstGuideTopic ? firstGuideTopic.id : (guideTopics[0] ? guideTopics[0].id : 'welcome');
                     selectContentItem(activeChannelId, 'topic');
                 } else if (activeServerId === 'brio') {
                     activeChannelId = brioDialogueData.subTopics[0] ? brioDialogueData.subTopics[0].id : 'brio_chats';
                     selectContentItem(activeChannelId, 'brio_subtopic');
                 } else { 
-                    if(contentBodyEl) contentBodyEl.innerHTML = '<div class="content-section"><p>請選擇一個伺服器和頻道。</p></div>';
+                    if(contentBodyEl) contentBodyEl.innerHTML = '<div class="content-section"><p>請選擇一個有效的伺服器和頻道。</p></div>';
                     if(currentChannelNameEl) currentChannelNameEl.textContent = "無";
                     const headerIconPlaceholder = contentHeaderEl.querySelector('.header-icon-placeholder');
                     if(headerIconPlaceholder) headerIconPlaceholder.innerHTML = `<span></span>`;
@@ -535,7 +570,7 @@
                 let headerIconHtml = '<span class="channel-icon">#</span>';
                 let itemNameForHeader = '未知內容';
                 
-                if (type === 'topic') {
+                if (type === 'topic') { 
                     selectedItem = guideTopics.find(t => t.id === itemId);
                     if(selectedItem) {
                         headerIconHtml = `<span class="channel-icon">${selectedItem.icon || '#'}</span>`;
@@ -570,8 +605,13 @@
                 }
             }
 
-            function checkAllCompleted() { /* Unchanged */
-                const allTopicsDone = guideTopics.every(topic => topic.isCompleted);
+            function checkAllCompleted() {
+                // Check if the 'guide' server conceptually exists and if its topics are used.
+                // Since 'guide' server was removed from `servers` array, we assume its topics are not actively tracked for completion
+                // unless it's re-added or the logic changes.
+                // For now, `allTopicsDone` will be true if guideTopics is empty or all its items are completed (irrespective of server existence).
+                // This might need refinement if the "guide" server can be re-enabled.
+                const allTopicsDone = guideTopics.length === 0 || guideTopics.every(topic => topic.isCompleted);
                 const allBrioSubTopicsDone = brioDialogueData.subTopics.every(subTopic => subTopic.isCompleted);
 
                 if (allTopicsDone && allBrioSubTopicsDone && completionToastEl) {
@@ -590,14 +630,26 @@
                 }
             }
 
-            const initialElements = [ /* Unchanged */
+            const initialElements = [ 
                 serverListEl, channelsPanelEl, panelToggleButtonEl, channelListEl,
                 serverNameTextEl, contentHeaderEl, currentChannelNameEl,
                 contentBodyWrapperEl, contentBodyEl, completionToastEl
             ];
             if (initialElements.every(el => el)) {
-                renderServers();
-                selectServer(activeServerId); 
+                if (servers.length > 0) {
+                    // If 'guide' was the default and is removed, select the first available.
+                    const defaultServerId = servers[0].id;
+                    if (activeServerId !== defaultServerId && !servers.find(s => s.id === activeServerId)) {
+                        activeServerId = defaultServerId;
+                    }
+                    selectServer(activeServerId); 
+                } else {
+                    if(contentBodyEl) contentBodyEl.innerHTML = '<div class="content-section"><p>目前沒有可供瀏覽的伺服器。</p></div>';
+                    if(currentChannelNameEl) currentChannelNameEl.textContent = "無";
+                    if(serverNameTextEl) serverNameTextEl.textContent = '無伺服器';
+                    if(channelListEl) channelListEl.innerHTML = '';
+                    renderServers(); 
+                }
             } else {
                 console.error("一個或多個必要的 DOM 元素未找到，指南模擬無法初始化。請檢查HTML中的ID。");
                  initialElements.forEach((el, index) => {
