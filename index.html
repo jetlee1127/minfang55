@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>可可冒險島 Discord 指南模擬</title>
+    <title>Discord 指南模擬</title> {/* MODIFIED TITLE */}
     <style>
         :root {
             --discord-bg-darkest: #202225;
@@ -103,11 +103,11 @@
             flex-grow: 1; margin-right: 5px; display: inline-block;
             opacity: 1; 
             max-width: calc(100% - 50px); 
-            transition: opacity 0.15s ease-out, max-width 0.25s ease-in-out, visibility 0s; 
+            transition: opacity 0.15s ease-out, max-width 0.25s ease-in-out; /* Removed visibility transition */
         }
         .channels-panel.collapsed .server-name-text { 
             opacity: 0; max-width: 0; margin-right: 0; padding: 0; pointer-events: none; 
-            visibility: hidden;
+            /* visibility: hidden; */ /* Removed direct visibility control here for collapsed state */
         }
         .panel-toggle-button {
             background: none; border: none; color: var(--discord-text-muted);
@@ -288,7 +288,7 @@
 
     <script>
         const servers = [ 
-            { id: 'guide', name: '可可冒險島指南', icon: '🏝️', type: 'guide' }, // Restored this server
+            { id: 'guide', name: '可可冒險島指南', icon: '🏝️', type: 'guide' }, 
             { id: 'brio', name: '與布里歐的對話', icon: '👨‍🍳', type: 'dialogue' }
         ];
 
@@ -394,7 +394,7 @@
             const contentBodyEl = document.getElementById('contentBody');
             const completionToastEl = document.getElementById('completionToast');
 
-            let activeServerId = 'guide'; // Default to the 'guide' server
+            let activeServerId = 'guide'; 
             let activeChannelId = 'welcome'; 
             let isChannelPanelCollapsed = false;
 
@@ -475,14 +475,9 @@
                 const currentServer = servers.find(s => s.id === activeServerId);
 
                 if (serverNameTextEl) {
-                    // If the current server is 'guide', do not display its name in the header.
-                    if (activeServerId === 'guide' && currentServer && currentServer.name === '可可冒險島指南') {
-                        serverNameTextEl.textContent = ''; 
-                        serverNameTextEl.style.visibility = 'hidden'; // Hide but keep space for layout
-                    } else {
-                        serverNameTextEl.textContent = currentServer ? currentServer.name : '未知區域';
-                        serverNameTextEl.style.visibility = 'visible';
-                    }
+                    // Standard behavior: display the name of the current server.
+                    serverNameTextEl.textContent = currentServer ? currentServer.name : '未知區域';
+                    serverNameTextEl.style.visibility = 'visible'; // Ensure it's visible
                 }
                 panelToggleButtonEl.style.display = 'flex';
 
@@ -552,10 +547,10 @@
                     panelToggleButtonEl.textContent = isChannelPanelCollapsed ? '☰' : '«';
                 }
 
-                renderServers(); // Update active server icon
+                renderServers(); 
 
                 if (activeServerId === 'guide') { 
-                    activeChannelId = guideTopics[0] ? guideTopics[0].id : 'welcome'; // Default to first guide topic
+                    activeChannelId = guideTopics[0] ? guideTopics[0].id : 'welcome'; 
                     selectContentItem(activeChannelId, 'topic');
                 } else if (activeServerId === 'brio') {
                     activeChannelId = brioDialogueData.subTopics[0] ? brioDialogueData.subTopics[0].id : 'brio_chats';
@@ -566,7 +561,7 @@
                     const headerIconPlaceholder = contentHeaderEl.querySelector('.header-icon-placeholder');
                     if(headerIconPlaceholder) headerIconPlaceholder.innerHTML = `<span></span>`;
                 }
-                renderChannelsOrDialogueTitle(); // This will handle the server name display logic
+                renderChannelsOrDialogueTitle(); 
                 updateInputMockVisibility(); 
             }
 
@@ -612,7 +607,7 @@
             }
 
             function checkAllCompleted() {
-                const allTopicsDone = guideTopics.every(topic => topic.isCompleted); // Restored original logic
+                const allTopicsDone = guideTopics.every(topic => topic.isCompleted); 
                 const allBrioSubTopicsDone = brioDialogueData.subTopics.every(subTopic => subTopic.isCompleted);
 
                 if (allTopicsDone && allBrioSubTopicsDone && completionToastEl) {
@@ -637,7 +632,7 @@
                 contentBodyWrapperEl, contentBodyEl, completionToastEl
             ];
             if (initialElements.every(el => el)) {
-                selectServer(activeServerId); // Initialize with the default server
+                selectServer(activeServerId); 
             } else {
                 console.error("一個或多個必要的 DOM 元素未找到，指南模擬無法初始化。請檢查HTML中的ID。");
                  initialElements.forEach((el, index) => {
