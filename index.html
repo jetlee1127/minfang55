@@ -103,11 +103,10 @@
             flex-grow: 1; margin-right: 5px; display: inline-block;
             opacity: 1; 
             max-width: calc(100% - 50px); 
-            transition: opacity 0.15s ease-out, max-width 0.25s ease-in-out; /* Removed visibility transition */
+            transition: opacity 0.15s ease-out, max-width 0.25s ease-in-out; 
         }
         .channels-panel.collapsed .server-name-text { 
             opacity: 0; max-width: 0; margin-right: 0; padding: 0; pointer-events: none; 
-            /* visibility: hidden; */ /* Removed direct visibility control here for collapsed state */
         }
         .panel-toggle-button {
             background: none; border: none; color: var(--discord-text-muted);
@@ -318,6 +317,29 @@
                 `,
                 isCompleted: false
             },
+            { // NEW SECTION - 工程師與小甜點的互動
+                id: 'engineer_dessert_relations',
+                category: '第貳章：可可冒險島',
+                categoryIcon: '🏝️',
+                icon: '🤝', 
+                name: '工程師與小甜點的互動',
+                content: `
+                    <div class="content-section">
+                        <h3>工程師與小甜點：夥伴關係</h3>
+                        <p>系統精靈：「在可可冒險島上，甜點建築師（或稱甜點工程師）與小甜點之間的關係，是建立在<strong class="highlight">互信、尊重與共同成長</strong>的基礎上的。」</p>
+                        <p>「甜點建築師的角色並非高高在上的指導者，更像是<strong class="highlight">細心的園丁與溫暖的夥伴</strong>。他們的主要職責是：」</p>
+                        <ul>
+                            <li><strong class="highlight">發掘潛能：</strong>協助每一位小甜點認識並發揮自己獨特的風味與特質，而非強行改變他們。</li>
+                            <li><strong class="highlight">提供支持：</strong>在小甜點遇到困難或迷茫時，給予鼓勵、建議與必要的協助。</li>
+                            <li><strong class="highlight">創造環境：</strong>營造一個安全、包容且充滿滋養的環境，讓小甜點們能夠安心探索、自由成長。</li>
+                            <li><strong class="highlight">傾聽心聲：</strong>耐心聆聽小甜點的想法與感受，理解他們的需，並尊重他們的選擇。</li>
+                        </ul>
+                        <p>「小甜點們則被鼓勵<strong class="highlight">勇敢展現自我</strong>，與甜點建築師坦誠交流，共同探索屬於自己的甜美人生道路。記住，每一種甜點都有其存在的價值與美好，工程師們會是你最堅實的後盾。」</p>
+                        <p class="important-note">「請記得，甜點建築師的存在旨在協助小甜點自由開展，並成為小甜點的支持。（見附註：可可冒險島須知 第九條）」</p>
+                    </div>
+                `,
+                isCompleted: false
+            },
             { id: 'island_facilities_worldtree', category: '第貳章：可可冒險島', categoryIcon: '🏝️', icon: '#', name: '世界樹', content: ` <div class="content-section"> <h3 class="channel-title">烘焙大廳</h3> <p>系統精靈：「這是你初次抵達的溫馨房間，系統會在這裡歡迎你！」</p> </div> <div class="content-section"> <h3 class="channel-title">世界樹-天氣中心</h3> <p>這裡的天氣和<strong class="highlight">現實世界</strong>同步哦！有天氣預報、預警等功能 (但警報太吵，訊息通知已被管理員關掉了)。</p> </div> <div class="content-section"> <h3 class="channel-title">世界樹-資訊中心</h3> <p>所有重要的<strong class="highlight">系統消息</strong>都會在這裡公告。</p> </div> `, isCompleted: false },
             { id: 'island_facilities_others', category: '第貳章：可可冒險島', icon: '#', name: '其他重要設施', content: ` <div class="content-section"> <h3 class="channel-title">可可冒險島事務中心</h3> <ul> <li><strong>許願池:</strong> 用來許願，不定時會有抽獎 (若沒有經費它就是個池塘 ⛲️)。</li> <li><strong>能量統計:</strong> 在營隊期間，會用來關心大家的餐食狀態。</li> </ul> </div> <div class="content-section"> <h3 class="channel-title">甜點嘰嘰喳喳</h3> <p>自由交談的空間，有許多文字聊天室 (#) 和語音聊天室 (🔊)。有些冠有特定股名稱的房間，則只有該股的成員才能看到和進入。</p> </div> <div class="content-section"> <h3 class="channel-title">調查員聚集地 & 小甜點聚落</h3> <p>系統精靈：「這是你和管理員之間的<strong class="highlight">秘密通訊頻道</strong>！」</p> <ul> <li><strong>隱私第一:</strong> <strong class="highlight">只有你自己能看到和進入</strong>專屬空間。需身份認證開通。</li> <li><strong>重要訊息:</strong> 空間內有三則重要訊息 (包含<strong class="highlight">小甜點夥伴</strong>及匿名聊天連結)。</li> <li><span class="important-note">絕對保密事項:</span> Discord 中<strong class="highlight">黑色背景標示</strong>的內容 (匿名烘焙坊號碼(Line)、預設小甜點名、您的小甜點) <strong class="highlight">嚴禁外洩</strong>！</li> <li><strong>員工機器人 & 商品:</strong> 可使用員工2指令購物 (需先加值)。<p class="architect-warning important-note">給甜點建築師的提醒: 使用「送禮物」功能時，對方會直接收到通知，所以請不要用這個功能來給你負責的小甜點送禮哦！</p></li> </ul> </div> `, isCompleted: false },
             { id: 'island_covenant', category: '第參章：可可冒險島約定', categoryIcon: '📜', icon: '#', name: '約定核心精神', content: ` <div class="content-section"> <h3>可可冒險島約定 - 核心精神</h3> <p>系統精靈：「約定在可可曆1000年頒布，是島嶼的基石。核心理念是：<strong class="highlight">建立一個包容與尊重個體的社會</strong>。」</p> <h3 class="channel-title">第一章：立約緣由</h3> <ul> <li>每一個甜點生而獨特，應被<strong class="highlight">尊重</strong>。</li> <li>甜點之間的相異是世界的甜美，<strong class="highlight">非缺陷</strong>。</li> <li>甜點建築師的責任是幫助甜點<strong class="highlight">發掘價值</strong>，而非改變本質。</li> </ul> <h3 class="channel-title">第二章：甜點基本權利</h3> <p>包含：存在的權利、選擇的自由、個性的尊重、公平對待、甜點建築師的責任。</p> <h3 class="channel-title">第三章：烘焙坊與社會責任</h3> <p>甜點建築師應遵守四大守則：<br>1. 不強迫小甜點改變本質；<br>2. 不評判小甜點的價值；<br>3. 耐心傾聽小甜點的心聲；<br>4. 幫助小甜點找到最適合自己的位置。</p> <h3 class="channel-title">第四章：約定的延續與修訂</h3> <p>修訂需召開「糖霜會議」。結語強調世界的美好在於無數風味的交織。</p> </div> `, isCompleted: false },
@@ -475,9 +497,8 @@
                 const currentServer = servers.find(s => s.id === activeServerId);
 
                 if (serverNameTextEl) {
-                    // Standard behavior: display the name of the current server.
                     serverNameTextEl.textContent = currentServer ? currentServer.name : '未知區域';
-                    serverNameTextEl.style.visibility = 'visible'; // Ensure it's visible
+                    serverNameTextEl.style.visibility = 'visible'; 
                 }
                 panelToggleButtonEl.style.display = 'flex';
 
